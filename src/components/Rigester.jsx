@@ -1,11 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import img3 from "../assets/img7.svg";
 import logo from "../assets/logo1.svg";
 
 import { useNavigate } from "react-router-dom";
+import { rigesterApi } from "../server/app";
+import toast from "react-hot-toast";
 
 const Rigester = () => {
+
   const navigate = useNavigate();
+
+  const [Name, setName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [DOB, setDOB] = useState("");
+  const [Aadhar, setAadhar] = useState("");
+  const [Pan, setPan] = useState("");
+  const [PrimaryNUmber, setPrimaryNUmber] = useState("");
+  const [secondaryNumber, setSecondaryNumber] = useState("");
+  const [Address, setAddress] = useState("");
+  const [Account, setAccount] = useState("");
+  const [UPI_id, setUPI_id] = useState("");
+  const [AccHOlderName, setAccHOlderName] = useState("");
+  const [IFSC_code, setIFSC_code] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
+
+
+  //signUp api call
+  const onSubmit = () => {
+
+    const data = {
+      name: Name,
+      email: Email,
+      password: Password,
+      DOB: DOB,
+      aadhar: Aadhar,
+      pan: Pan,
+      mobile: PrimaryNUmber,
+      secondary_mobile: secondaryNumber,
+      address: Address,
+      account_no: Account,
+      upi_id: UPI_id,
+      account_holder: AccHOlderName,
+      IFSC: IFSC_code,
+    };
+
+    if (
+      Name === "" ||
+      Email === "" ||
+      Password === "" ||
+      DOB === "" ||
+      Aadhar === "" ||
+      Pan === "" ||
+      PrimaryNUmber === "" ||
+      secondaryNumber === "" ||
+      Address === "" ||
+      Account === "" ||
+      UPI_id === "" ||
+      AccHOlderName === "" ||
+      IFSC_code === "" ||
+      ConfirmPassword === ""
+    ) {
+      toast.error("Please fill all required fields", {duration: 1500})
+    } else {
+      rigesterApi("user/signUp", data).then((res) => {
+        if(res.status === 200) {
+          toast.success(res.data.message, {duration: 1500})
+          navigate("/login")
+        }else{
+          toast.error("Try agian later", {duration: 1500})
+        }
+      });
+    }
+  };
 
   return (
     <div className="w-full h-full flex justify-center items-center bg-[#3777FA]">
@@ -26,149 +93,203 @@ const Rigester = () => {
         <h1 className="text-[20px] font-semibold pb-4 text-center">
           Welcome to<span className=" text-[#3777fa]"> AKTSMV TRADERS</span>
         </h1>
-        <form className=" flex flex-col mt-5">
-          <div className=" w-full flex justify-between items-center space-x-5 ">
-            <div className=" w-full ">
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                  placeholder="Name"
-                />
-              </div>
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Primary number
-                </label>
-                <input
-                  type="number"
-                  id="pnumber"
-                  name="pnumber"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                  placeholder="Primary number"
-                />
-              </div>
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Date of birth
-                </label>
-                <input
-                  type="date"
-                  id="dob"
-                  name="dob"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                  placeholder="Date of birth"
-                />
-              </div>
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Account holder name
-                </label>
-                <input
-                  type="text"
-                  id="aname"
-                  name="aname"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                  placeholder="Name"
-                />
-              </div>
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  UPI ID
-                </label>
-                <input
-                  type="text"
-                  id="upi"
-                  name="upi"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                  placeholder="UPI ID "
-                />
-              </div>
-            </div>
-            <div className=" w-full">
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Email id
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                  placeholder="Email id"
-                />
-              </div>
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                 Secondary number
-                </label>
-                <input
-                  type="number"
-                  id="snumber"
-                  name="snumber"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                  placeholder="Seconday number"
-                />
-              </div>
-              <div className=" mb-4">
+        <div className=" flex flex-col" >
+          <h1 className=" mb-4">Personal details</h1>
+          <div className=" w-full grid grid-cols-2 gap-5">
+            <div className="">
               <label className="block text-sm font-medium text-gray-600">
-                  Gender
-                </label>
-                <select
-                  id="gender"
-                  name="gender"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  IFSC code
-                </label>
-                <input
-                  type="text"
-                  id="ifsc"
-                  name="ifsc"
-                  className="mt-1 p-3 w-full border-2 rounded-md uppercase"
-                  placeholder="IFSC CODE"
-                />
-              </div>
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Account Number
-                </label>
-                <input
-                  type="number"
-                  id="account no"
-                  name="account no"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                  placeholder="Account number"
-                />
-              </div>
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Email id
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Email id"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Primary number
+              </label>
+              <input
+                type="number"
+                id="pnumber"
+                name="pnumber"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Primary number"
+                onChange={(e) => setPrimaryNUmber(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Date of birth
+              </label>
+              <input
+                type="date"
+                id="dob"
+                name="dob"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Date of birth"
+                onChange={(e) => setDOB(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Pan number
+              </label>
+              <input
+                type="text"
+                id="pan"
+                name="Pan"
+                className="mt-1 p-3 w-full border-2 rounded-md uppercase"
+                placeholder="Pan Number"
+                onChange={(e) => setPan(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Aadhar number
+              </label>
+              <input
+                type="number"
+                id="aadhar"
+                name="aadhar"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Aadhar number"
+                onChange={(e) => setAadhar(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Secondary number
+              </label>
+              <input
+                type="number"
+                id="snumber"
+                name="snumber"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Seconday number"
+                onChange={(e) => setSecondaryNumber(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Address
+              </label>
+              <textarea
+                id="address"
+                name="address"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Address"
+                onChange={(e)=>setAddress(e.target.value)}
+              ></textarea>
             </div>
           </div>
-              <div className=" mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Address
-                </label>
-                <textarea
-                  id="address"
-                  name="address"
-                  className="mt-1 p-3 w-full border-2 rounded-md"
-                  placeholder="Address"
-                ></textarea>
-              </div>
+          <h1 className=" my-4">Account details</h1>
+          <div className=" w-full grid grid-cols-2 gap-5">
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Account holder name
+              </label>
+              <input
+                type="text"
+                id="accountName"
+                name="accountName"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Name"
+                onChange={(e) => setAccHOlderName(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Account Number
+              </label>
+              <input
+                type="number"
+                id="account no"
+                name="account no"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Account number"
+                onChange={(e)=>setAccount(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                IFSC code
+              </label>
+              <input
+                type="text"
+                id="ifsc"
+                name="ifsc"
+                className="mt-1 p-3 w-full border-2 rounded-md uppercase"
+                placeholder="IFSC CODE"
+                onChange={(e)=>setIFSC_code(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                UPI ID
+              </label>
+              <input
+                type="text"
+                id="upi"
+                name="upi"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="UPI ID "
+                onChange={(e) => setUPI_id(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <h1 className=" my-4">Set Password</h1>
+          <div className=" w-full grid grid-cols-2 gap-5">
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="Confirm_password"
+                name="Confirm_password"
+                className="mt-1 p-3 w-full border-2 rounded-md"
+                placeholder="Confirm Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+
           <button
             type="submit"
-            className="bg-[#3777FA] text-white p-3 rounded-md hover:bg-[#334e8e] w-full shadow-md"
+            className="bg-[#3777FA] text-white p-3 rounded-md hover:bg-[#334e8e] w-full shadow-md mt-10"
+            onClick={()=>onSubmit()}
           >
             Sign up
           </button>
@@ -181,7 +302,7 @@ const Rigester = () => {
               Login
             </span>
           </h1>
-        </form>
+        </div>
       </div>
     </div>
   );

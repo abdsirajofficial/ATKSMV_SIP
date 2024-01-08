@@ -1,16 +1,130 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { BsCashCoin } from "react-icons/bs";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
+import { IoWarning } from "react-icons/io5";
+import {
+  delUserApi,
+  editApi,
+  getProfileApi,
+  getUserApi,
+  getnomineeApi,
+} from "../../../server/app";
+import toast from "react-hot-toast";
 
 export const Users = () => {
   const [editUser, seteditUser] = useState(false);
+  const [userData, setuserData] = useState([]);
+  const [totalUsers, settotalUsers] = useState();
+  const [profile, setprofile] = useState([]);
+  const [nominee, setnominee] = useState([]);
+  const [delConfirnMsg, setdelConfirnMsg] = useState(false);
+  const [delUser, setdelUser] = useState(
+    {
+      userId: "",
+      userName: "",
+    }
+  );
+
+  useEffect(() => {
+    setprofile([]);
+    setnominee([]);
+    getUserApi("admin/users", setuserData, settotalUsers);
+  }, []);
+
+  const handleEditUser = (id) => {
+    seteditUser(true);
+    getProfileApi("admin/profile", { userId: id }, setprofile);
+    getnomineeApi("admin/getNominee", { userId: id }, setnominee);
+  };
+
+  const deleteUser = (id) => {
+    delUserApi(`admin/deleteUser?userId=${id}`).then((res) => {
+      if (res.status === 200) {
+        toast.success(res.data.msg, { duration: 1500 });
+        getUserApi("admin/users", setuserData, settotalUsers)
+      }
+    });
+    setdelConfirnMsg(false)
+  };
+
+  const deleteUserConfirm = (id, name) => {
+    setdelUser({ userId: id, userName: name });
+    setdelConfirnMsg(true);
+  };
+
+  const handleCancelBtn = () => {
+    setprofile([]);
+    setnominee([]);
+    seteditUser(false);
+  };
+
+  const handleUpdateUser = () => {
+    const profileData = {
+      userId: profile.userId,
+      email: profile.email,
+      mobile: profile.mobile,
+      name: profile.name,
+      pan: profile.pan,
+      return: parseInt(profile.return),
+      secondary_mobile: profile.secondary_mobile,
+      upi_id: profile.upi_id,
+      DOB: profile.DOB,
+      IFSC: profile.IFSC,
+      aadhar: profile.aadhar,
+      account_holder: profile.account_holder,
+      account_no: profile.account_no,
+      address: profile.address,
+      amount: parseInt(profile.amount),
+    };
+
+    const nomineeData = {
+      name: nominee?.name || "",
+      email: nominee?.email || "",
+      aadhar: nominee?.aadhar || "",
+      pan: nominee?.pan || "",
+      mobile: nominee?.mobile || "",
+      account_no: nominee?.account_no || "",
+      upi_id: nominee?.upi_id || "",
+      account_holder: nominee?.account_holder || "",
+      IFSC: nominee?.IFSC || "",
+      userId: profile.userId,
+    };
+
+    if (nomineeData.name === "") {
+      editApi("admin/editUser", profileData).then((res) => {
+        if (res.status === 200) {
+          toast.success(res.data.msg, { duration: 1500 });
+          getUserApi("admin/users", setuserData, settotalUsers);
+        } else {
+          toast.error(res.data.error, { duration: 1500 });
+        }
+      });
+      seteditUser(false);
+    } else {
+      editApi("admin/editNominee", nomineeData).then((res) => {
+        if (res.status === 200) {
+        } else {
+          toast.error(res.data.error, { duration: 1500 });
+        }
+      });
+      editApi("admin/editUser", profileData).then((res) => {
+        if (res.status === 200) {
+          toast.success(res.data.msg, { duration: 1500 });
+          getUserApi("admin/users", setuserData, settotalUsers);
+        } else {
+          toast.error(res.data.error, { duration: 1500 });
+        }
+      });
+      seteditUser(false);
+    }
+  };
 
   return (
     <div className=" px-8 py-5">
       <div className=" flex justify-between items-center">
-        <h1 className=" text-[22px] font-medium">31 Users</h1>
+        <h1 className=" text-[22px] font-medium">{totalUsers} Users</h1>
         <div className=" flex justify-center items-center space-x-5">
           <div className="bg-white rounded-md border ">
             <div className="pl-3.5 py-2.5 flex justify-start items-center space-x-3 bg-white rounded-md border">
@@ -23,32 +137,91 @@ export const Users = () => {
           </button>
         </div>
       </div>
-      <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3 bg-white mt-5">
-        <p className=" flex justify-center items-center">SI No</p>
+      <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3 bg-[white] my-5">
         <p className=" flex justify-center items-center">User ID</p>
         <p className=" flex justify-center items-center">Name</p>
-        <p className=" flex justify-center items-center">Date of Birth</p>
-        <p className=" flex justify-center items-center">Sex</p>
+        <p className=" flex justify-center items-center">Role</p>
+        <p className=" flex justify-center items-center">Amount</p>
+        <p className=" flex justify-center items-center">Status</p>
         <p className=" flex justify-center items-center">Action</p>
       </div>
-      <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3  text-[14px] bg-white mt-5">
-        <p className=" flex justify-center items-center">01</p>
-        <p className=" flex justify-center items-center">1001</p>
-        <p className=" flex justify-center items-center">siraj</p>
-        <p className=" flex justify-center items-center">21/10/2001</p>
-        <p className=" flex justify-center items-center">Male</p>
-        <p className=" flex justify-center items-center space-x-5">
-          <h1
-            className=" text-[20px] hover:text-blue-500 cursor-pointer"
-            onClick={() => seteditUser(true)}
-          >
-            <MdModeEditOutline />
-          </h1>
-          <h1 className=" text-[20px] hover:text-red-500 cursor-pointer">
-            <MdDelete />
-          </h1>
-        </p>
-      </div>
+      {userData.map((user, index) => (
+        <div
+          key={index}
+          className={`w-full h-auto grid grid-cols-6 grid-rows-1 text-center rounded py-3  text-[14px] bg-white shadow border-b border-neutral-400 ${
+            index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
+          }`}
+        >
+          <p className=" flex justify-center items-center">{user.userId}</p>
+          <p className=" flex justify-center items-center">{user.name}</p>
+          <p className=" flex justify-center items-center">{user.role}</p>
+          <p className=" flex justify-center items-center">
+            {user.amount ? user.amount : 0}
+          </p>
+          <p className=" flex justify-center items-center">
+            <p
+              className={`px-3.5 rounded-full border-2 py-0.5 ${
+                user.status === "active"
+                  ? "bg-yellow-50 border-yellow-200"
+                  : "bg-green-50 border-green-200"
+              }`}
+            >
+              {user.status}
+            </p>
+          </p>
+          <p className=" flex justify-center items-center space-x-5">
+            <button
+              className=" flex  justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
+              onClick={() => deleteUserConfirm(user.userId, user.name)}
+            >
+              <p className=" text-[20px]">
+                <MdDelete />
+              </p>
+              <p>Delete</p>
+            </button>
+            <button
+              className=" flex  justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
+              onClick={() => handleEditUser(user.userId)}
+            >
+              <p>
+                <MdModeEditOutline />
+              </p>
+              <p>Edit</p>
+            </button>
+          </p>
+        </div>
+      ))}
+      {delConfirnMsg && (
+        <div className=" fixed z-20 w-screen h-screen  top-0 right-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center">
+          <div className="rounded-lg bg-white p-10 shadow-2xl antialiased flex flex-col justify-center items-center">
+                <p className=" text-center text-[40px] text-red-500">
+                  <IoWarning ></IoWarning> 
+                </p>
+                <p className=" pt-2 font-[700px] text-[18px]">Delete {delUser.userName}</p>
+                <p className=" text-gray-800  flex space-x-2 pt-5">
+                  <p>Are you sure you want to delete </p>
+                  <p className=" tracking text-black font-medium">{delUser.userId} {delUser.userName}?</p>
+                </p>
+                <p>All the transaction records and withdrawal records will be deleted and </p>
+                <p>  It cannot be undone.</p>
+
+            <div className=" w-full space-x-4 flex justify-center font-medium pt-5">
+              <button
+                className=" px-2 py-2 rounded-md bg-[#a2baf7] text-white hover:shadow-lg hover:shadow-[#a2baf7] transition-all duration-700"
+                onClick={() => setdelConfirnMsg( false)}
+              >
+                CANCEL, KEEP MEMBER
+              </button>
+              <button
+                className=" px-5 py-2 rounded-md text-white bg-red-700 hover:shadow-lg hover:shadow-red-200 transition-all duration-700"
+                onClick={ () => deleteUser(delUser.userId)}
+              >
+                YES, DELETE USER
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {editUser && (
         <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10 overflow-x-auto">
           <div className=" w-full bg-white rounded-lg p-10">
@@ -56,12 +229,15 @@ export const Users = () => {
               Investment Amount :-
             </div>
             <div className=" flex space-x-16 justify-start items-center">
-            <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
+              <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
                 <div className=" flex flex-col justify-start items-start space-y-3">
                   <input
                     type="number"
-                    value="305"
+                    value={profile.amount}
                     className="text-[#031635] font-semibold text-[22px] bg-transparent"
+                    onChange={(e) =>
+                      setprofile({ ...profile, amount: e.target.value })
+                    }
                   />
                   <h1 className=" text-[#031635] font-semibold">
                     Total Investment
@@ -75,8 +251,11 @@ export const Users = () => {
                 <div className=" flex flex-col justify-start items-start space-y-3">
                   <input
                     type="number"
-                    value="305"
+                    value={profile.return}
                     className="text-[#031635] font-semibold text-[22px] bg-transparent"
+                    onChange={(e) =>
+                      setprofile({ ...profile, return: e.target.value })
+                    }
                   />
                   <h1 className=" text-[#031635] font-semibold">
                     Total returns
@@ -89,7 +268,10 @@ export const Users = () => {
               <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
                 <div className=" flex flex-col justify-center items-center space-y-3">
                   <h1 className=" text-[#031635] font-semibold text-[22px]">
-                    305
+                    {profile.amount
+                      ? parseInt(profile.amount) +
+                        (profile.return ? parseInt(profile.return) : 0)
+                      : 0}
                   </h1>
                   <h1 className=" text-[#031635] font-semibold">
                     Total Amount
@@ -99,22 +281,6 @@ export const Users = () => {
                   <BsCashCoin />
                 </div>
               </div>
-              {/* <div className=" w-[350px] px-4 pb-2 pt-8 shadow-md  rounded-xl flex flex-col justify-between items-start bg-gradient-to-r from-blue-200 to-blue-500">
-                <div className=" flex flex-col justify-center items-center space-y-3">
-                  <h1 className=" text-[#031635] font-semibold text-[22px]">
-                    305
-                  </h1>
-                  <h1 className=" text-[#031635] font-semibold">
-                    Total amount
-                  </h1>
-                </div>
-                <div className=" w-full flex justify-end items-center space-x-2">
-                  <h1 className=" font-semibold text-[14px] text-[#031635]">
-                    Withdraw
-                  </h1>
-                  <FaArrowRightLong className=" text-[#031635]" />
-                </div>
-              </div> */}
             </div>
             <div className="text-neutral-400 text-base font-semibold tracking-wide pt-10">
               Profile Details :-
@@ -124,7 +290,7 @@ export const Users = () => {
                 <div className="text-zinc-600 mt-5">User Id</div>
                 <input
                   type="text"
-                  value="10001"
+                  value={profile.userId}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-gray-200 focus:outline-none focus:ring focus:border-blue-300"
                   readOnly
                 />
@@ -140,8 +306,11 @@ export const Users = () => {
                 </div>
                 <input
                   type="text"
-                  value="siraj"
+                  value={profile.name}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, name: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -155,23 +324,47 @@ export const Users = () => {
                 </div>
                 <input
                   type="email"
-                  value="sirajcsc2000@gmail.com"
+                  value={profile.email}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, email: e.target.value })
+                  }
                 />
               </div>
               <div>
                 <div className=" flex space-x-2 mt-5">
                   <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                    Email id
+                    Aadhar Number
                   </div>
                   <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
                     *
                   </div>
                 </div>
                 <input
-                  type="email"
-                  value="sirajcsc2000@gmail.com"
+                  type="number"
+                  value={profile.aadhar}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, aadhar: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <div className=" flex space-x-2 mt-5">
+                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    Pan Number
+                  </div>
+                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    *
+                  </div>
+                </div>
+                <input
+                  type="text"
+                  value={profile.pan}
+                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, pan: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -185,8 +378,11 @@ export const Users = () => {
                 </div>
                 <input
                   type="number"
-                  value="8144228909"
+                  value={profile.mobile}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, mobile: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -200,22 +396,11 @@ export const Users = () => {
                 </div>
                 <input
                   type="number"
-                  value="7848751156"
+                  value={profile.secondary_mobile}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                />
-              </div>
-              <div>
-                <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                    Address
-                  </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                    *
-                  </div>
-                </div>
-                <textarea
-                  value="92/100, pallivasal street, elavanasur, tamilnadu, 607202"
-                  className="w-[300px] h-[100px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, secondary_mobile: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -230,30 +415,30 @@ export const Users = () => {
                 <div>
                   <input
                     type="date"
-                    value="2022-01-01"
+                    value={profile.DOB}
                     className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                    onChange={(e) =>
+                      setprofile({ ...profile, DOB: e.target.value })
+                    }
                   />
                 </div>
               </div>
               <div>
                 <div className=" flex space-x-2 mt-5">
                   <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                    Sex
+                    Address
                   </div>
                   <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
                     *
                   </div>
                 </div>
-                <div>
-                  <select
-                    value="male"
-                    className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="others">Others</option>
-                  </select>
-                </div>
+                <textarea
+                  value={profile.address}
+                  className="w-[300px] h-[100px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, address: e.target.value })
+                  }
+                />
               </div>
             </div>
             <div className="text-neutral-400 text-base font-semibold tracking-wide mt-8">
@@ -271,8 +456,11 @@ export const Users = () => {
                 </div>
                 <input
                   type="text"
-                  value="siraj"
+                  value={profile.account_holder}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, account_holder: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -286,8 +474,11 @@ export const Users = () => {
                 </div>
                 <input
                   type="number"
-                  value="7848751156"
+                  value={profile.account_no}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, account_no: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -301,20 +492,219 @@ export const Users = () => {
                 </div>
                 <input
                   type="text"
-                  value="7848751156"
+                  value={profile.IFSC}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, IFSC: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <div className=" flex space-x-2 mt-5">
+                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    UPI ID
+                  </div>
+                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    *
+                  </div>
+                </div>
+                <input
+                  type="text"
+                  value={profile.upi_id}
+                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, upi_id: e.target.value })
+                  }
                 />
               </div>
             </div>
+            {nominee ? (
+              <div>
+                <div className="text-neutral-400 text-base font-semibold tracking-wide mt-16">
+                  Nominee Details :-
+                </div>
+                <div className=" grid grid-cols-3">
+                  <div>
+                    <div className=" flex space-x-2 mt-5">
+                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        Name
+                      </div>
+                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={nominee ? nominee.name : ""}
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) =>
+                        setnominee({ ...nominee, name: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <div className=" flex space-x-2 mt-5">
+                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        Email Id
+                      </div>
+                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={nominee ? nominee.email : ""}
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) =>
+                        setnominee({ ...nominee, email: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <div className=" flex space-x-2 mt-5">
+                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        Primary Number
+                      </div>
+                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="number"
+                      value={nominee ? nominee.mobile : ""}
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) =>
+                        setnominee({ ...nominee, mobile: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <div className=" flex space-x-2 mt-5">
+                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        Pan Number
+                      </div>
+                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={nominee ? nominee.pan : ""}
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) =>
+                        setnominee({ ...nominee, pan: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <div className=" flex space-x-2 mt-5">
+                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        Aadhar Number
+                      </div>
+                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="number"
+                      value={nominee ? nominee.aadhar : ""}
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) =>
+                        setnominee({ ...nominee, aadhar: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <div className=" flex space-x-2 mt-5">
+                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        Account Holder Name
+                      </div>
+                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={nominee ? nominee.account_holder : ""}
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) =>
+                        setnominee({
+                          ...nominee,
+                          account_holder: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <div className=" flex space-x-2 mt-5">
+                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        Account Number
+                      </div>
+                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="number"
+                      value={nominee ? nominee.account_no : ""}
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) =>
+                        setnominee({ ...nominee, account_no: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <div className=" flex space-x-2 mt-5">
+                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        IFSC Code
+                      </div>
+                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={nominee ? nominee.IFSC : ""}
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) =>
+                        setnominee({ ...nominee, IFSC: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <div className=" flex space-x-2 mt-5">
+                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        UPI ID
+                      </div>
+                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={nominee ? nominee.upi_id : ""}
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) =>
+                        setnominee({ ...nominee, upi_id: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : null}
+
             <div className=" flex justify-start items-start space-x-5 py-10">
               <button
                 className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                onClick={() => seteditUser(false)}
+                onClick={() => handleCancelBtn()}
               >
                 <h1>Cancel</h1>
               </button>
-              <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105">
-                <h1>Save</h1>
+              <button
+                className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                onClick={() => handleUpdateUser()}
+              >
+                <h1>Update</h1>
               </button>
             </div>
           </div>

@@ -3,15 +3,41 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo1.svg"
 import { MdDashboard, MdManageHistory, MdOutlineLogout } from "react-icons/md";
 import { RiAccountBoxFill } from "react-icons/ri";
+import jwtDecode  from "jwt-decode";
+import { BiMoneyWithdraw } from "react-icons/bi";
 
 export const UserDashboard = () => {
+
+  const token = localStorage.getItem('loginToken')
+  const name = localStorage.getItem('name')
 
     const navigate = useNavigate()
 
     const handleLogout = () => {
       localStorage.removeItem('loginToken');
+      localStorage.removeItem('name');
+      localStorage.removeItem('userid');
+      localStorage.removeItem('role');
       navigate('/login');
     }
+
+    useEffect(() => {
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+  
+      let decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+  
+      if (decodedToken.exp < currentTime) {
+        localStorage.removeItem('loginToken');
+        navigate('/login');
+      }
+      else{
+        // setemail(decodedToken.email);
+      }
+    }, [token, navigate]);
 
   return (
     <div className=" flex w-full h-screen">
@@ -25,7 +51,7 @@ export const UserDashboard = () => {
             </div>
             <NavLink
               to={"/user/dashboard"}
-              className=" acitive w-full mt-10 flex justify-center  items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+              className=" acitive w-full mt-10 flex justify-start  items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
               // onClick={() => setShowImage(false)}
             >
               <h1 className=" flex items-center gap-2 ">
@@ -40,6 +66,15 @@ export const UserDashboard = () => {
               <h1 className=" flex justify-center items-center gap-2">
                 <h1  className=" text-[24px]"><RiAccountBoxFill /></h1>
                 Profile
+              </h1>
+            </NavLink>
+            <NavLink
+              to={"/user/withdrawal"}
+              className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+            >
+              <h1 className="flex gap-3 text-center">
+                <h1 className=" text-[24px]"><BiMoneyWithdraw /></h1>
+                Withdrawal
               </h1>
             </NavLink>
             <NavLink
@@ -64,9 +99,9 @@ export const UserDashboard = () => {
         <div className="w-full h-18 shadow border-b-2 flex justify-end items-center bg-white pr-5">
           <div>
             <h1
-              className=" bg-yellow-300 px-[18px] py-2 text-[18px] rounded-full cursor-pointer"
+              className=" bg-yellow-300 px-[18px] py-2 text-[18px] rounded-full my-2"
             >
-              {/* {email[0]} */}A
+              {name[0]}
             </h1>
           </div>
         </div>

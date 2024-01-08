@@ -12,6 +12,8 @@ import { Withdrawal } from "./components/AdminPage/menus/withdrawal";
 import { Package } from "./components/AdminPage/menus/packages";
 import { Users } from "./components/AdminPage/menus/users";
 import { AdminHistory } from "./components/AdminPage/menus/History";
+import { UserWithdrawal } from "./components/UserPage/menus/userWithdrawal";
+import { Payment } from "./components/AdminPage/menus/payment";
 
 function App() {
   return (
@@ -25,12 +27,14 @@ function App() {
             <Route path="/user/dashboard" element={<Dashboard/>} />
             <Route path="/user/profile" element={<Profile/>} />
             <Route path="/user/history" element={<History/>} />
+            <Route path="/user/withdrawal" element={<UserWithdrawal/>} />
           </Route>
           <Route path="/admin" element={<AdminDashboard/>} >
             <Route path="/admin/users" element={<Users/>} />
             <Route path="/admin/withdrawal" element={<Withdrawal/>} />
             <Route path="/admin/history" element={<AdminHistory/>} />
             <Route path="/admin/packages" element={<Package/>} />
+            <Route path="/admin/payment" element={<Payment/>} />
           </Route>
         </Routes>
       </BrowserRouter>
