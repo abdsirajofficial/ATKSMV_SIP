@@ -220,52 +220,6 @@ export const Dashboard = () => {
         ))}
       </div>
       <h1 className=" font-semibold py-5">Annual Package</h1>
-      {/* <div className=" grid grid-cols-3 gap-10">
-        <div className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md">
-          <div className=" w-full bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
-            <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-              305
-            </h1>
-          </div>
-          <div className=" w-full flex justify-start items-center">
-            <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
-              <div className=" flex justify-center items-center space-x-3">
-                <h1 className=" text-green-500 ">
-                  <FaMoneyBill1Wave />
-                </h1>
-                <h1 className=" text-gray-800"> Returns up-to 13%</h1>
-              </div>
-              <div className=" flex justify-center items-center space-x-3">
-                <h1 className=" text-gray-00 ">
-                  <IoMdLock />
-                </h1>
-                <h1 className=" text-gray-800"> Tenure: 3 years</h1>
-              </div>
-              <div className=" flex justify-center items-center space-x-3">
-                <h1 className=" text-[#ffc200] ">
-                  <IoCashSharp />
-                </h1>
-                <h1 className=" text-gray-800">
-                  {" "}
-                  Total Amount : <span className=" font-semibold">10002</span>
-                </h1>
-              </div>
-            </div>
-            <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
-              <img src={img10} alt="" className=" w-32" />
-            </div>
-          </div>
-          <div className=" w-full flex justify-between items-center space-x-3 p-3">
-            <p className=" text-light-blue-800 cursor-pointer">More details</p>
-            <button
-              className=" bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-              onClick={() => setyearInvestment(true)}
-            >
-              <h1>Invest Now</h1>
-            </button>
-          </div>
-        </div>
-      </div> */}
        <div className=" grid grid-cols-3 gap-10">
         {annPackages.map((data, index) => (
           <div key={index} className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md">
@@ -320,7 +274,7 @@ export const Dashboard = () => {
               </p>
               <button
               className=" bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-              onClick={() => handleInvestbtn()}
+              onClick={() => handleInvestbtn(data.packId, "annual")}
               >
               <h1>Invest Now</h1>
             </button>
