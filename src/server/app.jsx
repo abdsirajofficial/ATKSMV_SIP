@@ -76,7 +76,7 @@ export const acceptWithrawalReqApi = async (path, data) => {
 //delete withdrawal request
 export const delWithrawalReq = async (path, data) => {
   try{
-    const res = await axios.put(api_url+path, data)   
+    const res = await axios.delete(api_url+path, data)   
     return res
   } catch(err) {
     toast.error("Try again later", {duration: 1500})

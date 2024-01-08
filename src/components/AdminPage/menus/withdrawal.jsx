@@ -7,6 +7,7 @@ import {
   getWithdrawal,
 } from "../../../server/app";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
+import toast from "react-hot-toast";
 
 export const Withdrawal = () => {
   const [approved, setapproved] = useState(false);
@@ -32,11 +33,21 @@ export const Withdrawal = () => {
       amount: amount,
     };
     acceptWithrawalReqApi("admin/requestChange", data);
+    getWithdrawal("admin/withdrawRequest", setwithdrawal);
     setapproved(false)
   };
 
   const delWithrawReq = (id) => {
-    delWithrawalReq("admin/deleteRequest", { userId: id });
+    delWithrawalReq(`admin/deleteRequest?userId=${id}`).then((res)=> {
+      if(res.status === 200) {
+        toast.success(res.data.msg,{duration: 1500})
+        getWithdrawal("admin/withdrawRequest", setwithdrawal);
+        setapproved(false)
+      } else{
+        toast.error(res.data.error)
+      }
+    })
+
   };
 
   return (
