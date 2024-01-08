@@ -20,12 +20,10 @@ export const Users = () => {
   const [profile, setprofile] = useState([]);
   const [nominee, setnominee] = useState([]);
   const [delConfirnMsg, setdelConfirnMsg] = useState(false);
-  const [delUser, setdelUser] = useState(
-    {
-      userId: "",
-      userName: "",
-    }
-  );
+  const [delUser, setdelUser] = useState({
+    userId: "",
+    userName: "",
+  });
 
   useEffect(() => {
     setprofile([]);
@@ -43,10 +41,10 @@ export const Users = () => {
     delUserApi(`admin/deleteUser?userId=${id}`).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
-        getUserApi("admin/users", setuserData, settotalUsers)
+        getUserApi("admin/users", setuserData, settotalUsers);
       }
     });
-    setdelConfirnMsg(false)
+    setdelConfirnMsg(false);
   };
 
   const deleteUserConfirm = (id, name) => {
@@ -156,65 +154,74 @@ export const Users = () => {
           <p className=" flex justify-center items-center">{user.name}</p>
           <p className=" flex justify-center items-center">{user.role}</p>
           <p className=" flex justify-center items-center">
-            {user.amount ? user.amount : 0}
+            {(user.amount ? user.amount : 0) + (user.return ? user.return : 0)}
           </p>
           <p className=" flex justify-center items-center">
             <p
               className={`px-3.5 rounded-full border-2 py-0.5 ${
-                user.status === "active"
-                  ? "bg-yellow-50 border-yellow-200"
-                  : "bg-green-50 border-green-200"
+                user.status === "Active"
+                  ? "bg-green-50 border-green-200"
+                  : "bg-red-50 border-red-200"
               }`}
             >
               {user.status}
             </p>
           </p>
-          <p className=" flex justify-center items-center space-x-5">
-            <button
-              className=" flex  justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
-              onClick={() => deleteUserConfirm(user.userId, user.name)}
-            >
-              <p className=" text-[20px]">
-                <MdDelete />
-              </p>
-              <p>Delete</p>
-            </button>
-            <button
-              className=" flex  justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
-              onClick={() => handleEditUser(user.userId)}
-            >
-              <p>
-                <MdModeEditOutline />
-              </p>
-              <p>Edit</p>
-            </button>
-          </p>
+          {user.status === "Active" && (
+            <p className="flex justify-center items-center space-x-5">
+              <button
+                className="flex justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
+                onClick={() => deleteUserConfirm(user.userId, user.name)}
+              >
+                <p className="text-[20px]">
+                  <MdDelete />
+                </p>
+                <p>Delete</p>
+              </button>
+              <button
+                className="flex justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
+                onClick={() => handleEditUser(user.userId)}
+              >
+                <p>
+                  <MdModeEditOutline />
+                </p>
+                <p>Edit</p>
+              </button>
+            </p>
+          )}
         </div>
       ))}
       {delConfirnMsg && (
         <div className=" fixed z-20 w-screen h-screen  top-0 right-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center">
           <div className="rounded-lg bg-white p-10 shadow-2xl antialiased flex flex-col justify-center items-center">
-                <p className=" text-center text-[40px] text-red-500">
-                  <IoWarning ></IoWarning> 
-                </p>
-                <p className=" pt-2 font-[700px] text-[18px]">Delete {delUser.userName}</p>
-                <p className=" text-gray-800  flex space-x-2 pt-5">
-                  <p>Are you sure you want to delete </p>
-                  <p className=" tracking text-black font-medium">{delUser.userId} {delUser.userName}?</p>
-                </p>
-                <p>All the transaction records and withdrawal records will be deleted and </p>
-                <p>  It cannot be undone.</p>
+            <p className=" text-center text-[40px] text-red-500">
+              <IoWarning></IoWarning>
+            </p>
+            <p className=" pt-2 font-[700px] text-[18px]">
+              Delete {delUser.userName}
+            </p>
+            <p className=" text-gray-800  flex space-x-2 pt-5">
+              <p>Are you sure you want to delete </p>
+              <p className=" tracking text-black font-medium">
+                {delUser.userId} {delUser.userName}?
+              </p>
+            </p>
+            <p>
+              All the transaction records and withdrawal records will be deleted
+              and{" "}
+            </p>
+            <p> It cannot be undone.</p>
 
             <div className=" w-full space-x-4 flex justify-center font-medium pt-5">
               <button
                 className=" px-2 py-2 rounded-md bg-[#a2baf7] text-white hover:shadow-lg hover:shadow-[#a2baf7] transition-all duration-700"
-                onClick={() => setdelConfirnMsg( false)}
+                onClick={() => setdelConfirnMsg(false)}
               >
                 CANCEL, KEEP MEMBER
               </button>
               <button
                 className=" px-5 py-2 rounded-md text-white bg-red-700 hover:shadow-lg hover:shadow-red-200 transition-all duration-700"
-                onClick={ () => deleteUser(delUser.userId)}
+                onClick={() => deleteUser(delUser.userId)}
               >
                 YES, DELETE USER
               </button>

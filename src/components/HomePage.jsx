@@ -66,11 +66,11 @@ export const HomePage = () => {
 
 
   return (
-    <div className=" w-full h-full ">
-      <div className=" px-20 bg-gradient-to-b from-blue-500 to-[#3777FA] text-white">
+    <div className=" w-full h-full">
+      <div className=" px-5 md:px-20 bg-gradient-to-b from-blue-500 to-[#3777FA] text-white ">
         <div className=" flex justify-between items-center pt-8">
           <div className="text-2xl font-medium">
-            <img src={logo} alt="" className=" w-56" />
+            <img src={logo} alt="" className=" w-26 md:w-56"  />
           </div>
           <div className=" flex justify-center items-center space-x-5">
             {/* <input
@@ -80,7 +80,7 @@ export const HomePage = () => {
             /> */}
             <button
               onClick={() => navigate("/login")}
-              className=" flex justify-between items-center gap-1 mt-6 select-none rounded-lg bg-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              className=" flex md:justify-between ml-[15px] mb-[8px] items-center md:gap-1 md:mt-6 select-none rounded-lg bg-amber-500 py-[5px] md:py-3 px-[18px] md:px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none "
             >
               <h1>
                 <IoMdLock className=" text-[14px]" />
@@ -90,18 +90,18 @@ export const HomePage = () => {
           </div>
         </div>
 
-        <div className=" w-full h-full flex justify-center items-center px-8 py-10  space-x-10">
-          <div className=" w-1/2">
-            <h1 className="text-[52px] font-bold mb-4">
+        <div className=" w-full h-full md:flex justify-center items-center px-8 py-10  space-x-10">
+          <div className=" md:w-1/2">
+            <h1 className=" text-[22px] md:text-[52px] font-bold mb-4">
               TMV TRADERS - Your Trading Partner
             </h1>
-            <p className="text-[20px] font-light">
+            <p className="text-[18px] font-light">
               Welcome to TMV Traders, your trusted partner in the world of
               trading. We provide top-notch services and support to help you
               succeed in your trading journey.
             </p>
             <button
-              className=" flex justify-center items-center gap-3 mt-6 select-none rounded-lg bg-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              className=" flex md:justify-center md:tems-center ml-6 gap-3 my-[20px] md:mt-6 select-none rounded-lg bg-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
               onClick={() => navigate("/login")}
             >
@@ -112,17 +112,19 @@ export const HomePage = () => {
             </button>
           </div>
 
-          <div className=" w-1/2">
+          <div className="w-[160px] md:w-1/2">
             <img src={img1} alt="no img" className=" pb-6" />
           </div>
         </div>
       </div>
-      <div className=" px-28 py-16 flex flex-col justify-start items-start space-y-5">
-        <h1 className="text-[36px]  font-semibold mb-4 ">
+
+
+      <div className="p-10 md:px-28 md:py-16 flex flex-col justify-start items-start space-y-5">
+        <h1 className="text-[22px] md:text-[36px]  font-semibold mb-4 ">
           Benefits of investing in gold with
           <span className=" text-[#3777FA]"> TKMV traders </span>
         </h1>
-        <ul className=" space-y-5">
+        <ul className="text-[15px] space-y-5">
           <li>
             1.TMV traders offers 1000 plus online gold investment scheme that
             belongs from different houses,
@@ -137,8 +139,10 @@ export const HomePage = () => {
             decision we believe in complete transparency and safety
           </li>
         </ul>
-        <div className=" flex space-x-10 pt-5">
-          <div className=" border-2 shadow-sm rounded-lg p-3 px-4">
+
+
+        <div className=" md:flex md:space-x-10 pt-5">
+          <div className=" border-2 shadow-sm rounded-lg mt-[15px] px-4 md:p-3 md:px-4">
             <img src={img4} alt="" className=" w-16 h-16" />
             <h1 className=" py-3 text-[20px] font-semibold ">0% commission</h1>
             <p className=" font-light tracking-wide pb-3 text-gray-500">
@@ -146,7 +150,7 @@ export const HomePage = () => {
               commission and enjoy all the benefits
             </p>
           </div>
-          <div className=" border-2 shadow-sm rounded-lg p-3 px-4">
+          <div className=" border-2 shadow-sm rounded-lg mt-[15px] px-4 md:p-3 md:px-4">
             <img src={img5} alt="" className=" w-16 h-16" />
             <h1 className=" py-3 text-[20px] font-semibold ">Trust</h1>
             <p className=" font-light tracking-wide pb-3 text-gray-500">
@@ -154,7 +158,7 @@ export const HomePage = () => {
               last two years
             </p>
           </div>
-          <div className=" border-2 shadow-sm rounded-lg p-3 px-4">
+          <div className=" border-2 shadow-sm rounded-lg mt-[15px] px-4 md:p-3 md:px-4">
             <img src={img6} alt="" className=" w-16 h-16" />
             <h1 className=" py-3 text-[20px] font-semibold ">100% Retruns</h1>
             <p className=" font-light tracking-wide pb-3 text-gray-500">
@@ -163,6 +167,7 @@ export const HomePage = () => {
             </p>
           </div>
         </div>
+        
       </div>
       <div className=" px-28 py-16">
         <h1 className="text-[36px]  font-semibold mb-4 ">SIP Calculator</h1>

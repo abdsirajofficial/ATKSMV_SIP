@@ -29,29 +29,38 @@ export const Dashboard = () => {
   };
   const [InvestmentDtls, setInvestmentDtls] = useState({
     packId: "",
-    type: ""
+    type: "",
   });
 
   const [senderAccName, setsenderAccName] = useState("");
   const [senderAmt, setsenderAmt] = useState();
   const [senderTransId, setsenderTransId] = useState("");
-  const [admin, setadmin]= useState([])
+  const [admin, setadmin] = useState([]);
   const [monPackages, setmonPackages] = useState([]);
   const [annPackages, setannPackages] = useState([]);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     getProfileApi("user/profile", userId, setprofile);
     getnomineeApi("user/getNominee", userId, setnominee);
-    getadminApi("user/admin", setadmin)
+    getadminApi("user/admin", setadmin);
     getMonPackageApi("admin/monthPackages", setmonPackages);
-    getAnnualPackageApi("admin/annualPackages", setannPackages)
+    getAnnualPackageApi("admin/annualPackages", setannPackages);
     setInvestmentDtls({
       packId: "",
-      type: ""
-    })
+      type: "",
+    });
+    setIsChecked()
   }, []);
 
-  const onsubmit = () => {
+  const makeWithraqBtn = () => {
+     const data = {
+      userId : profile.userId,
+      name : profile.name,
+      amount : profile.amount + profile.return
+     }
+      console.log(data)
+
     if (IsChecked === true) {
       makeWithdrawApi("user/withdrawal", data).then((res) => {
         if (res.status === 200) {
@@ -63,6 +72,7 @@ export const Dashboard = () => {
         } else {
           toast.error(res.data.err, { duration: 1500 });
         }
+        setwithrawalReq(false)
       });
     } else {
       toast.error("Please check the checkBox", { duration: 1500 });
@@ -72,30 +82,61 @@ export const Dashboard = () => {
   const makewithraw = () => {
     setwithrawalReq(true);
   };
-
-  const handleMonPack = () => {
-    const data = {
-      userId: localStorage.getItem("userid"),
-      name: senderAccName,
-      amount: senderAmt,
-      transId: senderTransId,
-      packId: 1,
-      count: 1,
-    };
-    monPackApi("user/transaction", data).then((res) => {
-      if (res.status === 200) {
-        toast.success(res.data.msg);
-      }
-    });
+  
+  const handleCancelBtn = () => {
+    setPackageInvestment(false)
   };
 
-  const handleInvestbtn = (id, type) => {
+  const handlePackage = () => {
+   
+    if (!userId.userId || !senderAccName || !senderAmt || !InvestmentDtls.packId || !quantity) {
+      toast.error('Please fill in all required fields.');
+      return; 
+    }
+  
+    const data = {
+      userId: userId.userId,
+      name: senderAccName,
+      amount: senderAmt*quantity,
+      transId: senderTransId,
+      packId: InvestmentDtls.packId,
+      count: quantity,
+    };
+    
+    if (IsChecked === true){
+      if(InvestmentDtls.type === "monthly"){
+        monPackApi("user/transaction", data).then((res) => {
+          if (res.status === 200) {
+            toast.success(res.data.msg);
+            setPackageInvestment(false)
+          }
+        }).catch((error) => {
+          toast.error('Failed to process the transaction. Please try again.');
+        });
+      }else{
+        monPackApi("user/transaction", data).then((res) => {
+          if (res.status === 200) {
+            toast.success(res.data.msg);
+            setPackageInvestment(false)
+          }
+        }).catch((error) => {
+          toast.error('Failed to process the transaction. Please try again.');
+        });
+      }
+    }else{
+      toast.error("Please check the CheckBox", {duration : 1500})
+    }
+  };
+  
+
+  const handleInvestbtn = (id, amount, type) => {
     setInvestmentDtls({
       packId: id,
-      type: type
-    })
-    setPackageInvestment(true)
-  }
+      type: type,
+    });
+    setsenderAmt(amount)
+    setPackageInvestment(true);
+  };
 
   const sipPackageCalc = (values, year, returns) => {
     const p = values;
@@ -107,6 +148,17 @@ export const Dashboard = () => {
       (((Math.pow(1 + r / (100 * n), n * t) - 1) / (r / (100 * n))) *
         (1 + r / (100 * n)));
     return Math.round(sip);
+  };
+
+  const handleIncrement = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      // Ensure quantity doesn't go below 1
+      setQuantity((prevQuantity) => prevQuantity - 1);
+    }
   };
 
   return (
@@ -157,9 +209,12 @@ export const Dashboard = () => {
         </div>
       </div>
       <h1 className=" font-semibold py-5">Monthly Package</h1>
-       <div className=" grid grid-cols-3 gap-10">
+      <div className=" grid grid-cols-3 gap-10">
         {monPackages.map((data, index) => (
-          <div className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md" key={index}>
+          <div
+            className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md"
+            key={index}
+          >
             <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
               <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
                 {data.amount} <span className=" text-[12px]">Per Month</span>
@@ -210,19 +265,22 @@ export const Dashboard = () => {
                 More details
               </p>
               <button
-              className=" bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-              onClick={() => handleInvestbtn(data.packId, "monthly")}
+                className=" bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                onClick={() => handleInvestbtn(data.packId, data.amount, "monthly")}
               >
-              <h1>Invest Now</h1>
-            </button>
+                <h1>Invest Now</h1>
+              </button>
             </div>
           </div>
         ))}
       </div>
       <h1 className=" font-semibold py-5">Annual Package</h1>
-       <div className=" grid grid-cols-3 gap-10">
+      <div className=" grid grid-cols-3 gap-10">
         {annPackages.map((data, index) => (
-          <div key={index} className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md">
+          <div
+            key={index}
+            className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md"
+          >
             <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
               <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
                 {data.amount} <span className=" text-[12px]"></span>
@@ -273,11 +331,11 @@ export const Dashboard = () => {
                 More details
               </p>
               <button
-              className=" bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-              onClick={() => handleInvestbtn(data.packId, "annual")}
+                className=" bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                onClick={() => handleInvestbtn(data.packId, data.amount, "annual")}
               >
-              <h1>Invest Now</h1>
-            </button>
+                <h1>Invest Now</h1>
+              </button>
             </div>
           </div>
         ))}
@@ -494,7 +552,7 @@ export const Dashboard = () => {
                 </button>
                 <button
                   className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                  onClick={() => onsubmit()}
+                  onClick={() => makeWithraqBtn()}
                 >
                   <h1>Send</h1>
                 </button>
@@ -556,6 +614,7 @@ export const Dashboard = () => {
           </div>
         </div>
       )}
+
       {PackageInvestment && (
         <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10 overflow-x-auto">
           <div className=" w-full bg-white rounded-lg p-10">
@@ -662,9 +721,10 @@ export const Dashboard = () => {
                   </div>
                   <input
                     type="number"
-                    value={senderAmt}
+                    value={senderAmt*quantity}
                     className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    onChange={(e) => setsenderAmt(parseInt(e.target.value, 10))}
+                    // onChange={(e) => setsenderAmt(parseInt(e.target.value, 10))}
+                    readOnly
                   />
                 </div>
                 <div>
@@ -683,21 +743,38 @@ export const Dashboard = () => {
                     onChange={(e) => setsenderTransId(e.target.value)}
                   />
                 </div>
-                <div>
-                  <div className=" flex space-x-2 mt-5">
+                <div className="flex flex-col space-y-4 mt-5 ">
+                  <div className=" flex space-x-2">
                     <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                      Enter The Quantity
+                      Add Your Quantity
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                      *
-                    </div>
+                    <div className="text-red-500 text-lg font-medium">*</div>
                   </div>
-                  <input
-                    type="number"
-                    value={1}
-                    className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    onChange={(e) => setsenderAmt(parseInt(e.target.value, 10))}
-                  />
+                  <div className=" flex space-x-2">
+                    {/* Minus Button */}
+                    <button
+                      className="px-4 py-2 rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring focus:border-blue-300"
+                      onClick={handleDecrement}
+                    >
+                      -
+                    </button>
+
+                    {/* Quantity Input */}
+                    <input
+                      type="number"
+                      value={quantity}
+                      className="w-[80px] px-3 py-2 rounded-md border-t border-b border-gray-300 bg-white focus:outline-none focus:ring focus:border-blue-300 text-center"
+                      onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+                    />
+
+                    {/* Plus Button */}
+                    <button
+                      className="px-4 py-2 rounded-md border border-blue-300 bg-blue-400 text-white hover:bg-blue-800 focus:outline-none focus:ring focus:border-blue-300"
+                      onClick={handleIncrement}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className=" pt-10 pb-5 space-x-2 ">
@@ -706,6 +783,7 @@ export const Dashboard = () => {
                   id="checkBoxForm"
                   name="checkBoxForm"
                   value="checkBoxForm"
+                  onChange={(e) => setIsChecked(e.target.checked)}
                 />
                 <label for="checkBoxForm">
                   Make sure above the details are correct
@@ -714,15 +792,15 @@ export const Dashboard = () => {
               <div className=" flex justify-start items-center space-x-5">
                 <button
                   className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                  onClick={() => setPackageInvestment(false)}
+                  onClick={() => handleCancelBtn()}
                 >
                   <h1>Cancel</h1>
                 </button>
                 <button
                   className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                  onClick={() => handleMonPack()}
+                  onClick={() => handlePackage()}
                 >
-                  <h1>Save</h1>
+                  <h1>Invest Now</h1>
                 </button>
               </div>
               <div className=" mt-5 rounded-xl border-2 p-4 bg-[#f8f2f2]">

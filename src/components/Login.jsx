@@ -25,7 +25,7 @@ const Login = () => {
         const UserId = res.data.profile.userId;
         const UserRole = res.data.profile.role;
         if (token) {
-          if (res.data.profile.role === "admin") {
+          if (res.data.profile.role === "Admin") {
             localStorage.setItem("loginToken", token);
             localStorage.setItem("name", UserName);
             localStorage.setItem("userid", UserId);
