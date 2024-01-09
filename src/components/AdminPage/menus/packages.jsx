@@ -6,7 +6,12 @@ import { FaPlus } from "react-icons/fa";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { BiRupee } from "react-icons/bi";
 import img10 from "../../../assets/img10.svg";
-import { addPackageApi, delPackageApi, getAnnualPackageApi, getMonPackageApi } from "../../../server/app";
+import {
+  addPackageApi,
+  delPackageApi,
+  getAnnualPackageApi,
+  getMonPackageApi,
+} from "../../../server/app";
 import toast from "react-hot-toast";
 // import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { IoWarning } from "react-icons/io5";
@@ -16,21 +21,22 @@ export const Package = () => {
   const [MonPackDetails, setMonPackDetails] = useState(false);
   const [addYearPackage, setaddYearPackage] = useState(false);
   const [YearPackDetails, setYearPackDetails] = useState(false);
+  const userId = {
+    userId: localStorage.getItem("userid"),
+  };
 
   const [delConfirnMsg, setdelConfirnMsg] = useState(false);
-  const [delPack, setdelPack] = useState(
-    {
-      id: "",
-      amount: "",
-      type: ""
-    }
-  );
+  const [currentPackId, setcurrentPackId] = useState();
+  const [delPack, setdelPack] = useState({
+    id: "",
+    amount: "",
+    type: "",
+  });
   const [packages, setPackages] = useState({
     amount: "",
     years: "",
-    returns: ""
+    returns: "",
   });
-
 
   const [monPackages, setmonPackages] = useState([]);
   const [annPackages, setannPackages] = useState([]);
@@ -60,86 +66,116 @@ export const Package = () => {
   };
 
   useEffect(() => {
-    getMonPackageApi("admin/monthPackages", setmonPackages);
-    getAnnualPackageApi("admin/annualPackages", setannPackages)
+    getMonPackageApi(
+      "user/monthPackages",
+      { userId: userId.userId },
+      setmonPackages,
+      setcurrentPackId
+    );
+    getAnnualPackageApi(
+      "user/annualPackages",
+      userId,
+      setannPackages,
+      setcurrentPackId
+    );
     setPackages({
       amount: "",
       years: "",
-      returns: ""
-    })
+      returns: "",
+    });
   }, []);
 
   const addmonPackage = (type) => {
     const data = {
       amount: parseInt(packages.amount),
-      years : parseInt(packages.years),
-      returns : parseInt(packages.returns)
-    }
-    if(type === "monthly"){
+      years: parseInt(packages.years),
+      returns: parseInt(packages.returns),
+    };
+    if (type === "monthly") {
       addPackageApi("admin/monthPackage", data).then((res) => {
-        if(res.status === 200) {
-          toast.success(res.data.msg, {duration: 1500})
-          getMonPackageApi("admin/monthPackages", setmonPackages);
+        if (res.status === 200) {
+          toast.success(res.data.msg, { duration: 1500 });
+          getMonPackageApi(
+            "user/monthPackages",
+            { userId: userId.userId },
+            setmonPackages,
+            setcurrentPackId
+          );
           setPackages({
             amount: "",
             years: "",
-            returns: ""
-          })
-          setaddMonPackage(false)
+            returns: "",
+          });
+          setaddMonPackage(false);
         }
-      })
-    }else{
+      });
+    } else {
       addPackageApi("admin/annualPackages", data).then((res) => {
-        if(res.status === 200) {
-          toast.success(res.data.msg, {duration: 1500})
-          getAnnualPackageApi("admin/annualPackages", setannPackages)
+        if (res.status === 200) {
+          toast.success(res.data.msg, { duration: 1500 });
+          getAnnualPackageApi(
+            "user/annualPackages",
+            userId,
+            setannPackages,
+            setcurrentPackId
+          );
           setPackages({
             amount: "",
             years: "",
-            returns: ""
-          })
-          setaddYearPackage(false)
+            returns: "",
+          });
+          setaddYearPackage(false);
         }
-      })
+      });
     }
-  }
+  };
 
   const deletePackage = (id, type) => {
-    if(type === "monthly"){
+    if (type === "monthly") {
       delPackageApi(`admin/monthPackages?packId=${id}`).then((res) => {
         if (res.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
-          getMonPackageApi("admin/monthPackages", setmonPackages);
+          getMonPackageApi(
+            "user/monthPackages",
+            { userId: userId.userId },
+            setmonPackages,
+            setcurrentPackId
+          );
         }
       });
-      setdelConfirnMsg(false)
-    }else{
+      setdelConfirnMsg(false);
+    } else {
       delPackageApi(`admin/annualPackages?packId=${id}`).then((res) => {
         if (res.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
-          getAnnualPackageApi("admin/annualPackages", setannPackages)
+          getAnnualPackageApi(
+            "user/annualPackages",
+            userId,
+            setannPackages,
+            setcurrentPackId
+          );
         }
       });
-      setdelConfirnMsg(false)
+      setdelConfirnMsg(false);
     }
-  }
+  };
 
   const delConfirmMsg = (id, amount, type) => {
-    setdelPack({ id: id, amount: amount, type: type});
-    setdelConfirnMsg(true)
-  }
+    setdelPack({ id: id, amount: amount, type: type });
+    setdelConfirnMsg(true);
+  };
 
-  const handlePackcancelBtn = () =>{
-    console.log(packages)
-    setaddMonPackage(false)
-    setaddYearPackage(false)
+  const handlePackcancelBtn = () => {
+    console.log(packages);
+    setaddMonPackage(false);
+    setaddYearPackage(false);
     setPackages({
       amount: "",
       years: "",
-      returns: ""
-    })
-    console.log(packages)
-  }
+      returns: "",
+    });
+    console.log(packages);
+  };
 
   return (
     <div className=" px-8 py-5">
@@ -156,71 +192,83 @@ export const Package = () => {
         </button>
       </div>
       <div className=" grid grid-cols-3 gap-10">
-        {monPackages.map((data, index) => (
-          <div className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md" key={index}>
-            <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
-              <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-                {data.amount} <span className=" text-[12px]">Per Month</span>
-              </h1>
-              <h1 className="p-3 rounded-fullfont-semibold text-[28px] text-white hover:text-red-500 cursor-pointer transform transition duration-300 hover:scale-125"
-              onClick={()=>delConfirmMsg(data.packId, data.amount, "monthly")}
-              >
-                <MdDelete />
-              </h1>
-            </div>
-            <div className=" w-full flex justify-start items-center">
-              <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-green-500 ">
-                    <FaMoneyBill1Wave />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Returns up-to {data.returns}%
-                  </h1>
-                </div>
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-gray-00 ">
-                    <IoMdLock />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Tenure: {data.years} years
-                  </h1>
-                </div>
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-[#ffc200] ">
-                    <IoCashSharp />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Total Amount :{" "}
-                    <span className=" font-semibold">
-                      {sipPackageCalc(data.amount, data.years, data.returns)}
-                    </span>
-                  </h1>
-                </div>
-              </div>
-              <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
-                <img src={img10} alt="" className=" w-32" />
-              </div>
-            </div>
-            <div className=" w-full flex justify-between items-center p-3">
-              <p
-                className=" text-light-blue-800 cursor-pointer hover:font-semibold"
-                onClick={() => setMonPackDetails(true)}
-              >
-                More details
-              </p>
-              <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105">
-                <h1>
-                  <MdModeEditOutline />
-                </h1>
-                <h1>Edit Now</h1>
-              </button>
-            </div>
+        {monPackages.length === 0 ? (
+          <div className="text-center py-4 text-gray-600">
+            Please add Monthly package
           </div>
-        ))}
+        ) : (
+          monPackages.map((data, index) => (
+            <div
+              className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md"
+              key={index}
+            >
+              <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
+                <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
+                  {data.amount} <span className=" text-[12px]">Per Month</span>
+                </h1>
+                <h1
+                  className="p-3 rounded-fullfont-semibold text-[28px] text-white hover:text-red-500 cursor-pointer transform transition duration-300 hover:scale-125"
+                  onClick={() =>
+                    delConfirmMsg(data.packId, data.amount, "monthly")
+                  }
+                >
+                  <MdDelete />
+                </h1>
+              </div>
+              <div className=" w-full flex justify-start items-center">
+                <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
+                  <div className=" flex justify-center items-center space-x-3">
+                    <h1 className=" text-green-500 ">
+                      <FaMoneyBill1Wave />
+                    </h1>
+                    <h1 className=" text-gray-800">
+                      {" "}
+                      Returns up-to {data.returns}%
+                    </h1>
+                  </div>
+                  <div className=" flex justify-center items-center space-x-3">
+                    <h1 className=" text-gray-00 ">
+                      <IoMdLock />
+                    </h1>
+                    <h1 className=" text-gray-800">
+                      {" "}
+                      Tenure: {data.years} years
+                    </h1>
+                  </div>
+                  <div className=" flex justify-center items-center space-x-3">
+                    <h1 className=" text-[#ffc200] ">
+                      <IoCashSharp />
+                    </h1>
+                    <h1 className=" text-gray-800">
+                      {" "}
+                      Total Amount :{" "}
+                      <span className=" font-semibold">
+                        {sipPackageCalc(data.amount, data.years, data.returns)}
+                      </span>
+                    </h1>
+                  </div>
+                </div>
+                <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
+                  <img src={img10} alt="" className=" w-32" />
+                </div>
+              </div>
+              <div className=" w-full flex justify-between items-center p-3">
+                <p
+                  className=" text-light-blue-800 cursor-pointer hover:font-semibold"
+                  onClick={() => setMonPackDetails(true)}
+                >
+                  More details
+                </p>
+                <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105">
+                  <h1>
+                    <MdModeEditOutline />
+                  </h1>
+                  <h1>Edit Now</h1>
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
       <div className=" flex justify-between items-center">
         <h1 className=" font-semibold py-5">Annual Package</h1>
@@ -235,97 +283,113 @@ export const Package = () => {
         </button>
       </div>
       <div className=" grid grid-cols-3 gap-10">
-        {annPackages.map((data, index) => (
-          <div key={index} className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md">
-            <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
-              <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-                {data.amount} <span className=" text-[12px]"></span>
-              </h1>
-              <h1 className="p-3 rounded-fullfont-semibold text-[28px] text-white hover:text-red-500 cursor-pointer transform transition duration-300 hover:scale-125"
-              onClick={()=>delConfirmMsg(data.packId, data.amount, "annual")}
-              >
-                <MdDelete />
-              </h1>
-            </div>
-            <div className=" w-full flex justify-start items-center">
-              <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-green-500 ">
-                    <FaMoneyBill1Wave />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Returns up-to {data.returns}%
-                  </h1>
-                </div>
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-gray-00 ">
-                    <IoMdLock />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Tenure: {data.years} years
-                  </h1>
-                </div>
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-[#ffc200] ">
-                    <IoCashSharp />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Total Amount :{" "}
-                    <span className=" font-semibold">
-                      {sipPackageCalc(data.amount, data.years, data.returns)}
-                    </span>
-                  </h1>
-                </div>
-              </div>
-              <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
-                <img src={img10} alt="" className=" w-32" />
-              </div>
-            </div>
-            <div className=" w-full flex justify-between items-center p-3">
-              <p
-                className=" text-light-blue-800 cursor-pointer hover:font-semibold"
-                onClick={() => setMonPackDetails(true)}
-              >
-                More details
-              </p>
-              <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105">
-                <h1>
-                  <MdModeEditOutline />
-                </h1>
-                <h1>Edit Now</h1>
-              </button>
-            </div>
+        {annPackages.length === 0 ? (
+          <div className="text-center py-4 text-gray-600">
+            Please add Annual Package
           </div>
-        ))}
+        ) : (
+          annPackages.map((data, index) => (
+            <div
+              key={index}
+              className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md"
+            >
+              <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
+                <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
+                  {data.amount} <span className=" text-[12px]"></span>
+                </h1>
+                <h1
+                  className="p-3 rounded-fullfont-semibold text-[28px] text-white hover:text-red-500 cursor-pointer transform transition duration-300 hover:scale-125"
+                  onClick={() =>
+                    delConfirmMsg(data.packId, data.amount, "annual")
+                  }
+                >
+                  <MdDelete />
+                </h1>
+              </div>
+              <div className=" w-full flex justify-start items-center">
+                <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
+                  <div className=" flex justify-center items-center space-x-3">
+                    <h1 className=" text-green-500 ">
+                      <FaMoneyBill1Wave />
+                    </h1>
+                    <h1 className=" text-gray-800">
+                      {" "}
+                      Returns up-to {data.returns}%
+                    </h1>
+                  </div>
+                  <div className=" flex justify-center items-center space-x-3">
+                    <h1 className=" text-gray-00 ">
+                      <IoMdLock />
+                    </h1>
+                    <h1 className=" text-gray-800">
+                      {" "}
+                      Tenure: {data.years} years
+                    </h1>
+                  </div>
+                  <div className=" flex justify-center items-center space-x-3">
+                    <h1 className=" text-[#ffc200] ">
+                      <IoCashSharp />
+                    </h1>
+                    <h1 className=" text-gray-800">
+                      {" "}
+                      Total Amount :{" "}
+                      <span className=" font-semibold">
+                        {sipPackageCalc(data.amount, data.years, data.returns)}
+                      </span>
+                    </h1>
+                  </div>
+                </div>
+                <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
+                  <img src={img10} alt="" className=" w-32" />
+                </div>
+              </div>
+              <div className=" w-full flex justify-between items-center p-3">
+                <p
+                  className=" text-light-blue-800 cursor-pointer hover:font-semibold"
+                  onClick={() => setMonPackDetails(true)}
+                >
+                  More details
+                </p>
+                <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105">
+                  <h1>
+                    <MdModeEditOutline />
+                  </h1>
+                  <h1>Edit Now</h1>
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {delConfirnMsg && (
         <div className=" fixed z-20 w-screen h-screen  top-0 right-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center">
           <div className="rounded-lg bg-white p-10 shadow-2xl antialiased flex flex-col justify-center items-center">
-                <p className=" text-center text-[40px] text-red-500">
-                  <IoWarning ></IoWarning> 
-                </p>
-                <p className=" pt-2 font-[700px] text-[18px]">Delete Rs: {delPack.amount} {delPack.type} Package</p>
-                <p className=" text-gray-800  flex space-x-2 pt-5">
-                  <p>Are you sure you want to delete </p>
-                  <p className=" tracking text-black font-medium">{delPack.amount} {delPack.type} ?</p>
-                </p>
-                <p>All the Monthly Package records will be deleted and </p>
-                <p>  It cannot be undone.</p>
+            <p className=" text-center text-[40px] text-red-500">
+              <IoWarning></IoWarning>
+            </p>
+            <p className=" pt-2 font-[700px] text-[18px]">
+              Delete Rs: {delPack.amount} {delPack.type} Package
+            </p>
+            <p className=" text-gray-800  flex space-x-2 pt-5">
+              <p>Are you sure you want to delete </p>
+              <p className=" tracking text-black font-medium">
+                {delPack.amount} {delPack.type} ?
+              </p>
+            </p>
+            <p>All the Monthly Package records will be deleted and </p>
+            <p> It cannot be undone.</p>
 
             <div className=" w-full space-x-4 flex justify-center font-medium pt-5">
               <button
                 className=" px-2 py-2 rounded-md bg-[#a2baf7] text-white hover:shadow-lg hover:shadow-[#a2baf7] transition-all duration-700"
-                onClick={() => setdelConfirnMsg( false)}
+                onClick={() => setdelConfirnMsg(false)}
               >
                 CANCEL, KEEP MEMBER
               </button>
               <button
                 className=" px-5 py-2 rounded-md text-white bg-red-700 hover:shadow-lg hover:shadow-red-200 transition-all duration-700"
-                onClick={ () => deletePackage(delPack.id, delPack.type)}
+                onClick={() => deletePackage(delPack.id, delPack.type)}
               >
                 YES, DELETE USER
               </button>
@@ -404,8 +468,9 @@ export const Package = () => {
               >
                 <h1>Cancel</h1>
               </button>
-              <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-              onClick={()=> addmonPackage( "monthly")}
+              <button
+                className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                onClick={() => addmonPackage("monthly")}
               >
                 <h1>Save</h1>
               </button>
@@ -484,8 +549,9 @@ export const Package = () => {
               >
                 <h1>Cancel</h1>
               </button>
-              <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-              onClick={()=> addmonPackage("annual")}
+              <button
+                className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                onClick={() => addmonPackage("annual")}
               >
                 <h1>Save</h1>
               </button>

@@ -12,6 +12,7 @@ import {
   getnomineeApi,
 } from "../../../server/app";
 import toast from "react-hot-toast";
+import { Pagination } from "../../pagination";
 
 export const Users = () => {
   const [editUser, seteditUser] = useState(false);
@@ -24,12 +25,15 @@ export const Users = () => {
     userId: "",
     userName: "",
   });
+  const [search, setsearch] = useState("")
+  const [Acitve, setAcitve] = useState(1)
+  const [Total, setTotal] = useState()
 
   useEffect(() => {
     setprofile([]);
     setnominee([]);
-    getUserApi("admin/users", setuserData, settotalUsers);
-  }, []);
+    getUserApi(`admin/users?page=${Acitve}`, setTotal, setuserData, settotalUsers);
+  }, [Acitve]);
 
   const handleEditUser = (id) => {
     seteditUser(true);
@@ -119,6 +123,10 @@ export const Users = () => {
     }
   };
 
+  const searchApi = ( value) => {
+    getUserApi(`admin/users?name=${value}`, setuserData, settotalUsers);
+  }
+
   return (
     <div className=" px-8 py-5">
       <div className=" flex justify-between items-center">
@@ -127,7 +135,7 @@ export const Users = () => {
           <div className="bg-white rounded-md border ">
             <div className="pl-3.5 py-2.5 flex justify-start items-center space-x-3 bg-white rounded-md border">
               <IoIosSearch className="text-gray-400" />
-              <input type="text" placeholder="Search by name" />
+              <input type="text" placeholder="Search by name" onChange={(e)=>searchApi(e.target.value)}/>
             </div>
           </div>
           <button className="bg-gradient-to-r from-blue-400 to-blue-700 px-5 py-2 rounded-md font-medium text-white transform transition duration-300 hover:scale-105">
@@ -143,54 +151,62 @@ export const Users = () => {
         <p className=" flex justify-center items-center">Status</p>
         <p className=" flex justify-center items-center">Action</p>
       </div>
-      {userData.map((user, index) => (
-        <div
-          key={index}
-          className={`w-full h-auto grid grid-cols-6 grid-rows-1 text-center rounded py-3  text-[14px] bg-white shadow border-b border-neutral-400 ${
-            index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
-          }`}
-        >
-          <p className=" flex justify-center items-center">{user.userId}</p>
-          <p className=" flex justify-center items-center">{user.name}</p>
-          <p className=" flex justify-center items-center">{user.role}</p>
-          <p className=" flex justify-center items-center">
-            {(user.amount ? user.amount : 0) + (user.return ? user.return : 0)}
-          </p>
-          <p className=" flex justify-center items-center">
-            <p
-              className={`px-3.5 rounded-full border-2 py-0.5 ${
-                user.status === "Active"
-                  ? "bg-green-50 border-green-200"
-                  : "bg-red-50 border-red-200"
-              }`}
-            >
-              {user.status}
+      {userData.length === 0 ? (
+        <div className="text-center py-4 text-gray-600">No users found</div>
+      ) : (
+        userData.map((user, index) => (
+          <div
+            key={index}
+            className={`w-full h-auto grid grid-cols-6 grid-rows-1 text-center rounded py-3  text-[14px] bg-white shadow border-b border-neutral-400 ${
+              index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
+            }`}
+          >
+            <p className=" flex justify-center items-center">{user.userId}</p>
+            <p className=" flex justify-center items-center">{user.name}</p>
+            <p className=" flex justify-center items-center">{user.role}</p>
+            <p className=" flex justify-center items-center">
+              {(user.amount ? user.amount : 0) +
+                (user.return ? user.return : 0)}
             </p>
-          </p>
-          {user.status === "Active" && (
-            <p className="flex justify-center items-center space-x-5">
-              <button
-                className="flex justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
-                onClick={() => deleteUserConfirm(user.userId, user.name)}
+            <p className=" flex justify-center items-center">
+              <p
+                className={`px-3.5 rounded-full border-2 py-0.5 ${
+                  user.status === "Active"
+                    ? "bg-green-50 border-green-200"
+                    : "bg-red-50 border-red-200"
+                }`}
               >
-                <p className="text-[20px]">
-                  <MdDelete />
-                </p>
-                <p>Delete</p>
-              </button>
-              <button
-                className="flex justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
-                onClick={() => handleEditUser(user.userId)}
-              >
-                <p>
-                  <MdModeEditOutline />
-                </p>
-                <p>Edit</p>
-              </button>
+                {user.status}
+              </p>
             </p>
-          )}
-        </div>
-      ))}
+            {user.status === "Active" && (
+              <p className="flex justify-center items-center space-x-5">
+                <button
+                  className="flex justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
+                  onClick={() => deleteUserConfirm(user.userId, user.name)}
+                >
+                  <p className="text-[20px]">
+                    <MdDelete />
+                  </p>
+                  <p>Delete</p>
+                </button>
+                <button
+                  className="flex justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
+                  onClick={() => handleEditUser(user.userId)}
+                >
+                  <p>
+                    <MdModeEditOutline />
+                  </p>
+                  <p>Edit</p>
+                </button>
+              </p>
+            )}
+          </div>
+        ))
+      )}
+      <div className=" w-full mt-5 justify-end items-end">
+        <Pagination active={Acitve} setActive={setAcitve} total={Total}/>
+      </div>
       {delConfirnMsg && (
         <div className=" fixed z-20 w-screen h-screen  top-0 right-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center">
           <div className="rounded-lg bg-white p-10 shadow-2xl antialiased flex flex-col justify-center items-center">

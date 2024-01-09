@@ -39,27 +39,37 @@ export const Dashboard = () => {
   const [monPackages, setmonPackages] = useState([]);
   const [annPackages, setannPackages] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [currentPackId, setcurrentPackId] = useState();
 
   useEffect(() => {
     getProfileApi("user/profile", userId, setprofile);
     getnomineeApi("user/getNominee", userId, setnominee);
     getadminApi("user/admin", setadmin);
-    getMonPackageApi("admin/monthPackages", setmonPackages);
-    getAnnualPackageApi("admin/annualPackages", setannPackages);
+    getMonPackageApi(
+      "user/monthPackages",
+      { userId: userId.userId },
+      setmonPackages,
+      setcurrentPackId
+    );
+    getAnnualPackageApi(
+      "user/annualPackages",
+      userId,
+      setannPackages,
+      setcurrentPackId
+    );
     setInvestmentDtls({
       packId: "",
       type: "",
     });
-    setIsChecked()
+    setIsChecked();
   }, []);
 
   const makeWithraqBtn = () => {
-     const data = {
-      userId : profile.userId,
-      name : profile.name,
-      amount : profile.amount + profile.return
-     }
-      console.log(data)
+    const data = {
+      userId: profile.userId,
+      name: profile.name,
+      amount: profile.amount + profile.return,
+    };
 
     if (IsChecked === true) {
       makeWithdrawApi("user/withdrawal", data).then((res) => {
@@ -72,7 +82,7 @@ export const Dashboard = () => {
         } else {
           toast.error(res.data.err, { duration: 1500 });
         }
-        setwithrawalReq(false)
+        setwithrawalReq(false);
       });
     } else {
       toast.error("Please check the checkBox", { duration: 1500 });
@@ -82,59 +92,67 @@ export const Dashboard = () => {
   const makewithraw = () => {
     setwithrawalReq(true);
   };
-  
+
   const handleCancelBtn = () => {
-    setPackageInvestment(false)
+    setPackageInvestment(false);
   };
 
   const handlePackage = () => {
-   
-    if (!userId.userId || !senderAccName || !senderAmt || !InvestmentDtls.packId || !quantity) {
-      toast.error('Please fill in all required fields.');
-      return; 
+    if (
+      !userId.userId ||
+      !senderAccName ||
+      !senderAmt ||
+      !InvestmentDtls.packId ||
+      !quantity
+    ) {
+      toast.error("Please fill in all required fields.");
+      return;
     }
-  
+
     const data = {
       userId: userId.userId,
       name: senderAccName,
-      amount: senderAmt*quantity,
+      amount: senderAmt * quantity,
       transId: senderTransId,
       packId: InvestmentDtls.packId,
       count: quantity,
     };
-    
-    if (IsChecked === true){
-      if(InvestmentDtls.type === "monthly"){
-        monPackApi("user/transaction", data).then((res) => {
-          if (res.status === 200) {
-            toast.success(res.data.msg);
-            setPackageInvestment(false)
-          }
-        }).catch((error) => {
-          toast.error('Failed to process the transaction. Please try again.');
-        });
-      }else{
-        monPackApi("user/transaction", data).then((res) => {
-          if (res.status === 200) {
-            toast.success(res.data.msg);
-            setPackageInvestment(false)
-          }
-        }).catch((error) => {
-          toast.error('Failed to process the transaction. Please try again.');
-        });
+
+    if (IsChecked === true) {
+      if (InvestmentDtls.type === "monthly") {
+        monPackApi("user/transaction", data)
+          .then((res) => {
+            if (res.status === 200) {
+              toast.success(res.data.msg);
+              setPackageInvestment(false);
+            }
+          })
+          .catch((error) => {
+            toast.error("Failed to process the transaction. Please try again.");
+          });
+      } else {
+        monPackApi("user/transaction", data)
+          .then((res) => {
+            if (res.status === 200) {
+              toast.success(res.data.msg);
+              setPackageInvestment(false);
+            }
+          })
+          .catch((error) => {
+            toast.error("Failed to process the transaction. Please try again.");
+          });
       }
-    }else{
-      toast.error("Please check the CheckBox", {duration : 1500})
+    } else {
+      toast.error("Please check the CheckBox", { duration: 1500 });
     }
   };
-  
 
   const handleInvestbtn = (id, amount, type) => {
     setInvestmentDtls({
       packId: id,
       type: type,
     });
-    setsenderAmt(amount)
+    setsenderAmt(amount);
     setPackageInvestment(true);
   };
 
@@ -160,6 +178,7 @@ export const Dashboard = () => {
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };
+  const currentDate = new Date().getDate();
 
   return (
     <div className=" px-8 py-5">
@@ -210,135 +229,246 @@ export const Dashboard = () => {
       </div>
       <h1 className=" font-semibold py-5">Monthly Package</h1>
       <div className=" grid grid-cols-3 gap-10">
-        {monPackages.map((data, index) => (
-          <div
-            className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md"
-            key={index}
-          >
-            <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
-              <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-                {data.amount} <span className=" text-[12px]">Per Month</span>
-              </h1>
-            </div>
-            <div className=" w-full flex justify-start items-center">
-              <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-green-500 ">
-                    <FaMoneyBill1Wave />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Returns up-to {data.returns}%
-                  </h1>
-                </div>
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-gray-00 ">
-                    <IoMdLock />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Tenure: {data.years} years
-                  </h1>
-                </div>
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-[#ffc200] ">
-                    <IoCashSharp />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Total Amount :{" "}
-                    <span className=" font-semibold">
-                      {sipPackageCalc(data.amount, data.years, data.returns)}
-                    </span>
-                  </h1>
-                </div>
-              </div>
-              <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
-                <img src={img10} alt="" className=" w-32" />
-              </div>
-            </div>
-            <div className=" w-full flex justify-between items-center p-3">
-              <p
-                className=" text-light-blue-800 cursor-pointer hover:font-semibold"
-                // onClick={() => setMonPackDetails(true)}
-              >
-                More details
-              </p>
-              <button
-                className=" bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                onClick={() => handleInvestbtn(data.packId, data.amount, "monthly")}
-              >
-                <h1>Invest Now</h1>
-              </button>
-            </div>
+        {monPackages.length === 0 ? (
+          <div className="text-center py-4 text-gray-600">
+            No packages available
           </div>
-        ))}
+        ) : (
+          monPackages.map((data, index) => (
+            <div
+              className={`w-full shadow-md flex flex-col justify-between items-start rounded-md ${
+                currentPackId === data.packId
+                  ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
+                  : "bg-gray-50"
+              }`}
+              key={index}
+            >
+              <div
+                className={`w-full flex justify-between items-center ${
+                  currentPackId === data.packId
+                    ? " border-b-2 border-gray-500 "
+                    : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
+                } rounded-t-md`}
+              >
+                <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
+                  {data.amount} <span className=" text-[12px]">Per Month</span>
+                </h1>
+                <div>
+                  {currentPackId === data.packId && (
+                    <div className=" bg-[#ff0000] text-white py-1 px-4 rounded-md  mr-3">
+                      Active Plan{" "}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className=" w-full flex justify-start items-center">
+                <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
+                  <div className=" flex justify-center items-center space-x-3">
+                    <h1 className=" text-green-500 ">
+                      <FaMoneyBill1Wave />
+                    </h1>
+                    <h1
+                      className={`${
+                        currentPackId === data.packId ? "" : "text-gray-800"
+                      }`}
+                    >
+                      {" "}
+                      Returns up-to {data.returns}%
+                    </h1>
+                  </div>
+                  <div className=" flex justify-center items-center space-x-3">
+                    <h1 className=" text-gray-00 ">
+                      <IoMdLock />
+                    </h1>
+                    <h1
+                      className={`${
+                        currentPackId === data.packId ? "" : "text-gray-800"
+                      }`}
+                    >
+                      {" "}
+                      Tenure: {data.years} years
+                    </h1>
+                  </div>
+                  <div className=" flex justify-center items-center space-x-3">
+                    <h1 className=" text-[#ffc200] ">
+                      <IoCashSharp />
+                    </h1>
+                    <h1
+                      className={`${
+                        currentPackId === data.packId ? "" : "text-gray-800"
+                      }`}
+                    >
+                      {" "}
+                      Total Amount :{" "}
+                      <span className=" font-semibold">
+                        {sipPackageCalc(data.amount, data.years, data.returns)}
+                      </span>
+                    </h1>
+                  </div>
+                </div>
+                <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
+                  <img src={img10} alt="" className=" w-32" />
+                </div>
+              </div>
+              <div className=" w-full flex justify-between items-center p-3">
+                <p
+                  className={`${
+                    currentPackId === data.packId
+                      ? " text-white cursor-pointer hover:font-semibold"
+                      : "text-light-blue-800 cursor-pointer hover:font-semibold"
+                  } `}
+                  // onClick={() => setMonPackDetails(true)}
+                >
+                  More details
+                </p>
+                {console.log(currentDate)}
+                {currentPackId === data.packId ? (
+                  currentDate >= 1 && currentDate <= 5 ? (
+                    <button
+                      className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
+                      onClick={() =>
+                        handleInvestbtn(data.packId, data.amount, "monthly")
+                      }
+                    >
+                      <h1>Current Plan</h1>
+                    </button>
+                  ) : null
+                ) : (
+                  <button
+                    className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
+                    onClick={() =>
+                      handleInvestbtn(data.packId, data.amount, "monthly")
+                    }
+                  >
+                    <h1>Upgrade Now</h1>
+                  </button>
+                )}
+              </div>
+            </div>
+          ))
+        )}
       </div>
       <h1 className=" font-semibold py-5">Annual Package</h1>
       <div className=" grid grid-cols-3 gap-10">
-        {annPackages.map((data, index) => (
-          <div
-            key={index}
-            className=" w-full shadow-md flex flex-col justify-between items-start bg-gray-50 rounded-md"
-          >
-            <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
-              <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-                {data.amount} <span className=" text-[12px]"></span>
-              </h1>
+      {annPackages.length === 0 ? (
+  <div className="text-center py-4 text-gray-600">
+    No packages available
+  </div>
+) : (
+  annPackages.map((data, index) => (
+    <div
+      className={`w-full shadow-md flex flex-col justify-between items-start rounded-md ${
+        currentPackId === data.packId
+          ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
+          : "bg-gray-50"
+      }`}
+      key={index}
+    >
+      <div
+        className={`w-full flex justify-between items-center ${
+          currentPackId === data.packId
+            ? " border-b-2 border-gray-500 "
+            : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
+        } rounded-t-md`}
+      >
+        <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
+          {data.amount} <span className=" text-[12px]">Per Month</span>
+        </h1>
+        <div>
+          {currentPackId === data.packId && (
+            <div className=" bg-[#ff0000] text-white py-1 px-4 rounded-md  mr-3">
+              Active Plan{" "}
             </div>
-            <div className=" w-full flex justify-start items-center">
-              <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-green-500 ">
-                    <FaMoneyBill1Wave />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Returns up-to {data.returns}%
-                  </h1>
-                </div>
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-gray-00 ">
-                    <IoMdLock />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Tenure: {data.years} years
-                  </h1>
-                </div>
-                <div className=" flex justify-center items-center space-x-3">
-                  <h1 className=" text-[#ffc200] ">
-                    <IoCashSharp />
-                  </h1>
-                  <h1 className=" text-gray-800">
-                    {" "}
-                    Total Amount :{" "}
-                    <span className=" font-semibold">
-                      {sipPackageCalc(data.amount, data.years, data.returns)}
-                    </span>
-                  </h1>
-                </div>
-              </div>
-              <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
-                <img src={img10} alt="" className=" w-32" />
-              </div>
-            </div>
-            <div className=" w-full flex justify-between items-center p-3">
-              <p
-                className=" text-light-blue-800 cursor-pointer hover:font-semibold"
-                // onClick={() => setMonPackDetails(true)}
-              >
-                More details
-              </p>
-              <button
-                className=" bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                onClick={() => handleInvestbtn(data.packId, data.amount, "annual")}
-              >
-                <h1>Invest Now</h1>
-              </button>
-            </div>
+          )}
+        </div>
+      </div>
+      <div className=" w-full flex justify-start items-center">
+        <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
+          <div className=" flex justify-center items-center space-x-3">
+            <h1 className=" text-green-500 ">
+              <FaMoneyBill1Wave />
+            </h1>
+            <h1
+              className={`${
+                currentPackId === data.packId ? "" : "text-gray-800"
+              }`}
+            >
+              {" "}
+              Returns up-to {data.returns}%
+            </h1>
           </div>
-        ))}
+          <div className=" flex justify-center items-center space-x-3">
+            <h1 className=" text-gray-00 ">
+              <IoMdLock />
+            </h1>
+            <h1
+              className={`${
+                currentPackId === data.packId ? "" : "text-gray-800"
+              }`}
+            >
+              {" "}
+              Tenure: {data.years} years
+            </h1>
+          </div>
+          <div className=" flex justify-center items-center space-x-3">
+            <h1 className=" text-[#ffc200] ">
+              <IoCashSharp />
+            </h1>
+            <h1
+              className={`${
+                currentPackId === data.packId ? "" : "text-gray-800"
+              }`}
+            >
+              {" "}
+              Total Amount :{" "}
+              <span className=" font-semibold">
+                {sipPackageCalc(data.amount, data.years, data.returns)}
+              </span>
+            </h1>
+          </div>
+        </div>
+        <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
+          <img src={img10} alt="" className=" w-32" />
+        </div>
+      </div>
+      <div className=" w-full flex justify-between items-center p-3">
+        <p
+          className={`${
+            currentPackId === data.packId
+              ? " text-white cursor-pointer hover:font-semibold"
+              : "text-light-blue-800 cursor-pointer hover:font-semibold"
+          } `}
+          // onClick={() => setMonPackDetails(true)}
+        >
+          More details
+        </p>
+        {console.log(currentDate)}
+        {currentPackId === data.packId ? (
+          currentDate >= 1 && currentDate <= 5 ? (
+            <button
+              className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
+              onClick={() =>
+                handleInvestbtn(data.packId, data.amount, "monthly")
+              }
+            >
+              <h1>Current Plan</h1>
+            </button>
+          ) : null
+        ) : (
+          <button
+            className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
+            onClick={() =>
+              handleInvestbtn(data.packId, data.amount, "monthly")
+            }
+          >
+            <h1>Upgrade Now</h1>
+          </button>
+        )}
+      </div>
+    </div>
+  ))
+)}
+
       </div>
       <div className=" mt-5 rounded-xl border-2 p-4 bg-[#f8f2f2]">
         <h1 className=" font-bold text-gray-600 uppercase text-[15px]">
@@ -721,7 +851,7 @@ export const Dashboard = () => {
                   </div>
                   <input
                     type="number"
-                    value={senderAmt*quantity}
+                    value={senderAmt * quantity}
                     className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                     // onChange={(e) => setsenderAmt(parseInt(e.target.value, 10))}
                     readOnly
@@ -764,7 +894,9 @@ export const Dashboard = () => {
                       type="number"
                       value={quantity}
                       className="w-[80px] px-3 py-2 rounded-md border-t border-b border-gray-300 bg-white focus:outline-none focus:ring focus:border-blue-300 text-center"
-                      onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+                      onChange={(e) =>
+                        setQuantity(parseInt(e.target.value, 10))
+                      }
                     />
 
                     {/* Plus Button */}

@@ -33,11 +33,12 @@ export const addNomineeApi = async (path, data) => {
   }
 }
 //getUser api
-export const getUserApi = async (path, setuserData, settotalUsers) => {
+export const getUserApi = async (path, setTotal, setuserData, settotalUsers) => {
   try{
     const res = await axios.get(api_url+path)
     setuserData(res.data.users)
     settotalUsers(res.data.totalUsers)
+    setTotal(res.data.totalUsers)
     return res
   } catch (err) {
     toast.error(err.response.data.error.message, {duration: 1500})
@@ -76,7 +77,7 @@ export const acceptWithrawalReqApi = async (path, data) => {
 //delete withdrawal request
 export const delWithrawalReq = async (path, data) => {
   try{
-    const res = await axios.delete(api_url+path, data)   
+    const res = await axios.put(api_url+path, data)   
     return res
   } catch(err) {
     toast.error("Try again later", {duration: 1500})
@@ -101,20 +102,22 @@ export const editApi = async (path,data) => {
   }
 }
 //get Package
-export const getMonPackageApi = async (path, setmonPackages) => {
+export const getMonPackageApi = async (path, userId, setmonPackages, setcurrentPackId) => {
   try{
-    const res = await axios.get(api_url+ path)
+    const res = await axios.put(api_url+ path, userId)
     setmonPackages(res.data.packages)
+    setcurrentPackId(res.data.lastPack.packId)
     return res
   } catch(err){
     // toast.error()
   }
 }
 //get Package
-export const getAnnualPackageApi = async (path, setmonPackages) => {
+export const getAnnualPackageApi = async (path, userId, setmonPackages, setcurrentPackId) => {
   try{
-    const res = await axios.get(api_url+ path)
+    const res = await axios.put(api_url+ path, userId)
     setmonPackages(res.data.packages)
+    setcurrentPackId(res.data.lastPack.packId)
     return res
   } catch(err){
     // toast.error()
