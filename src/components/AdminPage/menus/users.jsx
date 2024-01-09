@@ -179,8 +179,8 @@ export const Users = () => {
                 {user.status}
               </p>
             </p>
-            {user.status === "Active" && (
-              <p className="flex justify-center items-center space-x-5">
+            {user.role === "User" ? (
+              <p className="flex justify-centeer items-center space-x-5">
                 <button
                   className="flex justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
                   onClick={() => deleteUserConfirm(user.userId, user.name)}
@@ -200,7 +200,26 @@ export const Users = () => {
                   <p>Edit</p>
                 </button>
               </p>
-            )}
+            ): (<p className="flex justify-center items-center space-x-5">
+            {/* <button
+              className="flex justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
+              onClick={() => deleteUserConfirm(user.userId, user.name)}
+            >
+              <p className="text-[20px]">
+                <MdDelete />
+              </p>
+              <p>Delete</p>
+            </button> */}
+            <button
+              className="flex justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110 ml-14"
+              onClick={() => handleEditUser(user.userId)}
+            >
+              <p>
+                <MdModeEditOutline />
+              </p>
+              <p>Edit</p>
+            </button>
+          </p>)}
           </div>
         ))
       )}

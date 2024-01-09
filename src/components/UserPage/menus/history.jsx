@@ -12,7 +12,7 @@ export const History = () => {
   }, []);
 
   return (
-    <div className=" px-8 py-5">
+    <div className=" sm:px-8 py-5">
       <div className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3  text-[14px] bg-white mb-5">
         {/* <p className=" flex justify-center items-center">SI No</p> */}
         <p className=" flex justify-center items-center">User ID</p>
@@ -24,7 +24,7 @@ export const History = () => {
       {transaction && transaction.length > 0 ? (
         transaction.map((data, index) => (
           <div
-            className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3 text-[14px] bg-white border-b-2"
+            className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3 text-[12px] sm:text-[14px] bg-white border-b-2"
             key={index}
           >
             {/* <p className="flex justify-center items-center">{index + 1}</p> */}
@@ -40,7 +40,7 @@ export const History = () => {
                   data.status === "Success"
                     ? "bg-green-50 border-green-200"
                     : "bg-yellow-200 border-yellow-500"
-                } px-3.5 rounded-full border-2 py-0.5`}
+                } px-1 sm:px-3.5 rounded-full border-2 py-0.5`}
               >
                 {data.status}
               </p>

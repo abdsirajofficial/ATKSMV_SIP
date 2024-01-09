@@ -106,7 +106,7 @@ export const getMonPackageApi = async (path, userId, setmonPackages, setcurrentP
   try{
     const res = await axios.put(api_url+ path, userId)
     setmonPackages(res.data.packages)
-    setcurrentPackId(res.data.lastPack)
+    setcurrentPackId(res?.data?.lastPack?.packId || null)
     return res
   } catch(err){
     // toast.error()

@@ -12,8 +12,8 @@ export const UserWithdrawal = () => {
   }, []);
 
   return (
-    <div className=" px-8 py-5">
-      <div className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3  text-[14px] bg-white mb-5">
+    <div className=" md:px-8 py-5">
+      <div className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3 text-[14px] bg-white mb-5">
         {/* <p className=" flex justify-center items-center">SI No</p> */}
         <p className=" flex justify-center items-center">User ID</p>
         <p className=" flex justify-center items-center">Name</p>
@@ -24,7 +24,7 @@ export const UserWithdrawal = () => {
       {withdrawal && withdrawal.length > 0 ? (
         withdrawal.map((withdraw, index) => (
           <div
-            className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3 border-b-2 text-[14px] bg-white"
+            className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3 border-b-2 text-[12px] sm:text-[14px] bg-white"
             key={index}
           >
             {/* <p className="flex justify-center items-center">{index + 1}</p> */}
