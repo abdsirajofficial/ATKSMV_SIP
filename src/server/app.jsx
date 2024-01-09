@@ -41,7 +41,7 @@ export const getUserApi = async (path, setTotal, setuserData, settotalUsers) => 
     setTotal(res.data.totalUsers)
     return res
   } catch (err) {
-    toast.error(err.response.data.error.message, {duration: 1500})
+    // toast.error(err.response.data.error.message, {duration: 1500}) 
   }
 }
 //gethistory api
@@ -106,7 +106,7 @@ export const getMonPackageApi = async (path, userId, setmonPackages, setcurrentP
   try{
     const res = await axios.put(api_url+ path, userId)
     setmonPackages(res.data.packages)
-    setcurrentPackId(res.data.lastPack.packId)
+    setcurrentPackId(res.data.lastPack)
     return res
   } catch(err){
     // toast.error()

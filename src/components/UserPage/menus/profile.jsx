@@ -78,13 +78,13 @@ export const Profile = () => {
       <div className="text-neutral-400 text-base font-semibold tracking-wide">
         Profile Details :-
       </div>
-      <div className=" grid grid-cols-3 gap-5">
+      <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-2">
         <div>
           <div className="text-zinc-600 mt-5">User Id</div>
           <input
             type="text"
             value={profile.userId}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-gray-200 focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-gray-200 focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -100,7 +100,7 @@ export const Profile = () => {
           <input
             type="text"
             value={profile.name}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -116,7 +116,7 @@ export const Profile = () => {
           <input
             type="email"
             value={profile.email}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -132,7 +132,7 @@ export const Profile = () => {
           <input
             type="number"
             value={profile.aadhar}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -148,7 +148,7 @@ export const Profile = () => {
           <input
             type="text"
             value={profile.pan}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -164,7 +164,7 @@ export const Profile = () => {
           <input
             type="number"
             value={profile.mobile}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -180,7 +180,7 @@ export const Profile = () => {
           <input
             type="number"
             value={profile.secondary_mobile}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -197,7 +197,7 @@ export const Profile = () => {
             <input
               type="date"
               value={profile.DOB}
-              className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
               readOnly
             />
           </div>
@@ -213,7 +213,7 @@ export const Profile = () => {
           </div>
           <textarea
             value={profile.address}
-            className="w-[300px] h-[100px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] h-[100px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -221,7 +221,7 @@ export const Profile = () => {
       <div className="text-neutral-400 text-base font-semibold tracking-wide mt-8">
         Account Details :-
       </div>
-      <div className=" grid grid-cols-3">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
         <div>
           <div className=" flex space-x-2 mt-5">
             <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
@@ -234,7 +234,7 @@ export const Profile = () => {
           <input
             type="text"
             value={profile.account_holder}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -250,7 +250,7 @@ export const Profile = () => {
           <input
             type="number"
             value={profile.account_no}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -266,7 +266,7 @@ export const Profile = () => {
           <input
             type="text"
             value={profile.IFSC}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -282,7 +282,7 @@ export const Profile = () => {
           <input
             type="text"
             value={profile.upi_id}
-            className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
             readOnly
           />
         </div>
@@ -291,7 +291,7 @@ export const Profile = () => {
           <div className="text-neutral-400 text-base font-semibold tracking-wide mt-16">
             Nominee Details :-
           </div>
-          <div className=" grid grid-cols-3">
+          <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-2">
             <div>
               <div className=" flex space-x-2 mt-5">
                 <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
@@ -304,7 +304,7 @@ export const Profile = () => {
               <input
                 type="text"
                 value={nominee ? nominee.name : ""}
-                className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                 onChange={(e) =>
                   setnominee({ ...nominee, name: e.target.value })
                 }
@@ -322,7 +322,7 @@ export const Profile = () => {
               <input
                 type="text"
                 value={nominee ? nominee.email : ""}
-                className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                 onChange={(e) =>
                   setnominee({ ...nominee, email: e.target.value })
                 }
@@ -340,7 +340,7 @@ export const Profile = () => {
               <input
                 type="number"
                 value={nominee ? nominee.mobile : ""}
-                className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                 onChange={(e) =>
                   setnominee({ ...nominee, mobile: e.target.value })
                 }
@@ -358,7 +358,7 @@ export const Profile = () => {
               <input
                 type="number"
                 value={nominee ? nominee.pan : ""}
-                className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                 onChange={(e) =>
                   setnominee({ ...nominee, pan: e.target.value })
                 }
@@ -376,7 +376,7 @@ export const Profile = () => {
               <input
                 type="number"
                 value={nominee ? nominee.aadhar : ""}
-                className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                 onChange={(e) =>
                   setnominee({ ...nominee, aadhar: e.target.value })
                 }
@@ -394,7 +394,7 @@ export const Profile = () => {
               <input
                 type="text"
                 value={nominee ? nominee.account_holder : ""}
-                className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                 onChange={(e) =>
                   setnominee({
                     ...nominee,
@@ -415,7 +415,7 @@ export const Profile = () => {
               <input
                 type="number"
                 value={nominee ? nominee.account_no : ""}
-                className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                 onChange={(e) =>
                   setnominee({ ...nominee, account_no: e.target.value })
                 }
@@ -433,7 +433,7 @@ export const Profile = () => {
               <input
                 type="text"
                 value={nominee ? nominee.IFSC : ""}
-                className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                 onChange={(e) =>
                   setnominee({ ...nominee, IFSC: e.target.value })
                 }
@@ -451,12 +451,13 @@ export const Profile = () => {
               <input
                 type="text"
                 value={nominee ? nominee.upi_id : ""}
-                className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                 onChange={(e) =>
                   setnominee({ ...nominee, upi_id: e.target.value })
                 }
               />
             </div>
+          </div>
             <div className=" flex justify-start items-start space-x-5 py-10">
               <button
                 className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
@@ -471,7 +472,6 @@ export const Profile = () => {
                 <h1>Add Nominee</h1>
               </button>
             </div>
-          </div>
         </div>
 
       <div className=" mt-10 rounded-xl border-2 p-4 bg-[#f8f2f2]">
@@ -509,19 +509,7 @@ export const Profile = () => {
           authoringing us to call ISMS you even though you may be registered
           under DND. we shall call ISMS for a period of to months
         </h1>
-        <h1 className=" flex text-gray-600 mt-3 text-[14px] gap-2">
-          <h1 className=" text-[18px]">
-            <RiArrowRightDoubleLine />
-          </h1>
-          For issues related to cyber attacks. Call us at{" "}
-          <span className=" font-semibold">+91 8144228909</span> or Email us at{" "}
-          <span className=" font-semibold">sirajcsc2000@gmail.com</span>
-        </h1>
-        <h1 className=" text-gray-600 mt-5">
-          Above the details any changes contact or call us at{" "}
-          <span className=" font-semibold">+91 8144228909</span> or Email us at{" "}
-          <span className=" font-semibold">sirajcsc2000@gmail.com</span>
-        </h1>
+        <h1 className=" mt-5 font-medium text-[14px] text-red-400">For issues related to cyber attacks. Call us at <b> +91 8148867881</b> or Email us at <b>atksmvtraders@gmail.com</b></h1>
       </div>
     </div>
   );

@@ -45,7 +45,7 @@ export const Users = () => {
     delUserApi(`admin/deleteUser?userId=${id}`).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
-        getUserApi("admin/users", setuserData, settotalUsers);
+        getUserApi(`admin/users?page=${Acitve}`, setTotal, setuserData, settotalUsers);
       }
     });
     setdelConfirnMsg(false);
@@ -98,7 +98,7 @@ export const Users = () => {
       editApi("admin/editUser", profileData).then((res) => {
         if (res.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
-          getUserApi("admin/users", setuserData, settotalUsers);
+          getUserApi(`admin/users?page=${Acitve}`, setTotal, setuserData, settotalUsers);
         } else {
           toast.error(res.data.error, { duration: 1500 });
         }
@@ -124,7 +124,7 @@ export const Users = () => {
   };
 
   const searchApi = ( value) => {
-    getUserApi(`admin/users?name=${value}`, setuserData, settotalUsers);
+    getUserApi(`admin/users?name=${value}&page=${Acitve}`, setTotal, setuserData, settotalUsers);
   }
 
   return (
