@@ -104,7 +104,7 @@ const Rigester = () => {
                 type="text"
                 id="name"
                 name="name"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Name"
                 onChange={(e) => setName(e.target.value)}
               />
@@ -117,7 +117,7 @@ const Rigester = () => {
                 type="email"
                 id="email"
                 name="email"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Email id"
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -130,9 +130,7 @@ const Rigester = () => {
                 type="number"
                 id="pnumber"
                 name="pnumber"
-                // maxLength={10}
-                max={10}
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Primary number"
                 onChange={(e) => setPrimaryNUmber(e.target.value)}
               />
@@ -145,7 +143,7 @@ const Rigester = () => {
                 type="date"
                 id="dob"
                 name="dob"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Date of birth"
                 onChange={(e) => setDOB(e.target.value)}
               />
@@ -171,7 +169,7 @@ const Rigester = () => {
                 type="number"
                 id="aadhar"
                 name="aadhar"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Aadhar number"
                 onChange={(e) => setAadhar(e.target.value)}
               />
@@ -184,7 +182,7 @@ const Rigester = () => {
                 type="number"
                 id="snumber"
                 name="snumber"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Seconday number"
                 onChange={(e) => setSecondaryNumber(e.target.value)}
               />
@@ -196,7 +194,7 @@ const Rigester = () => {
               <textarea
                 id="address"
                 name="address"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Address"
                 onChange={(e)=>setAddress(e.target.value)}
               ></textarea>
@@ -212,7 +210,7 @@ const Rigester = () => {
                 type="text"
                 id="accountName"
                 name="accountName"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Name"
                 onChange={(e) => setAccHOlderName(e.target.value)}
               />
@@ -225,7 +223,7 @@ const Rigester = () => {
                 type="number"
                 id="account no"
                 name="account no"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Account number"
                 onChange={(e)=>setAccount(e.target.value)}
               />
@@ -251,7 +249,7 @@ const Rigester = () => {
                 type="text"
                 id="upi"
                 name="upi"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="UPI ID "
                 onChange={(e) => setUPI_id(e.target.value)}
               />
@@ -268,7 +266,7 @@ const Rigester = () => {
                 type="password"
                 id="password"
                 name="password"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
@@ -281,14 +279,9 @@ const Rigester = () => {
                 type="password"
                 id="Confirm_password"
                 name="Confirm_password"
-                className="mt-1 p-3 w-full border-2 rounded-md shadow-lg"
+                className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Confirm Password"
                 onChange={(e) => setPassword(e.target.value)}
-                onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  onSubmit();
-                }
-              }}
               />
             </div>
           </div>

@@ -49,7 +49,7 @@ export const UserDashboard = () => {
     <div className=" flex w-full h-screen">
       {/* Sidebar */}
 
-      <div className=" hidden sm:block">
+      <div className=" hidden md:block">
         <div className=" w-40 lg:w-48 h-full bg-gradient-to-b from-blue-500 to-[#3777FA] flex flex-col justify-between  items-center pt-5 space-y-2 pb-10">
           <div className=" flex flex-col justify-center items-center">
             <div className=" text-white flex justify-center ">
@@ -129,7 +129,7 @@ export const UserDashboard = () => {
 
             {/* Menu Content */}
             {isMenuOpen && (
-              <div className="sm:hidden block  absolute z-10 top-0 right-0 text-end w-[300px] bg-blue-600">
+              <div className="md:hidden block  absolute z-10 top-0 right-0 text-end w-[300px] bg-blue-600">
                 {/* Close Button */}
                 <button
                   className="text-[26px] py-4 pr-5"
@@ -207,7 +207,7 @@ export const UserDashboard = () => {
               </div>
             )}
           </div>
-          <div className=" hidden sm:block">
+          <div className=" hidden md:block">
             <h1 className=" bg-yellow-300 px-[18px] py-2 text-[18px] rounded-full my-2">
               {name[0]}
             </h1>

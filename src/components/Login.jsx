@@ -83,7 +83,7 @@ const Login = () => {
               type="text"
               id="username"
               name="username"
-              className="mt-1 p-3 w-full sm:w-[400px] border rounded-md shadow-lg"
+              className="mt-1 p-3 w-full sm:w-[400px] border rounded-md shadow-md"
               placeholder="Email or username"
               onChange={(e) => setusername(e.target.value)}
             />
@@ -99,14 +99,9 @@ const Login = () => {
               type="password"
               id="password"
               name="password"
-              className="mt-1 p-3 w-full sm:w-[400px] border rounded-md shadow-lg"
+              className="mt-1 p-3 w-full sm:w-[400px] border rounded-md shadow-md"
               placeholder="Password"
               onChange={(e) => setpassword(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  onSubmit();
-                }
-              }}
             />
             {/* <p className="text-sm font-medium text-gray-600 mt-3 text-end">
               Forgot Password?
@@ -134,4 +129,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; 

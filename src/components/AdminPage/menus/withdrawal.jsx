@@ -70,7 +70,7 @@ export const Withdrawal = () => {
   };
 
   return (
-    <div className="sm:px-2 md:px-8 py-5 w-full h-full flex flex-col">
+    <div className="sm:px-2 md:px-4 lg:px-8 py-5 w-full h-full flex flex-col">
       <div className="w-full h-auto shadow-sm grid grid-cols-7 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white mb-5">
         <p className=" flex justify-center items-center">SI No</p>
         <p className=" flex justify-center items-center">User ID</p>
@@ -89,7 +89,7 @@ export const Withdrawal = () => {
           ) : (
             withdrawal.map((withdraw, index) => (
               <div
-                className={`w-full h-auto grid grid-cols-7 grid-rows-1 text-center rounded py-3 text-[12px]  md:text-[14px] bg-white shadow border-b border-neutral-400 ${
+                className={`w-full h-auto grid grid-cols-7 grid-rows-1 text-center rounded py-3 text-[12px]  lg:text-[14px] bg-white shadow border-b border-neutral-400 ${
                   index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
                 }`}
               >

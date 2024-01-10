@@ -129,9 +129,9 @@ export const Users = () => {
 
 
   return (
-    <div className=" px-2 sm:px-8 py-5 w-full h-full flex flex-col">
+    <div className=" px-2 sm:px-4 md:px-8 py-5 w-full h-full flex flex-col">
       <div className=" sm:flex justify-between items-center">
-        <h1 className=" text-[16px] sm:text-[22px] font-medium">{totalUsers} Users</h1>
+        <h1 className=" text-[16px] sm:text-[18px]  md:text-[22px] font-medium">{totalUsers} Users</h1>
         <div className=" flex sm:justify-center justify-end items-center space-x-2 sm:space-x-5">
           <div className="bg-white rounded-md border ">
             <div className="pl-3.5 py-2.5 flex justify-start items-center space-x-3 bg-white rounded-md border">
@@ -146,7 +146,7 @@ export const Users = () => {
           </button>
         </div>
       </div>
-      <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[12px] sm:text-[16px] bg-[white] my-5">
+      <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[12px] sm:text-[14px] bg-[white] my-5">
         <p className=" flex justify-center items-center">User ID</p>
         <p className=" flex justify-center items-center">Name</p>
         <p className=" flex justify-center items-center">Role</p>
@@ -185,9 +185,9 @@ export const Users = () => {
                   </p>
                 </p>
                 {user.role === "User" ? (
-                  <p className=" sm:flex justify-center items-center sm:space-x-5">
+                  <p className=" flex justify-center items-center sm:space-x-5">
                     <button
-                      className="flex justify-center items-center sm:space-x-2 text-red-600 md:bg-red-600 md:px-2 py-1.5 rounded-lg md:text-white hover:scale-110"
+                      className="flex justify-center items-center space-x-1 sm:space-x-2 text-red-600 md:bg-red-600 md:px-2 py-1.5 rounded-lg md:text-white hover:scale-110"
                       onClick={() => deleteUserConfirm(user.userId, user.name)}
                     >
                       <p className="text-[20px]">
@@ -196,7 +196,7 @@ export const Users = () => {
                       <p className=" hidden md:block">Delete</p>
                     </button>
                     <button
-                      className="flex justify-center items-center md:space-x-2  text-blue-600 md:bg-blue-600 md:px-3 py-1.5 rounded-lg md:text-white hover:scale-110"
+                      className="flex justify-center items-center space-x-1 md:space-x-2  text-blue-600 md:bg-blue-600 md:px-3 py-1.5 rounded-lg md:text-white hover:scale-110"
                       onClick={() => handleEditUser(user.userId)}
                     >
                       <p className=" text-[18px]">
@@ -207,7 +207,7 @@ export const Users = () => {
                   </p>
                 ): (<p className="flex justify-center items-center space-x-5">
                 <button
-                  className=" flex justify-center items-center sm:space-x-2   text-blue-600 sm:bg-blue-600 px-3 py-1.5 rounded-lg sm:text-white hover:scale-110"
+                  className=" flex justify-center items-center space-x-1 sm:space-x-2   text-blue-600 md:bg-blue-600 px-3 py-1.5 rounded-lg md:text-white hover:scale-110"
                   onClick={() => handleEditUser(user.userId)}
                 >
                   <p className=" text-[18px]">
