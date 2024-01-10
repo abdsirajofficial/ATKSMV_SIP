@@ -47,8 +47,8 @@ export const Payment = () => {
   };
 
   return (
-    <div className=" px-8 py-5 w-full h-full flex flex-col">
-      <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3  text-[14px] bg-white mb-5">
+    <div className=" sm:px-8 py-5 w-full h-full flex flex-col">
+      <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white mb-5">
         {/* <p className=" flex justify-center items-center">SI No</p> */}
         <p className=" flex justify-center items-center">User ID</p>
         <p className=" flex justify-center items-center">Name</p>
@@ -65,8 +65,8 @@ export const Payment = () => {
             </div>
           ) : (
             transaction.map((data, index) => (
-              <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3  text-[14px] bg-white border-b-2">
-                {/* <p className=" flex justify-center items-center">{index +1}</p> */}
+              <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white border-b-2">
+                {/* <p className=" flex justify-center items-center">{index +1}</p> */}px
                 <p className=" flex justify-center items-center">{data.userId}</p>
                 <p className=" flex justify-center items-center">{data.name}</p>
                 <p className=" flex justify-center items-center">{data.amount}</p>

@@ -56,15 +56,6 @@ export const AdminDashboard = () => {
             <div className=" flex justify-center items-center text-white">
               <img src={logo} alt="" className="w-36" />
             </div>
-            {/* <NavLink
-              to={"/admin/dahboard"}
-              className=" acitive w-full mt-10 flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-            >
-              <h1 className="flex gap-3 text-center">
-                <h1 className=" text-[24px]"><LuPackageCheck /></h1>
-                Dahboard
-              </h1>
-            </NavLink> */}
             <NavLink
               to={"/admin/users"}
               className=" acitive w-full mt-10 flex justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
@@ -150,7 +141,7 @@ export const AdminDashboard = () => {
 
             {/* Menu Content */}
             {isMenuOpen && (
-              <div className="sm:hidden block  absolute top-0 right-0 text-end w-[300px] bg-blue-600">
+              <div className="sm:hidden block  absolute z-10 top-0 right-0 text-end w-[300px] bg-blue-600">
                 {/* Close Button */}
                 <button
                   className="text-[26px] py-4 pr-5"
@@ -251,6 +242,7 @@ export const AdminDashboard = () => {
           <Outlet />
         </div>
       </div>
+
     </div>
   );
 };

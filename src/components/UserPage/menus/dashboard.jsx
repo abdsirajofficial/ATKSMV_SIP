@@ -362,7 +362,6 @@ export const Dashboard = () => {
                 >
                   More details
                 </p>
-                {console.log(currentDate)}
                 {currentPackId === data.packId ? (
                   currentDate >= 1 && currentDate <= 5 ? (
                     <button
@@ -390,7 +389,7 @@ export const Dashboard = () => {
         )}
       </div>
       <h1 className=" font-semibold py-5">Annual Package</h1>
-      <div className=" w-full  grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className=" w-full grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         {annPackages.length === 0 ? (
           <div className="text-center py-4 text-gray-600">
             No packages available

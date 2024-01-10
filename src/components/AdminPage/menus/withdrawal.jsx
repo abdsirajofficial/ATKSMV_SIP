@@ -70,8 +70,8 @@ export const Withdrawal = () => {
   };
 
   return (
-    <div className="px-8 py-5 w-full h-full flex flex-col">
-      <div className="w-full h-auto shadow-sm grid grid-cols-7 grid-rows-1 text-center rounded py-3  text-[14px] bg-white mb-5">
+    <div className="sm:px-2 md:px-8 py-5 w-full h-full flex flex-col">
+      <div className="w-full h-auto shadow-sm grid grid-cols-7 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white mb-5">
         <p className=" flex justify-center items-center">SI No</p>
         <p className=" flex justify-center items-center">User ID</p>
         <p className=" flex justify-center items-center">Name</p>
@@ -89,7 +89,7 @@ export const Withdrawal = () => {
           ) : (
             withdrawal.map((withdraw, index) => (
               <div
-                className={`w-full h-auto grid grid-cols-7 grid-rows-1 text-center rounded py-3  text-[14px] bg-white shadow border-b border-neutral-400 ${
+                className={`w-full h-auto grid grid-cols-7 grid-rows-1 text-center rounded py-3 text-[12px]  md:text-[14px] bg-white shadow border-b border-neutral-400 ${
                   index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
                 }`}
               >
@@ -108,7 +108,7 @@ export const Withdrawal = () => {
                 </p>
                 <p className=" flex justify-center items-center ">
                   <p
-                    className={`px-3.5 rounded-full border-2 py-0.5 ${
+                    className={`sm:px-3.5 rounded-full border-2 py-0.5 px-1 ${
                       withdraw.status === "Success"
                         ? "bg-green-50 border-green-200"
                         : "bg-yellow-50 border-yellow-200"
@@ -120,10 +120,10 @@ export const Withdrawal = () => {
 
                 <p className=" flex justify-center items-center ">
                   <button
-                    className=" flex  justify-center items-center space-x-2 bg-green-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
+                    className=" flex  justify-center items-center sm:space-x-2 bg-green-600 sm:px-3 px-1 py-1.5 rounded-lg text-white hover:scale-110"
                     onClick={() => acceptRequest(withdraw.userId, withdraw.id)}
                   >
-                    <p className=" text-[20px]">
+                    <p className=" sm:text-[20px]">
                       <VscWorkspaceTrusted />
                     </p>
                     <p>Accept</p>

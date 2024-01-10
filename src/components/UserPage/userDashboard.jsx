@@ -129,7 +129,7 @@ export const UserDashboard = () => {
 
             {/* Menu Content */}
             {isMenuOpen && (
-              <div className="sm:hidden block  absolute top-0 right-0 text-end w-[300px] bg-blue-600">
+              <div className="sm:hidden block  absolute z-10 top-0 right-0 text-end w-[300px] bg-blue-600">
                 {/* Close Button */}
                 <button
                   className="text-[26px] py-4 pr-5"

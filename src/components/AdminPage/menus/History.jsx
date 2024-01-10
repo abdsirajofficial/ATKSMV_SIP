@@ -13,8 +13,8 @@ export const AdminHistory = () => {
 
 
   return (
-    <div className=" px-8 py-5 w-full h-full flex flex-col">
-      <div className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3  text-[14px] bg-white mb-5">
+    <div className=" sm:px-8 py-5 w-full h-full flex flex-col">
+      <div className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white mb-5">
         <p className=" flex justify-center items-center">SI No</p>
         <p className=" flex justify-center items-center">User ID</p>
         <p className=" flex justify-center items-center">Amount</p>
@@ -30,7 +30,7 @@ export const AdminHistory = () => {
             ) : (
               history.map((his, index) => (
                 <div
-                  className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3 hover:bg-gray-100 bg-white border-b-2 "
+                  className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center text-[12px] sm:text-[14px] rounded py-3 hover:bg-gray-100 bg-white border-b-2 "
                   key={index}
                 >
                   <p className=" flex justify-center items-center">{index + 1}</p>
@@ -40,7 +40,7 @@ export const AdminHistory = () => {
                     {his.createdOn.slice(0, 10)}
                   </p>
                   <p className=" flex justify-center items-center">
-                    <p className="bg-green-300 px-4 rounded-full border-2 border-green-600 cursor-pointer ">
+                    <p className="bg-green-300 px-1 sm:px-4 rounded-full border-2 border-green-600 cursor-pointer ">
                       {his.status}
                     </p>
                   </p>

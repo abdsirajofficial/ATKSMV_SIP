@@ -264,7 +264,7 @@ export const Package = () => {
           <h1>Add Package</h1>
         </button>
       </div>
-      <div className=" grid grid-cols-3 gap-10 mt-5">
+      <div className=" w-full grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         {monPackages.length === 0 ? (
           <div className="text-center py-4 text-gray-600">
             Please add Monthly package
@@ -358,7 +358,7 @@ export const Package = () => {
           <h1>Add Package</h1>
         </button>
       </div>
-      <div className=" grid grid-cols-3 gap-10 mt-5">
+      <div className=" w-full grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         {annPackages.length === 0 ? (
           <div className="text-center py-4 text-gray-600">
             Please add Annual Package
