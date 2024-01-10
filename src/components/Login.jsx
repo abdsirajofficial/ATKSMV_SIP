@@ -31,7 +31,7 @@ const Login = () => {
             localStorage.setItem("userid", UserId);
             localStorage.setItem("role", UserRole);
             toast.success("Login successfull!", { duration: 1500 });
-            navigate("/admin");
+            navigate("/admin/users");
             // setShowLoading(false)
           } else {
             localStorage.setItem("loginToken", token);
@@ -39,7 +39,7 @@ const Login = () => {
             localStorage.setItem("userid", UserId);
             localStorage.setItem("role", UserRole);
             toast.success("Login successfull!", { duration: 1500 });
-            navigate("/user");
+            navigate("/user/dashboard");
             // setShowLoading(false)
           }
         } else {
@@ -102,6 +102,12 @@ const Login = () => {
               className="mt-1 p-3 w-full sm:w-[290px]  border rounded-md shadow-md"
               placeholder="Password"
               onChange={(e) => setpassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  onSubmit();
+                }
+              }}
             />
             {/* <p className="text-sm font-medium text-gray-600 mt-3 text-end">
               Forgot Password?

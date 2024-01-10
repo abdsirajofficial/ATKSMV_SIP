@@ -282,6 +282,12 @@ const Register = () => {
                 className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Confirm Password"
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    onSubmit();
+                  }
+                }}
               />
             </div>
           </div>

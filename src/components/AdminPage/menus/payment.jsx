@@ -65,8 +65,8 @@ export const Payment = () => {
             </div>
           ) : (
             transaction.map((data, index) => (
-              <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white border-b-2">
-                {/* <p className=" flex justify-center items-center">{index +1}</p> */}px
+              <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[10px]  sm:text-[14px] bg-white border-b-2">
+                {/* <p className=" flex justify-center items-center">{index +1}</p> */}
                 <p className=" flex justify-center items-center">{data.userId}</p>
                 <p className=" flex justify-center items-center">{data.name}</p>
                 <p className=" flex justify-center items-center">{data.amount}</p>
@@ -75,7 +75,7 @@ export const Payment = () => {
                 </p>
                 <p className=" flex justify-center items-center ">
                   <p
-                    className={`px-3.5 rounded-full border-2 py-0.5 ${
+                    className={`sm:px-3.5 px-1 rounded-full border-2 py-0.5 ${
                       data.status === "Success"
                         ? "bg-green-50 border-green-200"
                         : "bg-yellow-50 border-yellow-200"
@@ -85,25 +85,25 @@ export const Payment = () => {
                   </p>
                 </p>
                 {data.status === "Pending" && (
-                  <p className=" flex justify-center items-center space-x-5">
+                  <p className=" flex justify-center items-center md:space-x-5 space-x-1">
                     <button
-                      className=" flex  justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
+                      className=" flex  justify-center items-center space-x-2 md:bg-red-600 md:px-2 py-1.5 rounded-lg md:text-white hover:scale-110 hover:text-red-600"
                         // onClick={() => deleteUser(user.userId)}
                         onClick={() => deleteUserConfirm(data.userId, data.id, data.name, data.amount)}
                     >
                       <p className=" text-[20px]">
                         <MdDelete />
                       </p>
-                      <p>Delete</p>
+                      <p className="hidden md:block">Delete</p>
                     </button>
                     <button
-                      className=" flex  justify-center items-center space-x-2 bg-green-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
+                      className=" flex  justify-center items-center space-x-2 md:bg-green-600 md:px-3 py-1.5 rounded-lg md:text-white hover:scale-110 hover:text-green-600"
                       onClick={() => accepReq(data.id)}
                     >
                       <p className=" text-[20px]">
                         <VscWorkspaceTrusted />
                       </p>
-                      <p>Accept</p>
+                      <p className="hidden md:block">Accept</p>
                     </button>
                   </p>
                 )}

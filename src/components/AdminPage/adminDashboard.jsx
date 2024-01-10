@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo1.svg";
 import {
   MdDashboard,
@@ -17,6 +17,12 @@ export const AdminDashboard = () => {
   const token = localStorage.getItem("loginToken");
   const name = localStorage.getItem("name");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const location = useLocation();
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
 
   const navigate = useNavigate();
 
@@ -127,7 +133,7 @@ export const AdminDashboard = () => {
 
       <div className=" w-full h-full flex flex-col ">
         {/* Navbar*/}
-        <div className="w-full h-14 shadow border-b-2 flex justify-end items-center bg-white pr-10">
+        <div className="w-full h-14 shadow border-b-2 flex justify-end items-center bg-white pr-5">
           <div>
             {/* Menu Button */}
             <div className="md:hidden block">

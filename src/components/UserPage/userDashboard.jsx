@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo1.svg";
 import { MdDashboard, MdManageHistory, MdOutlineLogout } from "react-icons/md";
 import { RiAccountBoxFill } from "react-icons/ri";
@@ -13,6 +13,10 @@ export const UserDashboard = () => {
 
   const token = localStorage.getItem("loginToken");
   const name = localStorage.getItem("name");
+  const location = useLocation();
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
   const navigate = useNavigate();
 
@@ -23,6 +27,10 @@ export const UserDashboard = () => {
     localStorage.removeItem("role");
     navigate("/login");
   };
+
+  useEffect(()=>{
+    setIsMenuOpen(false)
+  },[])
 
   useEffect(() => {
     if (!token) {
@@ -45,6 +53,7 @@ export const UserDashboard = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+
   return (
     <div className=" flex w-full h-screen">
       {/* Sidebar */}
@@ -56,9 +65,8 @@ export const UserDashboard = () => {
               <img src={logo} alt="" className="w-36" />
             </div>
             <NavLink
-              to={"/user/dashboard"}
+              to={"/user/dashboard"} 
               className=" acitive w-full mt-10 flex justify-start  items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-              // onClick={() => setShowImage(false)}
             >
               <h1 className=" flex items-center gap-2 ">
                 <h1 className=" text-[24px] ">
@@ -115,7 +123,7 @@ export const UserDashboard = () => {
 
       <div className=" w-full h-full flex flex-col ">
         {/* Navbar*/}
-        <div className="w-full h-18 shadow border-b-2 flex justify-end items-center bg-white pr-10">
+        <div className="w-full h-18 shadow border-b-2 flex justify-end items-center bg-white pr-5">
           <div>
             {/* Menu Button */}
             <div className="sm:hidden block">
