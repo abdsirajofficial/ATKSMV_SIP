@@ -16,6 +16,7 @@ import { ImCancelCircle } from "react-icons/im";
 export const AdminDashboard = () => {
   const token = localStorage.getItem("loginToken");
   const name = localStorage.getItem("name");
+  const UserId = localStorage.getItem("userid");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const location = useLocation();
@@ -237,9 +238,15 @@ export const AdminDashboard = () => {
             )}
           </div>
           <div className=" hidden md:block">
-            <h1 className=" bg-yellow-300 px-[18px] py-2 text-[18px] rounded-full my-2">
-              {name[0]}
-            </h1>
+            <div className=" flex justify-end items-center">
+            <h1 className=" px-[18px]  py-2 text-[18px] rounded-full my-2">
+                {UserId}
+              </h1>
+              <h1 className=" bg-yellow-300 px-[18px]  py-2 text-[18px] rounded-full my-2">
+                {name[0]}
+              </h1>
+              
+            </div>
           </div>
         </div>
 

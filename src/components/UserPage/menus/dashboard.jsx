@@ -64,7 +64,7 @@ export const Dashboard = () => {
     setIsChecked();
     setsenderAccName("");
     setsenderTransId("");
-    setQuantity(1)
+    setQuantity(1);
   }, []);
 
   const makeWithraqBtn = () => {
@@ -105,7 +105,7 @@ export const Dashboard = () => {
     setIsChecked();
     setsenderAccName("");
     setsenderTransId("");
-    setQuantity(1)
+    setQuantity(1);
     setPackageInvestment(false);
   };
 
@@ -121,7 +121,7 @@ export const Dashboard = () => {
       setIsChecked();
       setsenderAccName("");
       setsenderTransId("");
-      setQuantity(1)
+      setQuantity(1);
       return;
     }
 
@@ -143,7 +143,7 @@ export const Dashboard = () => {
               setIsChecked();
               setsenderAccName("");
               setsenderTransId("");
-              setQuantity(1)
+              setQuantity(1);
               setPackageInvestment(false);
             }
           })
@@ -158,7 +158,7 @@ export const Dashboard = () => {
               setIsChecked();
               setsenderAccName("");
               setsenderTransId("");
-              setQuantity(1)
+              setQuantity(1);
               setPackageInvestment(false);
             }
           })
@@ -166,7 +166,7 @@ export const Dashboard = () => {
             setIsChecked();
             setsenderAccName("");
             setsenderTransId("");
-            setQuantity(1)
+            setQuantity(1);
             toast.error("Failed to process the transaction. Please try again.");
           });
       }
@@ -174,7 +174,7 @@ export const Dashboard = () => {
       setIsChecked();
       setsenderAccName("");
       setsenderTransId("");
-      setQuantity(1)
+      setQuantity(1);
       toast.error("Please check the CheckBox", { duration: 1500 });
     }
   };
@@ -188,7 +188,7 @@ export const Dashboard = () => {
     setIsChecked();
     setsenderAccName("");
     setsenderTransId("");
-    setQuantity(1)
+    setQuantity(1);
     setPackageInvestment(true);
   };
 
@@ -280,7 +280,7 @@ export const Dashboard = () => {
               className={`w-full shadow-md flex flex-col justify-between items-start rounded-md ${
                 currentPackId === data.packId
                   ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
-                  : "bg-gray-50"
+                  : `bg-gray-50`
               }`}
               key={index}
             >
@@ -291,6 +291,7 @@ export const Dashboard = () => {
                     : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
                 } rounded-t-md`}
               >
+                {console.log(currentPackId)}
                 <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
                   {data.amount} <span className=" text-[12px]">Per Month</span>
                 </h1>
@@ -363,16 +364,14 @@ export const Dashboard = () => {
                   More details
                 </p>
                 {currentPackId === data.packId ? (
-                  currentDate >= 1 && currentDate <= 5 ? (
-                    <button
-                      className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
-                      onClick={() =>
-                        handleInvestbtn(data.packId, data.amount, "monthly")
-                      }
-                    >
-                      <h1>Current Plan</h1>
-                    </button>
-                  ) : null
+                  <button
+                    className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
+                    onClick={() =>
+                      handleInvestbtn(data.packId, data.amount, "monthly")
+                    }
+                  >
+                    <h1>Current Plan</h1>
+                  </button>
                 ) : (
                   <button
                     className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
@@ -482,18 +481,15 @@ export const Dashboard = () => {
                 >
                   More details
                 </p>
-                {console.log(currentDate)}
                 {currentPackId === data.packId ? (
-                  currentDate >= 1 && currentDate <= 5 ? (
-                    <button
-                      className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
-                      onClick={() =>
-                        handleInvestbtn(data.packId, data.amount, "monthly")
-                      }
-                    >
-                      <h1>Current Plan</h1>
-                    </button>
-                  ) : null
+                  <button
+                    className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
+                    onClick={() =>
+                      handleInvestbtn(data.packId, data.amount, "monthly")
+                    }
+                  >
+                    <h1>Current Plan</h1>
+                  </button>
                 ) : (
                   <button
                     className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"

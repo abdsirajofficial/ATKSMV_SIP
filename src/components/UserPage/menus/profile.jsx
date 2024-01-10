@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { RiArrowRightDoubleLine } from "react-icons/ri";
-import { addNomineeApi, getProfileApi, getnomineeApi } from "../../../server/app";
+import {
+  addNomineeApi,
+  getProfileApi,
+  getnomineeApi,
+} from "../../../server/app";
 import toast from "react-hot-toast";
 
 export const Profile = () => {
   const [profile, setprofile] = useState([]);
   const [nominee, setnominee] = useState([]);
-
 
   const data = {
     userId: localStorage.getItem("userid"),
@@ -18,12 +21,11 @@ export const Profile = () => {
   }, []);
 
   const handleCancelBtn = () => {
-
-   setnominee({
+    setnominee({
       name: "",
       email: "",
       aadhar: "",
-      pan:"",
+      pan: "",
       mobile: "",
       account_no: "",
       upi_id: "",
@@ -47,10 +49,10 @@ export const Profile = () => {
       !nominee?.IFSC
     ) {
       // Display a message to fill in all required fields
-      toast.error('Please fill in all required fields.', { duration: 1500 });
+      toast.error("Please fill in all required fields.", { duration: 1500 });
       return; // Exit the function if any field is empty
     }
-  
+
     // If all fields are filled, proceed with API call
     const nomineeData = {
       name: nominee.name,
@@ -64,14 +66,13 @@ export const Profile = () => {
       IFSC: nominee.IFSC,
       userId: data.userId,
     };
-  
+
     addNomineeApi("user/nominee", nomineeData).then((res) => {
       if (res.status === 201) {
         toast.success(res.data.message, { duration: 1500 });
       }
     });
   };
-  
 
   return (
     <div className=" px-8 py-5">
@@ -287,192 +288,218 @@ export const Profile = () => {
           />
         </div>
       </div>
-        <div>
-          <div className="text-neutral-400 text-base font-semibold tracking-wide mt-16">
-            Nominee Details :-
-          </div>
-          <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-2">
-            <div>
-              <div className=" flex space-x-2 mt-5">
-                <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                  Name
-                </div>
-                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                  *
-                </div>
-              </div>
-              <input
-                type="text"
-                value={nominee ? nominee.name : ""}
-                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                onChange={(e) =>
-                  setnominee({ ...nominee, name: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <div className=" flex space-x-2 mt-5">
-                <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                  Email Id
-                </div>
-                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                  *
-                </div>
-              </div>
-              <input
-                type="text"
-                value={nominee ? nominee.email : ""}
-                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                onChange={(e) =>
-                  setnominee({ ...nominee, email: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <div className=" flex space-x-2 mt-5">
-                <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                  Primary Number
-                </div>
-                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                  *
-                </div>
-              </div>
-              <input
-                type="number"
-                value={nominee ? nominee.mobile : ""}
-                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                onChange={(e) =>
-                  setnominee({ ...nominee, mobile: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <div className=" flex space-x-2 mt-5">
-                <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                  Pan Number
-                </div>
-                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                  *
-                </div>
-              </div>
-              <input
-                type="number"
-                value={nominee ? nominee.pan : ""}
-                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                onChange={(e) =>
-                  setnominee({ ...nominee, pan: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <div className=" flex space-x-2 mt-5">
-                <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                  Aadhar Number
-                </div>
-                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                  *
-                </div>
-              </div>
-              <input
-                type="number"
-                value={nominee ? nominee.aadhar : ""}
-                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                onChange={(e) =>
-                  setnominee({ ...nominee, aadhar: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <div className=" flex space-x-2 mt-5">
-                <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                  Account Holder Name
-                </div>
-                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                  *
-                </div>
-              </div>
-              <input
-                type="text"
-                value={nominee ? nominee.account_holder : ""}
-                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                onChange={(e) =>
-                  setnominee({
-                    ...nominee,
-                    account_holder: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div>
-              <div className=" flex space-x-2 mt-5">
-                <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                  Account Number
-                </div>
-                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                  *
-                </div>
-              </div>
-              <input
-                type="number"
-                value={nominee ? nominee.account_no : ""}
-                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                onChange={(e) =>
-                  setnominee({ ...nominee, account_no: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <div className=" flex space-x-2 mt-5">
-                <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                  IFSC Code
-                </div>
-                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                  *
-                </div>
-              </div>
-              <input
-                type="text"
-                value={nominee ? nominee.IFSC : ""}
-                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                onChange={(e) =>
-                  setnominee({ ...nominee, IFSC: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <div className=" flex space-x-2 mt-5">
-                <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                  UPI ID
-                </div>
-                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                  *
-                </div>
-              </div>
-              <input
-                type="text"
-                value={nominee ? nominee.upi_id : ""}
-                className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                onChange={(e) =>
-                  setnominee({ ...nominee, upi_id: e.target.value })
-                }
-              />
-            </div>
-          </div>
-            <div className=" flex justify-start items-start space-x-5 py-10">
-              <button
-                className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                onClick={() => handleCancelBtn()}
-              >
-                <h1>Cancel</h1>
-              </button>
-              <button
-                className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                onClick={() => addNominee()}
-              >
-                <h1>Add Nominee</h1>
-              </button>
-            </div>
+      <div>
+        <div className="text-neutral-400 text-base font-semibold tracking-wide mt-16">
+          Nominee Details :-
         </div>
+        <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-2">
+          <div>
+            <div className=" flex space-x-2 mt-5">
+              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                Name
+              </div>
+              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                *
+              </div>
+            </div>
+            <input
+              type="text"
+              value={nominee ? nominee.name : ""}
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              onChange={(e) => setnominee({ ...nominee, name: e.target.value })}
+            />
+          </div>
+          <div>
+            <div className=" flex space-x-2 mt-5">
+              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                Email Id
+              </div>
+              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                *
+              </div>
+            </div>
+            <input
+              type="text"
+              value={nominee ? nominee.email : ""}
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              onChange={(e) =>
+                setnominee({ ...nominee, email: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <div className=" flex space-x-2 mt-5">
+              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                Primary Number
+              </div>
+              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                *
+              </div>
+            </div>
+            <input
+              type="number"
+              value={nominee ? nominee.mobile : ""}
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              onChange={(e) => {
+                // Remove non-numeric characters from the input value
+                const newValue = e.target.value.replace(/[^0-9]/g, "");
+
+                // Limit the input to 10 digits
+                const limitedValue = newValue.slice(0, 10);
+
+                // Update the nominee state with the limited mobile number
+                setnominee({ ...nominee, mobile: limitedValue });
+              }}
+            />
+          </div>
+          <div>
+            <div className=" flex space-x-2 mt-5">
+              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                Pan Number
+              </div>
+              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                *
+              </div>
+            </div>
+            <input
+              type="text"
+              value={nominee ? nominee.pan : ""}
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 uppercase rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              onChange={(e) => {
+                // Remove any characters that are not alphabets or numbers
+                const newValue = e.target.value.replace(/[^a-zA-Z0-9]/g, "");
+
+                // Limit the input to 10 characters
+                const limitedValue = newValue.slice(0, 10);
+
+                // Update the nominee state with the limited PAN value
+                setnominee({ ...nominee, pan: limitedValue });
+              }}
+            />
+          </div>
+          <div>
+            <div className=" flex space-x-2 mt-5">
+              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                Aadhar Number
+              </div>
+              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                *
+              </div>
+            </div>
+            <input
+              type="number"
+              value={nominee ? nominee.aadhar : ""}
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              onChange={(e) => {
+                // Remove non-numeric characters from the input value
+                const newValue = e.target.value.replace(/[^0-9]/g, "");
+
+                // Limit the input to 12 digits
+                const limitedValue = newValue.slice(0, 12);
+
+                // Update the nominee state with the limited aadhar number
+                setnominee({ ...nominee, aadhar: limitedValue });
+              }}
+            />
+          </div>
+          <div>
+            <div className=" flex space-x-2 mt-5">
+              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                Account Holder Name
+              </div>
+              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                *
+              </div>
+            </div>
+            <input
+              type="text"
+              value={nominee ? nominee.account_holder : ""}
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              onChange={(e) =>
+                setnominee({
+                  ...nominee,
+                  account_holder: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div>
+            <div className=" flex space-x-2 mt-5">
+              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                Account Number
+              </div>
+              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                *
+              </div>
+            </div>
+            <input
+              type="number"
+              value={nominee ? nominee.account_no : ""}
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              onChange={(e) =>
+                setnominee({ ...nominee, account_no: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <div className=" flex space-x-2 mt-5">
+              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                IFSC Code
+              </div>
+              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                *
+              </div>
+            </div>
+            <input
+              type="text"
+              value={nominee ? nominee.IFSC : ""}
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 uppercase rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              onChange={(e) => {
+                // Remove any characters that are not alphabets or numbers
+                const newValue = e.target.value.replace(/[^a-zA-Z0-9]/g, "");
+
+                // Limit the input to 11 characters
+                const limitedValue = newValue.slice(0, 11);
+
+                // Update the nominee state with the limited IFSC value
+                setnominee({ ...nominee, IFSC: limitedValue });
+              }}
+            />
+          </div>
+          <div>
+            <div className=" flex space-x-2 mt-5">
+              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                UPI ID
+              </div>
+              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                *
+              </div>
+            </div>
+            <input
+              type="text"
+              value={nominee ? nominee.upi_id : ""}
+              className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+              onChange={(e) =>
+                setnominee({ ...nominee, upi_id: e.target.value })
+              }
+            />
+          </div>
+        </div>
+        <div className=" flex justify-start items-start space-x-5 py-10">
+          <button
+            className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+            onClick={() => handleCancelBtn()}
+          >
+            <h1>Cancel</h1>
+          </button>
+          <button
+            className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+            onClick={() => addNominee()}
+          >
+            <h1>Add Nominee</h1>
+          </button>
+        </div>
+      </div>
 
       <div className=" mt-10 rounded-xl border-2 p-4 bg-[#f8f2f2]">
         <h1 className=" font-bold text-gray-600 uppercase text-[15px]">
@@ -509,7 +536,10 @@ export const Profile = () => {
           authoringing us to call ISMS you even though you may be registered
           under DND. we shall call ISMS for a period of to months
         </h1>
-        <h1 className=" mt-5 font-medium text-[14px] text-red-400">For issues related to cyber attacks. Call us at <b> +91 8148867881</b> or Email us at <b>atksmvtraders@gmail.com</b></h1>
+        <h1 className=" mt-5 font-medium text-[14px] text-red-400">
+          For issues related to cyber attacks. Call us at <b> +91 8148867881</b>{" "}
+          or Email us at <b>atksmvtraders@gmail.com</b>
+        </h1>
       </div>
     </div>
   );

@@ -25,14 +25,19 @@ export const Users = () => {
     userId: "",
     userName: "",
   });
-  const [Acitve, setAcitve] = useState(1)
-  const [Total, setTotal] = useState()
-  const [search, setsearch] = useState()
+  const [Acitve, setAcitve] = useState(1);
+  const [Total, setTotal] = useState();
+  const [search, setsearch] = useState();
 
   useEffect(() => {
     setprofile([]);
     setnominee([]);
-    getUserApi(`admin/users?page=${Acitve}&maxResults=7`, setTotal, setuserData, settotalUsers);
+    getUserApi(
+      `admin/users?page=${Acitve}&maxResults=7`,
+      setTotal,
+      setuserData,
+      settotalUsers
+    );
   }, [Acitve]);
 
   const handleEditUser = (id) => {
@@ -45,7 +50,12 @@ export const Users = () => {
     delUserApi(`admin/deleteUser?userId=${id}`).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
-        getUserApi(`admin/users?page=${Acitve}&maxResults=7`, setTotal, setuserData, settotalUsers);
+        getUserApi(
+          `admin/users?page=${Acitve}&maxResults=7`,
+          setTotal,
+          setuserData,
+          settotalUsers
+        );
       }
     });
     setdelConfirnMsg(false);
@@ -78,7 +88,7 @@ export const Users = () => {
       account_holder: profile.account_holder,
       account_no: profile.account_no,
       address: profile.address,
-      amount: profile.amount ? parseInt(profile.amount) : 0
+      amount: profile.amount ? parseInt(profile.amount) : 0,
     };
 
     const nomineeData = {
@@ -98,7 +108,12 @@ export const Users = () => {
       editApi("admin/editUser", profileData).then((res) => {
         if (res.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
-          getUserApi(`admin/users?page=${Acitve}&maxResults=7`, setTotal, setuserData, settotalUsers);
+          getUserApi(
+            `admin/users?page=${Acitve}&maxResults=7`,
+            setTotal,
+            setuserData,
+            settotalUsers
+          );
         } else {
           toast.error(res.data.error, { duration: 1500 });
         }
@@ -124,23 +139,35 @@ export const Users = () => {
   };
 
   const searchApi = () => {
-    getUserApi(`admin/users?name=${search}&page=${Acitve}&maxResults=6`, setTotal, setuserData, settotalUsers);
-  }
-
+    getUserApi(
+      `admin/users?name=${search}&page=${Acitve}&maxResults=6`,
+      setTotal,
+      setuserData,
+      settotalUsers
+    );
+  };
 
   return (
     <div className=" px-2 sm:px-4 md:px-8 py-5 w-full h-full flex flex-col">
       <div className=" sm:flex justify-between items-center">
-        <h1 className=" text-[16px] sm:text-[18px]  md:text-[22px] font-medium">{totalUsers} Users</h1>
+        <h1 className=" text-[16px] sm:text-[18px]  md:text-[22px] font-medium">
+          {totalUsers} Users
+        </h1>
         <div className=" flex sm:justify-center justify-end items-center space-x-2 sm:space-x-5">
           <div className="bg-white rounded-md border ">
             <div className="pl-3.5 py-2.5 flex justify-start items-center space-x-3 bg-white rounded-md border">
               <IoIosSearch className="text-gray-400" />
-              <input type="text" placeholder="Search by name" className=" sm:w-[300px] w-full" onChange={(e)=>setsearch(e.target.value)}/>
+              <input
+                type="text"
+                placeholder="Search by name"
+                className=" sm:w-[300px] w-full"
+                onChange={(e) => setsearch(e.target.value)}
+              />
             </div>
           </div>
-          <button className=" bg-gradient-to-r from-blue-400 to-blue-700 px-3 sm:px-5 py-2 rounded-md font-medium text-white transform transition duration-300 hover:scale-105"
-          onClick={()=> searchApi()}
+          <button
+            className=" bg-gradient-to-r from-blue-400 to-blue-700 px-3 sm:px-5 py-2 rounded-md font-medium text-white transform transition duration-300 hover:scale-105"
+            onClick={() => searchApi()}
           >
             Search
           </button>
@@ -166,7 +193,9 @@ export const Users = () => {
                   index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
                 }`}
               >
-                <p className=" flex justify-center items-center">{user.userId}</p>
+                <p className=" flex justify-center items-center">
+                  {user.userId}
+                </p>
                 <p className=" flex justify-center items-center">{user.name}</p>
                 <p className=" flex justify-center items-center">{user.role}</p>
                 <p className=" flex justify-center items-center">
@@ -202,27 +231,31 @@ export const Users = () => {
                       <p className=" text-[18px]">
                         <MdModeEditOutline />
                       </p>
-                      <p className=" hidden md:block" >Edit</p>
+                      <p className=" hidden md:block">Edit</p>
                     </button>
                   </p>
-                ): (<p className="flex justify-center items-center space-x-5">
-                <button
-                  className=" flex justify-center items-center space-x-1 sm:space-x-2   text-blue-600 md:bg-blue-600 px-3 py-1.5 rounded-lg md:text-white hover:scale-110"
-                  onClick={() => handleEditUser(user.userId)}
-                >
-                  <p className=" text-[18px]">
-                    <MdModeEditOutline />
+                ) : (
+                  <p className="flex justify-center items-center space-x-5">
+                    <button
+                      className=" flex justify-center items-center space-x-1 sm:space-x-2   text-blue-600 md:bg-blue-600 px-3 py-1.5 rounded-lg md:text-white hover:scale-110"
+                      onClick={() => handleEditUser(user.userId)}
+                    >
+                      <p className=" text-[18px]">
+                        <MdModeEditOutline />
+                      </p>
+                      <p className=" hidden md:block">Edit</p>
+                    </button>
                   </p>
-                  <p className=" hidden md:block">Edit</p>
-                </button>
-              </p>)}
+                )}
               </div>
             ))
           )}
         </div>
-        {Total > 1 && (<div className=" w-full mt-5 justify-end items-end">
-          <Pagination active={Acitve} setActive={setAcitve} total={Total}/>
-        </div>)}   
+        {Total > 1 && (
+          <div className=" w-full mt-5 justify-end items-end">
+            <Pagination active={Acitve} setActive={setAcitve} total={Total} />
+          </div>
+        )}
       </div>
       {delConfirnMsg && (
         <div className=" fixed z-20 w-screen h-screen  top-0 right-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center">
@@ -262,66 +295,72 @@ export const Users = () => {
           </div>
         </div>
       )}
+
       {editUser && (
         <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10 overflow-x-auto">
           <div className=" w-full bg-white rounded-lg p-10">
-            <div className="text-neutral-400 text-base font-semibold tracking-wide pb-5">
-              Investment Amount :-
-            </div>
-            <div className=" flex space-x-16 justify-start items-center">
-              <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
-                <div className=" flex flex-col justify-start items-start space-y-3">
-                  <input
-                    type="number"
-                    value={profile.amount}
-                    className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
-                    onChange={(e) =>
-                      setprofile({ ...profile, amount: e.target.value })
-                    }
-                  />
-                  <h1 className=" text-[#031635] font-semibold">
-                    Total Investment
-                  </h1>
+            {profile.role !== "Admin" && (
+              <div className="text-neutral-400 text-base font-semibold tracking-wide pb-5">
+                Investment Amount :-
+              </div>
+            )}
+            {profile.role !== "Admin" && (
+              <div className=" flex space-x-16 justify-start items-center">
+                <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
+                  <div className=" flex flex-col justify-start items-start space-y-3">
+                    <input
+                      type="number"
+                      value={profile.amount}
+                      className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
+                      onChange={(e) =>
+                        setprofile({ ...profile, amount: e.target.value })
+                      }
+                    />
+                    <h1 className=" text-[#031635] font-semibold">
+                      Total Investment
+                    </h1>
+                  </div>
+                  <div className=" shadow-lg  rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
+                    <BsCashCoin />
+                  </div>
                 </div>
-                <div className=" shadow-lg  rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
-                  <BsCashCoin />
+                <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
+                  <div className=" flex flex-col justify-start items-start space-y-3">
+                    <input
+                      type="number"
+                      value={profile.return}
+                      className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
+                      onChange={(e) =>
+                        setprofile({ ...profile, return: e.target.value })
+                      }
+                    />
+                    <h1 className=" text-[#031635] font-semibold">
+                      Total returns
+                    </h1>
+                  </div>
+                  <div className=" shadow-lg  rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
+                    <BsCashCoin />
+                  </div>
+                </div>
+                <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
+                  <div className=" flex flex-col justify-center items-center space-y-3">
+                    <h1 className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent p-4">
+                      {profile.amount
+                        ? parseInt(profile.amount) +
+                          (profile.return ? parseInt(profile.return) : 0)
+                        : 0}
+                    </h1>
+                    <h1 className=" text-[#031635] font-semibold">
+                      Total Amount
+                    </h1>
+                  </div>
+                  <div className=" shadow-lg  rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
+                    <BsCashCoin />
+                  </div>
                 </div>
               </div>
-              <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
-                <div className=" flex flex-col justify-start items-start space-y-3">
-                  <input
-                    type="number"
-                    value={profile.return}
-                    className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
-                    onChange={(e) =>
-                      setprofile({ ...profile, return: e.target.value })
-                    }
-                  />
-                  <h1 className=" text-[#031635] font-semibold">
-                    Total returns
-                  </h1>
-                </div>
-                <div className=" shadow-lg  rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
-                  <BsCashCoin />
-                </div>
-              </div>
-              <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
-                <div className=" flex flex-col justify-center items-center space-y-3">
-                  <h1 className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent p-4">
-                    {profile.amount
-                      ? parseInt(profile.amount) +
-                        (profile.return ? parseInt(profile.return) : 0)
-                      : 0}
-                  </h1>
-                  <h1 className=" text-[#031635] font-semibold">
-                    Total Amount
-                  </h1>
-                </div>
-                <div className=" shadow-lg  rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
-                  <BsCashCoin />
-                </div>
-              </div>
-            </div>
+            )}
+
             <div className="text-neutral-400 text-base font-semibold tracking-wide pt-10">
               Profile Details :-
             </div>
@@ -384,9 +423,16 @@ export const Users = () => {
                   type="number"
                   value={profile.aadhar}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  onChange={(e) =>
-                    setprofile({ ...profile, aadhar: e.target.value })
-                  }
+                  onChange={(e) => {
+                    // Remove any non-numeric characters from the input value
+                    const newValue = e.target.value.replace(/[^0-9]/g, "");
+
+                    // Limit the input to 12 digits
+                    const limitedValue = newValue.slice(0, 12);
+
+                    // Update the profile state with the limited aadhar number
+                    setprofile({ ...profile, aadhar: limitedValue });
+                  }}
                 />
               </div>
               <div>
@@ -401,10 +447,20 @@ export const Users = () => {
                 <input
                   type="text"
                   value={profile.pan}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  onChange={(e) =>
-                    setprofile({ ...profile, pan: e.target.value })
-                  }
+                  className="w-[300px] px-3 py-2 mt-3 rounded-md uppercase border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) => {
+                    // Remove any characters that are not alphanumeric
+                    const newValue = e.target.value.replace(
+                      /[^a-zA-Z0-9]/g,
+                      ""
+                    );
+
+                    // Limit the input to 10 characters
+                    const limitedValue = newValue.slice(0, 10);
+
+                    // Update the profile state with the limited PAN value
+                    setprofile({ ...profile, pan: limitedValue });
+                  }}
                 />
               </div>
               <div>
@@ -420,9 +476,13 @@ export const Users = () => {
                   type="number"
                   value={profile.mobile}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  onChange={(e) =>
-                    setprofile({ ...profile, mobile: e.target.value })
-                  }
+                  onChange={(e) => {
+                    // Remove non-numeric characters from the input value
+                    const newValue = e.target.value.replace(/[^0-9]/g, "");
+
+                    // Update the profile state with the cleaned mobile number
+                    setprofile({ ...profile, mobile: newValue.slice(0, 10) });
+                  }}
                 />
               </div>
               <div>
@@ -438,9 +498,16 @@ export const Users = () => {
                   type="number"
                   value={profile.secondary_mobile}
                   className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  onChange={(e) =>
-                    setprofile({ ...profile, secondary_mobile: e.target.value })
-                  }
+                  onChange={(e) => {
+                    // Remove non-numeric characters from the input value
+                    const newValue = e.target.value.replace(/[^0-9]/g, "");
+
+                    // Limit the input to 10 digits
+                    const limitedValue = newValue.slice(0, 10);
+
+                    // Update the profile state with the limited secondary mobile number
+                    setprofile({ ...profile, secondary_mobile: limitedValue });
+                  }}
                 />
               </div>
               <div>
@@ -533,10 +600,20 @@ export const Users = () => {
                 <input
                   type="text"
                   value={profile.IFSC}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  onChange={(e) =>
-                    setprofile({ ...profile, IFSC: e.target.value })
-                  }
+                  className="w-[300px] px-3 py-2 mt-3 rounded-md uppercase border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) => {
+                    // Remove any characters that are not alphanumeric
+                    const newValue = e.target.value.replace(
+                      /[^a-zA-Z0-9]/g,
+                      ""
+                    );
+
+                    // Limit the input to 11 characters
+                    const limitedValue = newValue.slice(0, 11);
+
+                    // Update the profile state with the limited IFSC value
+                    setprofile({ ...profile, IFSC: limitedValue });
+                  }}
                 />
               </div>
               <div>
@@ -613,9 +690,16 @@ export const Users = () => {
                       type="number"
                       value={nominee ? nominee.mobile : ""}
                       className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                      onChange={(e) =>
-                        setnominee({ ...nominee, mobile: e.target.value })
-                      }
+                      onChange={(e) => {
+                        // Remove non-numeric characters from the input value
+                        const newValue = e.target.value.replace(/[^0-9]/g, "");
+
+                        // Limit the input to 10 digits
+                        const limitedValue = newValue.slice(0, 10);
+
+                        // Update the nominee state with the limited mobile number
+                        setnominee({ ...nominee, mobile: limitedValue });
+                      }}
                     />
                   </div>
                   <div>
@@ -630,10 +714,20 @@ export const Users = () => {
                     <input
                       type="text"
                       value={nominee ? nominee.pan : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                      onChange={(e) =>
-                        setnominee({ ...nominee, pan: e.target.value })
-                      }
+                      className="w-[300px] px-3 py-2 mt-3 rounded-md border uppercase border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) => {
+                        // Remove any characters that are not alphanumeric
+                        const newValue = e.target.value.replace(
+                          /[^a-zA-Z0-9]/g,
+                          ""
+                        );
+
+                        // Limit the input to 10 characters
+                        const limitedValue = newValue.slice(0, 10);
+
+                        // Update the nominee state with the limited PAN value
+                        setnominee({ ...nominee, pan: limitedValue });
+                      }}
                     />
                   </div>
                   <div>
@@ -649,9 +743,16 @@ export const Users = () => {
                       type="number"
                       value={nominee ? nominee.aadhar : ""}
                       className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                      onChange={(e) =>
-                        setnominee({ ...nominee, aadhar: e.target.value })
-                      }
+                      onChange={(e) => {
+                        // Remove non-numeric characters from the input value
+                        const newValue = e.target.value.replace(/[^0-9]/g, "");
+
+                        // Limit the input to 12 digits
+                        const limitedValue = newValue.slice(0, 12);
+
+                        // Update the nominee state with the limited Aadhar number
+                        setnominee({ ...nominee, aadhar: limitedValue });
+                      }}
                     />
                   </div>
                   <div>
@@ -705,10 +806,20 @@ export const Users = () => {
                     <input
                       type="text"
                       value={nominee ? nominee.IFSC : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                      onChange={(e) =>
-                        setnominee({ ...nominee, IFSC: e.target.value })
-                      }
+                      className="w-[300px] px-3 py-2 mt-3 uppercase rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      onChange={(e) => {
+                        // Remove any characters that are not alphanumeric
+                        const newValue = e.target.value.replace(
+                          /[^a-zA-Z0-9]/g,
+                          ""
+                        );
+
+                        // Limit the input to 11 characters
+                        const limitedValue = newValue.slice(0, 11);
+
+                        // Update the nominee state with the limited IFSC value
+                        setnominee({ ...nominee, IFSC: limitedValue });
+                      }}
                     />
                   </div>
                   <div>

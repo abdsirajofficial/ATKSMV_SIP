@@ -5,9 +5,9 @@ import logo from "../assets/logo1.svg";
 import { useNavigate } from "react-router-dom";
 import { rigesterApi } from "../server/app";
 import toast from "react-hot-toast";
+import loadingIcon from "../assets/loading.svg";
 
-const Register = () => {
-
+const Rigester = () => {
   const navigate = useNavigate();
 
   const [Name, setName] = useState("");
@@ -24,10 +24,12 @@ const Register = () => {
   const [AccHOlderName, setAccHOlderName] = useState("");
   const [IFSC_code, setIFSC_code] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
 
   //signUp api call
   const onSubmit = () => {
+    setLoading(true);
 
     const data = {
       name: Name,
@@ -62,12 +64,15 @@ const Register = () => {
       ConfirmPassword === ""
     ) {
       toast.error("Please fill all required fields", {duration: 1500})
+      setLoading(false);
     } else {
-      rigesterApi("user/signUp", data).then((res) => {
+      rigesterApi("user/signUp", data, setLoading).then((res) => {
         if(res.status === 200) {
           toast.success(res.data.message, {duration: 1500})
+          setLoading(false);
           navigate("/login")
         }else{
+          setLoading(false);
           toast.error("Try agian later", {duration: 1500})
         }
       });
@@ -93,13 +98,11 @@ const Register = () => {
         <h1 className="text-[20px] font-semibold pb-4 text-center">
           Welcome to<span className=" text-[#3777fa]"> AKTSMV TRADERS</span>
         </h1>
-        <div className=" flex flex-col" >
+        <div className=" flex flex-col">
           <h1 className=" mb-4">Personal details</h1>
           <div className=" w-full h-full grid grid-cols-1 sm:grid-cols-2  gap-5">
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
-                Name
-              </label>
+              <label className=" text-sm font-medium text-gray-600">Name</label>
               <input
                 type="text"
                 id="name"
@@ -123,7 +126,7 @@ const Register = () => {
               />
             </div>
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className="text-sm font-medium text-gray-600">
                 Primary number
               </label>
               <input
@@ -132,7 +135,11 @@ const Register = () => {
                 name="pnumber"
                 className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Primary number"
-                onChange={(e) => setPrimaryNUmber(e.target.value)}
+                onChange={(e) => {
+                  const newValue = e.target.value.replace(/[^0-9]/g, "");
+                  setPrimaryNUmber(newValue.slice(0, 10));
+                  e.target.value = newValue.slice(0, 10);
+                }}
               />
             </div>
             <div className="">
@@ -162,20 +169,27 @@ const Register = () => {
               />
             </div>
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className="text-sm font-medium text-gray-600">
                 Aadhar number
               </label>
               <input
-                type="number"
+                type="text" // Change type to text
                 id="aadhar"
                 name="aadhar"
                 className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Aadhar number"
-                onChange={(e) => setAadhar(e.target.value)}
+                onChange={(e) => {
+                  const newValue = e.target.value.replace(/[^0-9]/g, "");
+                  const formattedValue = newValue
+                    .slice(0, 12)
+                    .replace(/(\d{4})(\d{4})(\d{4})/, "$1 $2 $3");
+                  setAadhar(formattedValue);
+                  e.target.value = formattedValue;
+                }}
               />
             </div>
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className="text-sm font-medium text-gray-600">
                 Secondary number
               </label>
               <input
@@ -183,8 +197,12 @@ const Register = () => {
                 id="snumber"
                 name="snumber"
                 className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
-                placeholder="Seconday number"
-                onChange={(e) => setSecondaryNumber(e.target.value)}
+                placeholder="Secondary number"
+                onChange={(e) => {
+                  const newValue = e.target.value.replace(/[^0-9]/g, "");
+                  setSecondaryNumber(newValue.slice(0, 10));
+                  e.target.value = newValue.slice(0, 10);
+                }}
               />
             </div>
             <div className="">
@@ -196,7 +214,7 @@ const Register = () => {
                 name="address"
                 className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Address"
-                onChange={(e)=>setAddress(e.target.value)}
+                onChange={(e) => setAddress(e.target.value)}
               ></textarea>
             </div>
           </div>
@@ -225,7 +243,7 @@ const Register = () => {
                 name="account no"
                 className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Account number"
-                onChange={(e)=>setAccount(e.target.value)}
+                onChange={(e) => setAccount(e.target.value)}
               />
             </div>
             <div className="">
@@ -238,7 +256,7 @@ const Register = () => {
                 name="ifsc"
                 className="mt-1 p-3 w-full border-2 rounded-md uppercase"
                 placeholder="IFSC CODE"
-                onChange={(e)=>setIFSC_code(e.target.value)}
+                onChange={(e) => setIFSC_code(e.target.value)}
               />
             </div>
             <div className="">
@@ -282,23 +300,19 @@ const Register = () => {
                 className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Confirm Password"
                 onChange={(e) => setPassword(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    onSubmit();
-                  }
-                }}
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="bg-[#3777FA] text-white p-3 rounded-md hover:bg-[#334e8e] w-full shadow-md mt-10"
+            className="bg-[#3777FA] text-white p-3 rounded-md flex justify-center space-x-3 items-center hover:bg-[#334e8e] w-full shadow-md mt-10"
             onClick={()=>onSubmit()}
           >
-            Sign up
+            <p>Sign up</p>
+            {loading && <img src={loadingIcon} alt="no img" className=" w-5" />}
           </button>
+
           <h1 className="text-sm font-medium text-gray-600 mt-8 text-center mb-[15px]">
             Already have a account?{" "}
             <span
@@ -308,10 +322,11 @@ const Register = () => {
               Login
             </span>
           </h1>
+          
         </div>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default Rigester;

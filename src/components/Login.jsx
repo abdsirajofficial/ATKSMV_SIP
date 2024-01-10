@@ -1,24 +1,31 @@
 import React, { useState } from "react";
 import img3 from "../assets/img3.svg";
 import logo from "../assets/logo2.svg";
-
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../server/app";
 import toast from "react-hot-toast";
+import loadingIcon from "../assets/loading.svg";
+
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 
 const Login = () => {
   const navigate = useNavigate();
-
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  //const [color, setColor] = useState("#ffffff");
 
   //login api call
   const onSubmit = () => {
-    // setShowLoading(true)
+    setLoading(true);
 
     const data = { email: username, password: password };
 
-    loginApi("user/login", data).then((res) => {
+    loginApi("user/login", data, setLoading).then((res) => {
       if (res.status === 200) {
         const token = res.data.token;
         const UserName = res.data.profile.name;
@@ -32,7 +39,7 @@ const Login = () => {
             localStorage.setItem("role", UserRole);
             toast.success("Login successfull!", { duration: 1500 });
             navigate("/admin/users");
-            // setShowLoading(false)
+            setLoading(false);
           } else {
             localStorage.setItem("loginToken", token);
             localStorage.setItem("name", UserName);
@@ -40,15 +47,15 @@ const Login = () => {
             localStorage.setItem("role", UserRole);
             toast.success("Login successfull!", { duration: 1500 });
             navigate("/user/dashboard");
-            // setShowLoading(false)
+            setLoading(false);
           }
         } else {
+          setLoading(false);
           toast.error("Login failed", { duration: 1500 });
-          // setShowLoading(false)
         }
       } else {
+        setLoading(false);
         toast.error("Something wrong", { duration: 1500 });
-        // setShowLoading(false)
       }
     });
   };
@@ -115,10 +122,11 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="bg-[#3777FA] text-white p-3 rounded-md hover:bg-[#334e8e] w-full sm:w-[290px]  shadow-md mt-5"
+            className="bg-[#3777FA] flex justify-center items-center  space-x-3 text-white p-3 rounded-md hover:bg-[#334e8e] w-full sm:w-[290px]  shadow-md mt-5"
             onClick={() => onSubmit()}
           >
-            Login
+            <p>Login</p>
+            {loading && <img src={loadingIcon} alt="no img" className=" w-5" />}
           </button>
           <h1 className="text-sm font-medium text-gray-600 mt-8 text-center">
             Don't have an account?{" "}
@@ -126,7 +134,7 @@ const Login = () => {
               className=" text-[#3777fa] cursor-pointer"
               onClick={() => navigate("/rigester")}
             >
-              Rigester
+              Register
             </span>
           </h1>
         </div>
@@ -135,4 +143,4 @@ const Login = () => {
   );
 };
 
-export default Login; 
+export default Login;
