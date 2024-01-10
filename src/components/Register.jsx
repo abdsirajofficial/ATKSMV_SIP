@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { rigesterApi } from "../server/app";
 import toast from "react-hot-toast";
 
-const Rigester = () => {
+const Register = () => {
 
   const navigate = useNavigate();
 
@@ -308,4 +308,4 @@ const Rigester = () => {
   );
 };
 
-export default Rigester;
+export default Register;

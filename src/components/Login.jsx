@@ -65,13 +65,13 @@ const Login = () => {
           </h1>
         </div>
       </div>
-      <div className="w-full bg-[aliceblue] md:w-1/2 h-full md:bg-white flex flex-col justify-center items-center space-y-8">
+      <div className="  w-full bg-[aliceblue] md:w-1/2 h-full md:bg-white flex flex-col justify-center items-center space-y-8">
         <img className=" w-52 " src={logo} alt="" />
         <h1 className=" md:text-[20px] font-semibold ">
           {" "}
           Welcome to<span className=" text-[#3777fa]"> ATKSMV TRADERS</span>
         </h1>
-        <div className=" md:w-1/2 flex flex-col">
+        <div className=" md:w-3/4 lg:w-[1/2] flex flex-col justify-center items-center">
           <div className="mb-6">
             <label
               htmlFor="username"
@@ -83,7 +83,7 @@ const Login = () => {
               type="text"
               id="username"
               name="username"
-              className="mt-1 p-3 w-full sm:w-[400px] border rounded-md shadow-md"
+              className="mt-1 p-3 w-full sm:w-[290px]  border rounded-md shadow-md"
               placeholder="Email or username"
               onChange={(e) => setusername(e.target.value)}
             />
@@ -99,7 +99,7 @@ const Login = () => {
               type="password"
               id="password"
               name="password"
-              className="mt-1 p-3 w-full sm:w-[400px] border rounded-md shadow-md"
+              className="mt-1 p-3 w-full sm:w-[290px]  border rounded-md shadow-md"
               placeholder="Password"
               onChange={(e) => setpassword(e.target.value)}
             />
@@ -109,7 +109,7 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="bg-[#3777FA] text-white p-3 rounded-md hover:bg-[#334e8e] w-full shadow-md"
+            className="bg-[#3777FA] text-white p-3 rounded-md hover:bg-[#334e8e] w-full sm:w-[290px]  shadow-md mt-5"
             onClick={() => onSubmit()}
           >
             Login

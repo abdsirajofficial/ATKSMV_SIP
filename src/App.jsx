@@ -2,7 +2,6 @@ import "./App.css";
 import { HomePage } from "./components/HomePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
-import Rigester from "./components/Rigester";
 import { UserDashboard } from "./components/UserPage/userDashboard";
 import { Dashboard } from "./components/UserPage/menus/dashboard";
 import { Profile } from "./components/UserPage/menus/profile";
@@ -14,6 +13,7 @@ import { Users } from "./components/AdminPage/menus/users";
 import { AdminHistory } from "./components/AdminPage/menus/History";
 import { UserWithdrawal } from "./components/UserPage/menus/userWithdrawal";
 import { Payment } from "./components/AdminPage/menus/payment";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/rigester" element={<Rigester/>} />
+          <Route path="/rigester" element={<Register/>} />
           <Route path="/user" element={<UserDashboard/>} >
             <Route path="/user/dashboard" element={<Dashboard/>} />
             <Route path="/user/profile" element={<Profile/>} />
