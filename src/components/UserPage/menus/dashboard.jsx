@@ -62,6 +62,9 @@ export const Dashboard = () => {
       type: "",
     });
     setIsChecked();
+    setsenderAccName("");
+    setsenderTransId("");
+    setQuantity(1)
   }, []);
 
   const makeWithraqBtn = () => {
@@ -76,15 +79,20 @@ export const Dashboard = () => {
         if (res.status === 200) {
           if (res.data.msg === "WithDrawal request already Exist") {
             toast.success(res.data.msg, { duration: 1500 });
+            setIsChecked();
           } else {
             toast.success(res.data.success, { duration: 1500 });
+            setIsChecked();
           }
         } else {
           toast.error(res.data.err, { duration: 1500 });
+          setIsChecked();
         }
+        setIsChecked();
         setwithrawalReq(false);
       });
     } else {
+      setIsChecked();
       toast.error("Please check the checkBox", { duration: 1500 });
     }
   };
@@ -94,6 +102,10 @@ export const Dashboard = () => {
   };
 
   const handleCancelBtn = () => {
+    setIsChecked();
+    setsenderAccName("");
+    setsenderTransId("");
+    setQuantity(1)
     setPackageInvestment(false);
   };
 
@@ -106,6 +118,10 @@ export const Dashboard = () => {
       !quantity
     ) {
       toast.error("Please fill in all required fields.");
+      setIsChecked();
+      setsenderAccName("");
+      setsenderTransId("");
+      setQuantity(1)
       return;
     }
 
@@ -124,6 +140,10 @@ export const Dashboard = () => {
           .then((res) => {
             if (res.status === 200) {
               toast.success(res.data.msg);
+              setIsChecked();
+              setsenderAccName("");
+              setsenderTransId("");
+              setQuantity(1)
               setPackageInvestment(false);
             }
           })
@@ -135,14 +155,26 @@ export const Dashboard = () => {
           .then((res) => {
             if (res.status === 200) {
               toast.success(res.data.msg);
+              setIsChecked();
+              setsenderAccName("");
+              setsenderTransId("");
+              setQuantity(1)
               setPackageInvestment(false);
             }
           })
           .catch((error) => {
+            setIsChecked();
+            setsenderAccName("");
+            setsenderTransId("");
+            setQuantity(1)
             toast.error("Failed to process the transaction. Please try again.");
           });
       }
     } else {
+      setIsChecked();
+      setsenderAccName("");
+      setsenderTransId("");
+      setQuantity(1)
       toast.error("Please check the CheckBox", { duration: 1500 });
     }
   };
@@ -153,6 +185,10 @@ export const Dashboard = () => {
       type: type,
     });
     setsenderAmt(amount);
+    setIsChecked();
+    setsenderAccName("");
+    setsenderTransId("");
+    setQuantity(1)
     setPackageInvestment(true);
   };
 
@@ -205,26 +241,31 @@ export const Dashboard = () => {
             <BsCashCoin />
           </div>
         </div>
-        <div className=" w-full md:w-[250px] 2xl:w-[300px] px-4 pb-2 pt-8 shadow-md  rounded-xl flex flex-col justify-between items-start bg-gradient-to-r from-blue-200 to-blue-500">
-          <div className=" flex flex-col justify-center items-center space-y-3">
-            <h1 className=" text-[#031635] font-semibold text-[22px]">
+        <div className="w-full md:w-[250px] 2xl:w-[300px] px-4 pb-2 pt-8 shadow-md rounded-xl flex flex-col justify-between items-start bg-gradient-to-r from-blue-200 to-blue-500">
+          <div className="flex flex-col justify-center items-center space-y-3">
+            <h1 className="text-[#031635] font-semibold text-[22px]">
               {profile.amount
                 ? parseInt(profile.amount) +
                   (profile.return ? parseInt(profile.return) : 0)
                 : 0}
             </h1>
-            <h1 className=" text-[#031635] font-semibold">Total amount</h1>
+            <h1 className="text-[#031635] font-semibold">Total amount</h1>
           </div>
-          <div
-            className=" w-full flex justify-end items-center space-x-2"
-            onClick={() => makewithraw()}
-          >
-            {/* <div className=" w-3 h-3 bg-green-500 rounded-full"></div> */}
-            <h1 className=" font-semibold text-[14px] text-[#031635] cursor-pointer">
-              Withdraw
-            </h1>
-            <FaArrowRightLong className=" text-[#031635]" />
-          </div>
+
+          {/* Conditional rendering for the withdrawal option */}
+          {(profile.amount ? parseInt(profile.amount) : 0) +
+            (profile.return ? parseInt(profile.return) : 0) >
+            0 && (
+            <div
+              className="w-full flex justify-end items-center space-x-2"
+              onClick={() => makewithraw()}
+            >
+              <h1 className="font-semibold text-[14px] text-[#031635] cursor-pointer">
+                Withdraw
+              </h1>
+              <FaArrowRightLong className="text-[#031635]" />
+            </div>
+          )}
         </div>
       </div>
       <h1 className=" w-full font-semibold py-5">Monthly Package</h1>
@@ -504,7 +545,10 @@ export const Dashboard = () => {
           authoringing us to call ISMS you even though you may be registered
           under DND. we shall call ISMS for a period of to months
         </h1>
-        <h1 className=" mt-5 font-medium text-[14px] text-red-400">For issues related to cyber attacks. Call us at <b> +91 8148867881</b> or Email us at <b>atksmvtraders@gmail.com</b></h1>
+        <h1 className=" mt-5 font-medium text-[14px] text-red-400">
+          For issues related to cyber attacks. Call us at <b> +91 8148867881</b>{" "}
+          or Email us at <b>atksmvtraders@gmail.com</b>
+        </h1>
       </div>
       {withdrawalReq && (
         <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10 overflow-x-auto">
@@ -716,7 +760,11 @@ export const Dashboard = () => {
                   be registered under DND. we shall call ISMS for a period of to
                   months
                 </h1>
-                <h1 className=" mt-5 font-medium text-[14px] text-red-400">For issues related to cyber attacks. Call us at <b> +91 8148867881</b> or Email us at <b>atksmvtraders@gmail.com</b></h1>
+                <h1 className=" mt-5 font-medium text-[14px] text-red-400">
+                  For issues related to cyber attacks. Call us at{" "}
+                  <b> +91 8148867881</b> or Email us at{" "}
+                  <b>atksmvtraders@gmail.com</b>
+                </h1>
               </div>
             </div>
           </div>
@@ -959,13 +1007,17 @@ export const Dashboard = () => {
                   Email us at{" "}
                   <span className=" font-semibold">sirajcsc2000@gmail.com</span>
                 </h1>
-                <h1 className=" mt-5 font-medium text-[14px] text-red-400">For issues related to cyber attacks. Call us at <b> +91 8148867881</b> or Email us at <b>atksmvtraders@gmail.com</b></h1>
+                <h1 className=" mt-5 font-medium text-[14px] text-red-400">
+                  For issues related to cyber attacks. Call us at{" "}
+                  <b> +91 8148867881</b> or Email us at{" "}
+                  <b>atksmvtraders@gmail.com</b>
+                </h1>
               </div>
             </div>
           </div>
         </div>
       )}
-        {/* {yearInvestment && (
+      {/* {yearInvestment && (
           <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10 overflow-x-auto">
             <div className=" w-full bg-white rounded-lg p-10">
               <h1 className=" font-semibold pb-5">

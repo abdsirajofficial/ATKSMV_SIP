@@ -25,14 +25,14 @@ export const Users = () => {
     userId: "",
     userName: "",
   });
-  const [search, setsearch] = useState("")
   const [Acitve, setAcitve] = useState(1)
   const [Total, setTotal] = useState()
+  const [search, setsearch] = useState()
 
   useEffect(() => {
     setprofile([]);
     setnominee([]);
-    getUserApi(`admin/users?page=${Acitve}`, setTotal, setuserData, settotalUsers);
+    getUserApi(`admin/users?page=${Acitve}&maxResults=7`, setTotal, setuserData, settotalUsers);
   }, [Acitve]);
 
   const handleEditUser = (id) => {
@@ -45,7 +45,7 @@ export const Users = () => {
     delUserApi(`admin/deleteUser?userId=${id}`).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
-        getUserApi(`admin/users?page=${Acitve}`, setTotal, setuserData, settotalUsers);
+        getUserApi(`admin/users?page=${Acitve}&maxResults=7`, setTotal, setuserData, settotalUsers);
       }
     });
     setdelConfirnMsg(false);
@@ -69,7 +69,7 @@ export const Users = () => {
       mobile: profile.mobile,
       name: profile.name,
       pan: profile.pan,
-      return: parseInt(profile.return),
+      return: profile.returns ? parseInt(profile.return) : 0,
       secondary_mobile: profile.secondary_mobile,
       upi_id: profile.upi_id,
       DOB: profile.DOB,
@@ -78,7 +78,7 @@ export const Users = () => {
       account_holder: profile.account_holder,
       account_no: profile.account_no,
       address: profile.address,
-      amount: parseInt(profile.amount),
+      amount: profile.amount ? parseInt(profile.amount) : 0
     };
 
     const nomineeData = {
@@ -98,7 +98,7 @@ export const Users = () => {
       editApi("admin/editUser", profileData).then((res) => {
         if (res.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
-          getUserApi(`admin/users?page=${Acitve}`, setTotal, setuserData, settotalUsers);
+          getUserApi(`admin/users?page=${Acitve}&maxResults=7`, setTotal, setuserData, settotalUsers);
         } else {
           toast.error(res.data.error, { duration: 1500 });
         }
@@ -123,22 +123,25 @@ export const Users = () => {
     }
   };
 
-  const searchApi = ( value) => {
-    getUserApi(`admin/users?name=${value}&page=${Acitve}`, setTotal, setuserData, settotalUsers);
+  const searchApi = () => {
+    getUserApi(`admin/users?name=${search}&page=${Acitve}&maxResults=6`, setTotal, setuserData, settotalUsers);
   }
 
+
   return (
-    <div className=" px-8 py-5">
+    <div className=" px-8 py-5 w-full h-full flex flex-col">
       <div className=" flex justify-between items-center">
         <h1 className=" text-[22px] font-medium">{totalUsers} Users</h1>
         <div className=" flex justify-center items-center space-x-5">
           <div className="bg-white rounded-md border ">
             <div className="pl-3.5 py-2.5 flex justify-start items-center space-x-3 bg-white rounded-md border">
               <IoIosSearch className="text-gray-400" />
-              <input type="text" placeholder="Search by name" onChange={(e)=>searchApi(e.target.value)}/>
+              <input type="text" placeholder="Search by name" onChange={(e)=>setsearch(e.target.value)}/>
             </div>
           </div>
-          <button className="bg-gradient-to-r from-blue-400 to-blue-700 px-5 py-2 rounded-md font-medium text-white transform transition duration-300 hover:scale-105">
+          <button className="bg-gradient-to-r from-blue-400 to-blue-700 px-5 py-2 rounded-md font-medium text-white transform transition duration-300 hover:scale-105"
+          onClick={()=> searchApi()}
+          >
             Search
           </button>
         </div>
@@ -151,47 +154,60 @@ export const Users = () => {
         <p className=" flex justify-center items-center">Status</p>
         <p className=" flex justify-center items-center">Action</p>
       </div>
-      {userData.length === 0 ? (
-        <div className="text-center py-4 text-gray-600">No users found</div>
-      ) : (
-        userData.map((user, index) => (
-          <div
-            key={index}
-            className={`w-full h-auto grid grid-cols-6 grid-rows-1 text-center rounded py-3  text-[14px] bg-white shadow border-b border-neutral-400 ${
-              index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
-            }`}
-          >
-            <p className=" flex justify-center items-center">{user.userId}</p>
-            <p className=" flex justify-center items-center">{user.name}</p>
-            <p className=" flex justify-center items-center">{user.role}</p>
-            <p className=" flex justify-center items-center">
-              {(user.amount ? user.amount : 0) +
-                (user.return ? user.return : 0)}
-            </p>
-            <p className=" flex justify-center items-center">
-              <p
-                className={`px-3.5 rounded-full border-2 py-0.5 ${
-                  user.status === "Active"
-                    ? "bg-green-50 border-green-200"
-                    : "bg-red-50 border-red-200"
+      <div className=" w-full grow  flex flex-col justify-between">
+        <div>
+          {userData.length === 0 ? (
+            <div className="text-center py-4 text-gray-600">No users found</div>
+          ) : (
+            userData.map((user, index) => (
+              <div
+                key={index}
+                className={`w-full h-auto grid grid-cols-6 grid-rows-1 text-center rounded py-3  text-[14px] bg-white shadow border-b border-neutral-400 ${
+                  index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
                 }`}
               >
-                {user.status}
-              </p>
-            </p>
-            {user.role === "User" ? (
-              <p className="flex justify-centeer items-center space-x-5">
-                <button
-                  className="flex justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
-                  onClick={() => deleteUserConfirm(user.userId, user.name)}
-                >
-                  <p className="text-[20px]">
-                    <MdDelete />
+                <p className=" flex justify-center items-center">{user.userId}</p>
+                <p className=" flex justify-center items-center">{user.name}</p>
+                <p className=" flex justify-center items-center">{user.role}</p>
+                <p className=" flex justify-center items-center">
+                  {(user.amount ? user.amount : 0) +
+                    (user.return ? user.return : 0)}
+                </p>
+                <p className=" flex justify-center items-center">
+                  <p
+                    className={`px-3.5 rounded-full border-2 py-0.5 ${
+                      user.status === "Active"
+                        ? "bg-green-50 border-green-200"
+                        : "bg-red-50 border-red-200"
+                    }`}
+                  >
+                    {user.status}
                   </p>
-                  <p>Delete</p>
-                </button>
+                </p>
+                {user.role === "User" ? (
+                  <p className="flex justify-centeer items-center space-x-5">
+                    <button
+                      className="flex justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
+                      onClick={() => deleteUserConfirm(user.userId, user.name)}
+                    >
+                      <p className="text-[20px]">
+                        <MdDelete />
+                      </p>
+                      <p>Delete</p>
+                    </button>
+                    <button
+                      className="flex justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
+                      onClick={() => handleEditUser(user.userId)}
+                    >
+                      <p>
+                        <MdModeEditOutline />
+                      </p>
+                      <p>Edit</p>
+                    </button>
+                  </p>
+                ): (<p className="flex justify-center items-center space-x-5">
                 <button
-                  className="flex justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
+                  className="flex justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110 ml-14"
                   onClick={() => handleEditUser(user.userId)}
                 >
                   <p>
@@ -199,32 +215,14 @@ export const Users = () => {
                   </p>
                   <p>Edit</p>
                 </button>
-              </p>
-            ): (<p className="flex justify-center items-center space-x-5">
-            {/* <button
-              className="flex justify-center items-center space-x-2 bg-red-600 px-2 py-1.5 rounded-lg text-white hover:scale-110"
-              onClick={() => deleteUserConfirm(user.userId, user.name)}
-            >
-              <p className="text-[20px]">
-                <MdDelete />
-              </p>
-              <p>Delete</p>
-            </button> */}
-            <button
-              className="flex justify-center items-center space-x-2 bg-blue-600 px-3 py-1.5 rounded-lg text-white hover:scale-110 ml-14"
-              onClick={() => handleEditUser(user.userId)}
-            >
-              <p>
-                <MdModeEditOutline />
-              </p>
-              <p>Edit</p>
-            </button>
-          </p>)}
-          </div>
-        ))
-      )}
-      <div className=" w-full mt-5 justify-end items-end">
-        <Pagination active={Acitve} setActive={setAcitve} total={Total}/>
+              </p>)}
+              </div>
+            ))
+          )}
+        </div>
+        {Total > 1 && (<div className=" w-full mt-5 justify-end items-end">
+          <Pagination active={Acitve} setActive={setAcitve} total={Total}/>
+        </div>)}   
       </div>
       {delConfirnMsg && (
         <div className=" fixed z-20 w-screen h-screen  top-0 right-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center">
@@ -276,7 +274,7 @@ export const Users = () => {
                   <input
                     type="number"
                     value={profile.amount}
-                    className="text-[#031635] font-semibold text-[22px] bg-transparent"
+                    className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
                     onChange={(e) =>
                       setprofile({ ...profile, amount: e.target.value })
                     }
@@ -294,7 +292,7 @@ export const Users = () => {
                   <input
                     type="number"
                     value={profile.return}
-                    className="text-[#031635] font-semibold text-[22px] bg-transparent"
+                    className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
                     onChange={(e) =>
                       setprofile({ ...profile, return: e.target.value })
                     }
@@ -309,7 +307,7 @@ export const Users = () => {
               </div>
               <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
                 <div className=" flex flex-col justify-center items-center space-y-3">
-                  <h1 className=" text-[#031635] font-semibold text-[22px]">
+                  <h1 className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent p-4">
                     {profile.amount
                       ? parseInt(profile.amount) +
                         (profile.return ? parseInt(profile.return) : 0)

@@ -17,15 +17,15 @@ export function Pagination({active,setActive,total}) {
     };
    
     return (
-      <div className=" flex justify-end items-end gap-8">
+      <div className=" flex justify-end items-center gap-8">
         <button
           size="sm"
           variant="outlined"
           onClick={prev}
           disabled={active === 1}
-          className=" flex justify-center items-center"
+          className=" flex justify-center items-center border-2 p-3 bg-[#212121] rounded-lg"
         >
-          <FaAngleLeft className="h-4 w-4" />
+          <FaAngleLeft className="h-4 w-4 text-white" />
         </button>
         <p className="font-normal">
           Page <strong className="text-gray-900">{active}</strong> of{" "}
@@ -36,9 +36,9 @@ export function Pagination({active,setActive,total}) {
           variant="outlined"
           onClick={next}
           disabled={active === total}
-          className=" flex justify-center items-center"
+          className="flex justify-center items-center border-2 p-3 bg-[#212121] rounded-lg"
         >
-          <FaAngleRight strokeWidth={2} className="h-4 w-4" />
+          <FaAngleRight strokeWidth={2} className="h-4 w-4 text-white" />
         </button>
       </div>
     );

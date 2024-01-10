@@ -50,7 +50,7 @@ export const UserDashboard = () => {
       {/* Sidebar */}
 
       <div className=" hidden sm:block">
-        <div className=" w-40 lg:w-48 h-full bg-gradient-to-b from-blue-500 to-[#3777FA] flex flex-col justify-between  items-center pt-5 space-y-2">
+        <div className=" w-40 lg:w-48 h-full bg-gradient-to-b from-blue-500 to-[#3777FA] flex flex-col justify-between  items-center pt-5 space-y-2 pb-10">
           <div className=" flex flex-col justify-center items-center">
             <div className=" text-white flex justify-center ">
               <img src={logo} alt="" className="w-36" />
@@ -102,10 +102,10 @@ export const UserDashboard = () => {
             </NavLink>
           </div>
           <button
-            className=" flex justify-center items-center gap-x-2 text-white pb-8 hover:text-red-700"
+            className="flex justify-center items-center gap-x-2 bg-[aliceblue] hover:bg-red-400 hover:text-white px-3 py-2 rounded-md shadow-lg transform hover:scale-105 transition duration-300"
             onClick={() => handleLogout()}
           >
-            <h1 className=" text-[20px]">
+            <h1 className="text-[20px]">
               <MdOutlineLogout />
             </h1>
             Logout
@@ -113,7 +113,7 @@ export const UserDashboard = () => {
         </div>
       </div>
 
-      <div className=" relative w-full h-full flex flex-col ">
+      <div className=" w-full h-full flex flex-col ">
         {/* Navbar*/}
         <div className="w-full h-18 shadow border-b-2 flex justify-end items-center bg-white pr-10">
           <div>
@@ -191,18 +191,18 @@ export const UserDashboard = () => {
                         </h1>
                       </NavLink>
                     </div>
-                    <div className=" flex justify-start items-start pr-40">
+                    <div className=" flex justify-start items-start pr-40 pt-5">
                       <button
-                        className=" flex justify-center items-center  gap-x-2 text-white pb-8 pr-9 mt-5 hover:text-red-700"
+                        className="flex justify-center items-center gap-x-2 bg-[aliceblue] hover:bg-red-400 hover:text-white px-3 py-2 rounded-md shadow-lg transform hover:scale-105 transition duration-300"
                         onClick={() => handleLogout()}
                       >
-                        <h1 className=" flex justify-center items-center gap-2">
+                        <h1 className="text-[20px]">
                           <MdOutlineLogout />
                         </h1>
-                        <h1>Logout</h1>
+                        Logout
                       </button>
                     </div>
-                    </div>
+                  </div>
                 </div>
               </div>
             )}

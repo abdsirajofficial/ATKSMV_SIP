@@ -55,27 +55,27 @@ const Login = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center bg-[#588FFF]">
-      <div className=" w-1/2 h-full bg-gradient-to-b from-blue-500 to-[#3777FA] flex flex-col space-y-10 justify-center items-center">
+      <div className="hidden md:w-1/2 h-full bg-gradient-to-b from-blue-500 to-[#3777FA] md:flex flex-col space-y-10 justify-center items-center">
         <img className="" src={img3} alt="" />
         <div className=" flex flex-col justify-center items-center text-white space-y-3">
-          <h1 className=" text-[16px]">Expert in stock recommendation</h1>
+          <h1 className="text-[16px]">Expert in stock recommendation</h1>
           <h1 className="text-[14px] text-gray-200">
             Trade hassle-free in Stocks, Futures & Options and Currencies of
             NSE, BSE & MCX
           </h1>
         </div>
       </div>
-      <div className=" w-1/2 h-full bg-white flex flex-col justify-center items-center space-y-8">
+      <div className="w-full bg-[aliceblue] md:w-1/2 h-full md:bg-white flex flex-col justify-center items-center space-y-8">
         <img className=" w-52 " src={logo} alt="" />
-        <h1 className="text-[20px] font-semibold ">
+        <h1 className=" md:text-[20px] font-semibold ">
           {" "}
           Welcome to<span className=" text-[#3777fa]"> ATKSMV TRADERS</span>
         </h1>
-        <div className=" w-1/2 flex flex-col">
+        <div className=" md:w-1/2 flex flex-col">
           <div className="mb-6">
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-600"
+              className="block text-sm font-medium text-black md:text-gray-600"
             >
               Username
             </label>
@@ -83,7 +83,7 @@ const Login = () => {
               type="text"
               id="username"
               name="username"
-              className="mt-1 p-3 w-full border rounded-md"
+              className="mt-1 p-3 w-full sm:w-[400px] border rounded-md shadow-lg"
               placeholder="Email or username"
               onChange={(e) => setusername(e.target.value)}
             />
@@ -91,7 +91,7 @@ const Login = () => {
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-600"
+              className="block text-sm font-medium text-black md:text-gray-600"
             >
               Password
             </label>
@@ -99,9 +99,14 @@ const Login = () => {
               type="password"
               id="password"
               name="password"
-              className="mt-1 p-3 w-full border rounded-md"
+              className="mt-1 p-3 w-full sm:w-[400px] border rounded-md shadow-lg"
               placeholder="Password"
               onChange={(e) => setpassword(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  onSubmit();
+                }
+              }}
             />
             {/* <p className="text-sm font-medium text-gray-600 mt-3 text-end">
               Forgot Password?

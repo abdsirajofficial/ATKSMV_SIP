@@ -8,6 +8,7 @@ import {
 } from "../../../server/app";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 import toast from "react-hot-toast";
+import { Pagination } from "../../pagination";
 
 export const Withdrawal = () => {
   const [approved, setapproved] = useState(false);
@@ -15,10 +16,16 @@ export const Withdrawal = () => {
 
   const [withdrawal, setwithdrawal] = useState([]);
   const [profile, setprofile] = useState([]);
+  const [Acitve, setAcitve] = useState(1);
+  const [Total, setTotal] = useState();
 
   useEffect(() => {
-    getWithdrawal("admin/withdrawRequest", setwithdrawal);
-  }, []);
+    getWithdrawal(
+      `admin/withdrawRequest?page=${Acitve}&maxResults=7`,
+      setTotal,
+      setwithdrawal
+    );
+  }, [Acitve]);
 
   const acceptRequest = (userId, id) => {
     setapproved(true);
@@ -32,16 +39,29 @@ export const Withdrawal = () => {
       userId: userId,
       amount: amount,
     };
-    acceptWithrawalReqApi("admin/requestChange", data);
-    getWithdrawal("admin/withdrawRequest", setwithdrawal);
-    setapproved(false);
+    acceptWithrawalReqApi("admin/requestChange", data).then((res) => {
+      if(res.status === 200){
+        getWithdrawal(
+          `admin/withdrawRequest?page=${Acitve}&maxResults=7`,
+          setTotal,
+          setwithdrawal
+        );
+        setapproved(false);
+      }else {
+        toast.error(res.data.error);
+      }
+    })
   };
 
   const delWithrawReq = (id) => {
     delWithrawalReq(`admin/deleteRequest?userId=${id}`).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
-        getWithdrawal("admin/withdrawRequest", setwithdrawal);
+        getWithdrawal(
+          `admin/withdrawRequest?page=${Acitve}&maxResults=7`,
+          setTotal,
+          setwithdrawal
+        );
         setapproved(false);
       } else {
         toast.error(res.data.error);
@@ -50,7 +70,7 @@ export const Withdrawal = () => {
   };
 
   return (
-    <div className=" px-8 py-5">
+    <div className="px-8 py-5 w-full h-full flex flex-col">
       <div className="w-full h-auto shadow-sm grid grid-cols-7 grid-rows-1 text-center rounded py-3  text-[14px] bg-white mb-5">
         <p className=" flex justify-center items-center">SI No</p>
         <p className=" flex justify-center items-center">User ID</p>
@@ -60,54 +80,63 @@ export const Withdrawal = () => {
         <p className=" flex justify-center items-center">Status</p>
         <p className=" flex justify-center items-center">Action</p>
       </div>
-      {withdrawal.length === 0 ? (
-        <div className="text-center py-4 text-gray-600">
-          No withdrawal request are available
-        </div>
-      ) : (
-        withdrawal.map((withdraw, index) => (
-          <div
-            className={`w-full h-auto grid grid-cols-7 grid-rows-1 text-center rounded py-3  text-[14px] bg-white shadow border-b border-neutral-400 ${
-              index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
-            }`}
-          >
-            <p className=" flex justify-center items-center">{index + 1}</p>
-            <p className=" flex justify-center items-center">
-              {withdraw.userId}
-            </p>
-            <p className=" flex justify-center items-center">{withdraw.name}</p>
-            <p className=" flex justify-center items-center">
-              {withdraw.amount}
-            </p>
-            <p className=" flex justify-center items-center">
-              {withdraw.updatedOn.slice(0, 10)}
-            </p>
-            <p className=" flex justify-center items-center ">
-              <p
-                className={`px-3.5 rounded-full border-2 py-0.5 ${
-                  withdraw.status === "Success"
-                    ? "bg-green-50 border-green-200"
-                    : "bg-yellow-50 border-yellow-200"
+      <div className=" w-full grow  flex flex-col justify-between">
+        <div>
+          {withdrawal.length === 0 ? (
+            <div className="text-center py-4 text-gray-600">
+              No withdrawal request are available
+            </div>
+          ) : (
+            withdrawal.map((withdraw, index) => (
+              <div
+                className={`w-full h-auto grid grid-cols-7 grid-rows-1 text-center rounded py-3  text-[14px] bg-white shadow border-b border-neutral-400 ${
+                  index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
                 }`}
               >
-                {withdraw.status}
-              </p>
-            </p>
-
-            <p className=" flex justify-center items-center ">
-              <button
-                className=" flex  justify-center items-center space-x-2 bg-green-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
-                onClick={() => acceptRequest(withdraw.userId, withdraw.id)}
-              >
-                <p className=" text-[20px]">
-                  <VscWorkspaceTrusted />
+                <p className=" flex justify-center items-center">{index + 1}</p>
+                <p className=" flex justify-center items-center">
+                  {withdraw.userId}
                 </p>
-                <p>Accept</p>
-              </button>
-            </p>
-          </div>
-        ))
-      )}
+                <p className=" flex justify-center items-center">
+                  {withdraw.name}
+                </p>
+                <p className=" flex justify-center items-center">
+                  {withdraw.amount}
+                </p>
+                <p className=" flex justify-center items-center">
+                  {withdraw.updatedOn.slice(0, 10)}
+                </p>
+                <p className=" flex justify-center items-center ">
+                  <p
+                    className={`px-3.5 rounded-full border-2 py-0.5 ${
+                      withdraw.status === "Success"
+                        ? "bg-green-50 border-green-200"
+                        : "bg-yellow-50 border-yellow-200"
+                    }`}
+                  >
+                    {withdraw.status}
+                  </p>
+                </p>
+
+                <p className=" flex justify-center items-center ">
+                  <button
+                    className=" flex  justify-center items-center space-x-2 bg-green-600 px-3 py-1.5 rounded-lg text-white hover:scale-110"
+                    onClick={() => acceptRequest(withdraw.userId, withdraw.id)}
+                  >
+                    <p className=" text-[20px]">
+                      <VscWorkspaceTrusted />
+                    </p>
+                    <p>Accept</p>
+                  </button>
+                </p>
+              </div>
+            ))
+          )}
+        </div>
+        {Total > 1 && (<div className=" w-full mt-5 justify-end items-end">
+          <Pagination active={Acitve} setActive={setAcitve} total={Total}/>
+        </div>)}   
+      </div>
 
       {approved && (
         <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10">

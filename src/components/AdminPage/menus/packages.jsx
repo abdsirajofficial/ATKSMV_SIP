@@ -9,6 +9,7 @@ import img10 from "../../../assets/img10.svg";
 import {
   addPackageApi,
   delPackageApi,
+  eidtPackageApi,
   getAnnualPackageApi,
   getMonPackageApi,
 } from "../../../server/app";
@@ -20,7 +21,7 @@ export const Package = () => {
   const [addMonPackage, setaddMonPackage] = useState(false);
   const [MonPackDetails, setMonPackDetails] = useState(false);
   const [addYearPackage, setaddYearPackage] = useState(false);
-  const [YearPackDetails, setYearPackDetails] = useState(false);
+  const [packAmount, setpackAmount] = useState();
   const userId = {
     userId: localStorage.getItem("userid"),
   };
@@ -40,6 +41,8 @@ export const Package = () => {
 
   const [monPackages, setmonPackages] = useState([]);
   const [annPackages, setannPackages] = useState([]);
+  const [eidtPackages, seteidtPackages] = useState(false);
+  const [EditPackData, setEditPackData] = useState([]);
 
   const sipCalculator = (values, year) => {
     const p = values;
@@ -67,7 +70,7 @@ export const Package = () => {
 
   useEffect(() => {
     getMonPackageApi(
-      "user/monthPackages",
+      "admin/monthPackages",
       { userId: userId.userId },
       setmonPackages,
       setcurrentPackId
@@ -96,7 +99,7 @@ export const Package = () => {
         if (res.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getMonPackageApi(
-            "user/monthPackages",
+            "admin/monthPackages",
             { userId: userId.userId },
             setmonPackages,
             setcurrentPackId
@@ -114,7 +117,7 @@ export const Package = () => {
         if (res.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getAnnualPackageApi(
-            "user/annualPackages",
+            "admin/annualPackages",
             userId,
             setannPackages,
             setcurrentPackId
@@ -166,7 +169,6 @@ export const Package = () => {
   };
 
   const handlePackcancelBtn = () => {
-    console.log(packages);
     setaddMonPackage(false);
     setaddYearPackage(false);
     setPackages({
@@ -174,8 +176,79 @@ export const Package = () => {
       years: "",
       returns: "",
     });
-    console.log(packages);
+    setEditPackData([]);
+    seteidtPackages(false);
   };
+
+  const handleEditPackage = (id, type) => {
+    seteidtPackages(true);
+
+    if (type === "monthly") {
+      const foundPackage = monPackages.find(
+        (packageItem) => packageItem.packId === id
+      );
+
+      if (foundPackage) {
+        setEditPackData(foundPackage);
+      }
+    } else {
+      const foundPackage = annPackages.find(
+        (packageItem) => packageItem.packId === id
+      );
+
+      if (foundPackage) {
+        setEditPackData(foundPackage);
+      }
+    }
+  };
+
+  const updatePackages = (type) => {
+    const PackaType = type.slice(0, 3);
+
+    const data = {
+      packId: EditPackData.packId,
+      amount: parseInt(EditPackData.amount),
+      years: parseInt(EditPackData.years),
+      returns: parseInt(EditPackData.returns),
+    };
+
+    if (PackaType === "MON") {
+      eidtPackageApi("admin/editMonthPackages", data).then((res) => {
+        if (res.status === 200) {
+          toast.success(res.data.msg, { duration: 1500 });
+          getMonPackageApi(
+            "admin/monthPackages",
+            { userId: userId.userId },
+            setmonPackages,
+            setcurrentPackId
+          );
+          setEditPackData([]);
+          seteidtPackages(false);
+          setaddMonPackage(false);
+        }
+      });
+    } else {
+      eidtPackageApi("admin/editAnnualPackages", data).then((res) => {
+        if (res.status === 200) {
+          toast.success(res.data.msg, { duration: 1500 });
+          getAnnualPackageApi(
+            "admin/annualPackages",
+            userId,
+            setannPackages,
+            setcurrentPackId
+          );
+          setEditPackData([]);
+          seteidtPackages(false);
+          setaddYearPackage(false);
+        }
+      });
+    }
+  };
+
+  const PackageMoreDtls = (amount) => {
+    setMonPackDetails(true)
+    setpackAmount(amount)
+  }
 
   return (
     <div className=" px-8 py-5">
@@ -191,7 +264,7 @@ export const Package = () => {
           <h1>Add Package</h1>
         </button>
       </div>
-      <div className=" grid grid-cols-3 gap-10">
+      <div className=" grid grid-cols-3 gap-10 mt-5">
         {monPackages.length === 0 ? (
           <div className="text-center py-4 text-gray-600">
             Please add Monthly package
@@ -255,11 +328,14 @@ export const Package = () => {
               <div className=" w-full flex justify-between items-center p-3">
                 <p
                   className=" text-light-blue-800 cursor-pointer hover:font-semibold"
-                  onClick={() => setMonPackDetails(true)}
+                  onClick={() => PackageMoreDtls( data.amount)}
                 >
                   More details
                 </p>
-                <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105">
+                <button
+                  className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                  onClick={() => handleEditPackage(data.packId, "monthly")}
+                >
                   <h1>
                     <MdModeEditOutline />
                   </h1>
@@ -270,7 +346,7 @@ export const Package = () => {
           ))
         )}
       </div>
-      <div className=" flex justify-between items-center">
+      <div className=" flex justify-between items-center mt-10">
         <h1 className=" font-semibold py-5">Annual Package</h1>
         <button
           className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
@@ -282,7 +358,7 @@ export const Package = () => {
           <h1>Add Package</h1>
         </button>
       </div>
-      <div className=" grid grid-cols-3 gap-10">
+      <div className=" grid grid-cols-3 gap-10 mt-5">
         {annPackages.length === 0 ? (
           <div className="text-center py-4 text-gray-600">
             Please add Annual Package
@@ -350,7 +426,10 @@ export const Package = () => {
                 >
                   More details
                 </p>
-                <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105">
+                <button
+                  className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                  onClick={() => handleEditPackage(data.packId, "annual")}
+                >
                   <h1>
                     <MdModeEditOutline />
                   </h1>
@@ -362,6 +441,89 @@ export const Package = () => {
         )}
       </div>
 
+      {eidtPackages && (
+        <div className=" w-full fixed inset-0 flex justify-center items-center bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10">
+          <div className=" w-min bg-white rounded-lg p-10">
+            <h1 className=" font-semibold">Edit Monthly Package</h1>
+            <div className=" flex space-x-5">
+              <div>
+                <div className=" flex space-x-2 mt-5">
+                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    Amount
+                  </div>
+                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    *
+                  </div>
+                </div>
+                <input
+                  type="number"
+                  value={EditPackData.amount}
+                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  placeholder="Amount"
+                  onChange={(e) =>
+                    setEditPackData({ ...EditPackData, amount: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <div className=" flex space-x-2 mt-5">
+                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    No of years
+                  </div>
+                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    *
+                  </div>
+                </div>
+                <input
+                  type="number"
+                  value={EditPackData.years}
+                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  placeholder="Years"
+                  onChange={(e) =>
+                    setEditPackData({ ...EditPackData, years: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <div className=" flex space-x-2 mt-5">
+                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    Returns %
+                  </div>
+                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    *
+                  </div>
+                </div>
+                <input
+                  type="number"
+                  value={EditPackData.returns}
+                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  placeholder="returns"
+                  onChange={(e) =>
+                    setEditPackData({
+                      ...EditPackData,
+                      returns: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <div className=" flex justify-end items-end space-x-5 mt-8">
+              <button
+                className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                onClick={() => handlePackcancelBtn()}
+              >
+                <h1>Cancel</h1>
+              </button>
+              <button
+                className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                onClick={() => updatePackages(EditPackData.packId)}
+              >
+                <h1>Update</h1>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {delConfirnMsg && (
         <div className=" fixed z-20 w-screen h-screen  top-0 right-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center">
           <div className="rounded-lg bg-white p-10 shadow-2xl antialiased flex flex-col justify-center items-center">
@@ -565,11 +727,11 @@ export const Package = () => {
           <div className=" w-full bg-white rounded-lg p-10">
             <div className=" flex justify-between items-center">
               <h1 className=" font-medium text-[22px]">
-                Start your SIP Monthly 500
+                Start your SIP Monthly {packAmount}
               </h1>
               <button
                 className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                onClick={() => setMonPackDetails(false)}
+                onClick={() =>{setMonPackDetails(false), setpackAmount()} }
               >
                 <h1>Cancel</h1>
               </button>
@@ -585,15 +747,15 @@ export const Package = () => {
               </tr>
               {/* </thead> */}
               {/* <tbody className=""> */}
-              {[...Array(15)].map((_, index) => (
+              {[...Array(5)].map((_, index) => (
                 <tr key={index}>
                   <td>{2024 + index}</td>
-                  <td>{500 * 12}</td>
-                  <td>{500 * 12 * (index + 1)}</td>
-                  <td>{sipCalculator(500, index + 1)}</td>
+                  <td>{packAmount * 12}</td>
+                  <td>{packAmount * 12 * (index + 1)}</td>
+                  <td>{sipCalculator(packAmount, index + 1)}</td>
                   <td className=" flex justify-center items-center">
                     <BiRupee />
-                    {500 * 12 * (index + 1) + sipCalculator(500, index + 1)}
+                    {packAmount * 12 * (index + 1) + sipCalculator(packAmount, index + 1)}
                   </td>
                 </tr>
               ))}
@@ -605,10 +767,10 @@ export const Package = () => {
                 <th>Footer 3</th>
                 <th>Footer 4</th>
                 <th>
-                  {[...Array(15)]
+                  {[...Array(5)]
                     .map(
                       (_, index) =>
-                        500 * 12 * (index + 1) + sipCalculator(500, index + 1)
+                      packAmount * 12 * (index + 1) + sipCalculator(packAmount, index + 1)
                     )
                     .reduce((a, b) => a + b, 0)}
                 </th>

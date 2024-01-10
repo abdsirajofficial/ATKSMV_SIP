@@ -38,27 +38,29 @@ export const getUserApi = async (path, setTotal, setuserData, settotalUsers) => 
     const res = await axios.get(api_url+path)
     setuserData(res.data.users)
     settotalUsers(res.data.totalUsers)
-    setTotal(res.data.totalUsers)
+    setTotal(res.data.totalPages)
     return res
   } catch (err) {
     // toast.error(err.response.data.error.message, {duration: 1500}) 
   }
 }
 //gethistory api
-export const gethistory = async (path, setHistory) => {
+export const gethistory = async (path, setTotal, setHistory) => {
   try{
     const res = await axios.get(api_url+path)
     setHistory(res.data.history)
+    setTotal(res.data.totalPages)
   return res
   } catch(err) {
     // toast.error(err.response.data.error.message, {duration: 1500})
   }
 }
 //get Withdrawal
-export const getWithdrawal = async (path, setwithdrawal) => {
+export const getWithdrawal = async (path, setTotal, setwithdrawal) => {
   try{
     const res = await axios.put(api_url+path)
     setwithdrawal(res.data.transactions)
+    setTotal(res.data.totalPages)
   return res
   } catch(err) {
     // toast.error(err.response.data.error.message, {duration: 1500})
@@ -173,10 +175,11 @@ export const getnomineeApi = async (path, data, setnominee) => {
   }
 }
 //get Withdrawal
-export const gettransactionApi = async (path, settransaction) => {
+export const gettransactionApi = async (path, setTotal, settransaction) => {
   try{
     const res = await axios.put(api_url+path)
     settransaction(res.data.transactions)
+    setTotal(res.data.totalPages)
   return res
   } catch(err) {
     // toast.error(err.response.data.error.message, {duration: 1500})
@@ -199,5 +202,14 @@ export const getadminApi = async (path, setadmin) => {
     return res
   } catch (err) {
     toast.error(err.response.data.error, {duration: 1500})
+  }
+}
+//get Withdrawal
+export const eidtPackageApi = async (path, data) => {
+  try{
+    const res = await axios.put(api_url+path, data)
+  return res
+  } catch(err) {
+    toast.error(err.response.data.err, {duration: 1500})
   }
 }
