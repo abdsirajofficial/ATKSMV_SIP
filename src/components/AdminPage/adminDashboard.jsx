@@ -163,7 +163,15 @@ export const AdminDashboard = () => {
                     <div className=" w-full text-white flex justify-center items-center ">
                       <img src={logo} alt="" className="w-36" />
                     </div>
-                    <div className=" w-full">
+                    <div className=" w-full py-2 mt-5 text-white">
+                    <div className=" flex justify-start items-start">
+                        <h1 className=" px-[18px]  text-[18px] rounded-full">
+                        User Id : {UserId}
+                        </h1>
+                        {/* <h1 className="px-[18px]  py-2 text-[18px] rounded-full my-2">
+                          {name}
+                        </h1> */}
+                      </div>
                       <NavLink
                         to={"/admin/users"}
                         className=" acitive w-full mt-10 flex justify-start  items-start lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"

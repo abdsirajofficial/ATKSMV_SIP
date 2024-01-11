@@ -28,27 +28,30 @@ export const Users = () => {
     userId: "",
     userName: "",
   });
-  const [Acitve, setAcitve] = useState(1);
-  const [InAcitve, setInAcitve] = useState(1);
+  const [Active, setActive] = useState(1);
+  const [InActive, setInActive] = useState(1);
   const [Total, setTotal] = useState();
+  // const [InacitveTotal, setInacitveTotal] = useState();
   const [InActiveTotal, setInActiveTotal] = useState();
   const [search, setsearch] = useState();
+  const [showUsers, setshowUsers] = useState(true);
 
   useEffect(() => {
     setprofile([]);
     setnominee([]);
     getUserApi(
-      `admin/users?page=${Acitve}&maxResults=7&status=Active`,
+      `admin/users?page=${Active}&maxResults=7&status=Active`,
       setTotal,
       setuserData,
       settotalUsers
     );
     getUserInActiveApi(
-      `admin/users?page=${InActiveTotal}&maxResults=7&status=InActive`,
+      `admin/users?page=${InActive}&maxResults=7&status=InActive`,
+      setInActivetotalUsers,
       setInActiveTotal,
       setuserInActiveData
     );
-  }, [Acitve, InActiveTotal]);
+  }, [Active, InActive]);
 
   const handleEditUser = (id) => {
     seteditUser(true);
@@ -61,7 +64,7 @@ export const Users = () => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
         getUserApi(
-          `admin/users?page=${Acitve}&maxResults=7`,
+          `admin/users?page=${Active}&maxResults=7`,
           setTotal,
           setuserData,
           settotalUsers
@@ -150,14 +153,12 @@ export const Users = () => {
 
   const searchApi = () => {
     getUserApi(
-      `admin/users?name=${search}&page=${Acitve}&maxResults=6`,
+      `admin/users?name=${search}&page=${Active}&maxResults=6`,
       setTotal,
       setuserData,
       settotalUsers
     );
   };
-
-  const [showUsers, setshowUsers] = useState(true);
 
   return (
     <div className=" px-2 sm:px-4 md:px-8 py-5 w-full h-full flex flex-col">
@@ -166,18 +167,22 @@ export const Users = () => {
           {showUsers ? (
             <h1>{totalUsers} Users</h1>
           ) : (
-            <h1>{InActiveTotal} Users</h1>
+            <h1>{InActivetotalUsers} Users</h1>
           )}
           {showUsers ? (
             <div className=" space-x-4">
               <button
-                className={`p-2 text-[17px] bg-gradient-to-r from-blue-400 to-blue-700 rounded-md shadow-md px-3 mt-2 ${ !showUsers ? "":" text-white"}`}
+                className={`p-2 text-[17px] bg-gradient-to-r from-blue-400 to-blue-700 rounded-md shadow-md px-3 mt-2 ${
+                  !showUsers ? "" : " text-white"
+                }`}
                 onClick={() => setshowUsers(true)}
               >
                 Active
               </button>
               <button
-                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-white  ${ showUsers ? " ":" text-"}`}
+                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-white  ${
+                  showUsers ? " " : " text-"
+                }`}
                 onClick={() => setshowUsers(false)}
               >
                 InActive
@@ -186,13 +191,17 @@ export const Users = () => {
           ) : (
             <div className=" space-x-4">
               <button
-                className={`p-2 text-[17px] bg-white rounded-md  shadow-md px-3 mt-2 ${ !showUsers ? "":" text-white"}`}
+                className={`p-2 text-[17px] bg-white rounded-md  shadow-md px-3 mt-2 ${
+                  !showUsers ? "" : " text-white"
+                }`}
                 onClick={() => setshowUsers(true)}
               >
                 Active
               </button>
               <button
-                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-gradient-to-r from-blue-400 to-blue-700  ${ showUsers ? " ":" text-"}`}
+                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-gradient-to-r from-blue-400 to-blue-700  ${
+                  showUsers ? " " : " text-white"
+                }`}
                 onClick={() => setshowUsers(false)}
               >
                 InActive
@@ -306,6 +315,15 @@ export const Users = () => {
                 </div>
               ))
             )}
+            {Total > 1 && (
+              <div className=" w-full mt-5 justify-end items-end">
+                <Pagination
+                  active={Active}
+                  setActive={setActive}
+                  total={Total}
+                />
+              </div>
+            )}
           </div>
         ) : (
           <div>
@@ -359,31 +377,35 @@ export const Users = () => {
                 </div>
               ))
             )}
-          </div>
-        )}
-
-        {Total > 1 && (
-          <div className=" w-full mt-5 justify-end items-end">
-            <Pagination active={Acitve} setActive={setAcitve} total={Total} />
+             {Total > 1 && (
+              <div className=" w-full mt-5 justify-end items-end">
+                <Pagination
+                  active={InActive}
+                  setActive={setInActive}
+                  total={InActiveTotal}
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
       {delConfirnMsg && (
         <div className=" fixed z-20 w-screen h-screen  top-0 right-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center">
-          <div className="rounded-lg bg-white p-10 shadow-2xl antialiased flex flex-col justify-center items-center">
+          <div className="rounded-lg bg-white p-5 sm:p-10 shadow-2xl antialiased flex flex-col justify-center items-center">
             <p className=" text-center text-[40px] text-red-500">
               <IoWarning></IoWarning>
             </p>
             <p className=" pt-2 font-[700px] text-[18px]">
               Delete {delUser.userName}
             </p>
-            <p className=" text-gray-800  flex space-x-2 pt-5">
+            <p className=" text-gray-800  sm:flex space-x-2 pt-5">
               <p>Are you sure you want to delete </p>
-              <p className=" tracking text-black font-medium">
-                {delUser.userId} {delUser.userName}?
+              <p className=" tracking text-black font-medium flex space-x-2">
+                <p>{delUser.userId}</p>
+                <p>{delUser.userName} ?</p>
               </p>
             </p>
-            <p>
+            <p className=" text-center">
               All the transaction records and withdrawal records will be deleted
               and{" "}
             </p>
@@ -408,21 +430,21 @@ export const Users = () => {
       )}
 
       {editUser && (
-        <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10 overflow-x-auto">
-          <div className=" w-full bg-white rounded-lg p-10">
+        <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm sm:px-10 sm:pt-10 overflow-x-auto">
+          <div className=" w-full bg-white rounded-lg sm:p-10 p-5">
             {profile.role !== "Admin" && (
               <div className="text-neutral-400 text-base font-semibold tracking-wide pb-5">
                 Investment Amount :-
               </div>
             )}
             {profile.role !== "Admin" && (
-              <div className=" flex space-x-16 justify-start items-center">
-                <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
+              <div className=" grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div className=" w-full md:w-[250px] 2xl:w-[300px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
                   <div className=" flex flex-col justify-start items-start space-y-3">
                     <input
                       type="number"
                       value={profile.amount}
-                      className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
+                      className="text-[#031635] w-full sm:w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
                       onChange={(e) =>
                         setprofile({ ...profile, amount: e.target.value })
                       }
@@ -435,12 +457,12 @@ export const Users = () => {
                     <BsCashCoin />
                   </div>
                 </div>
-                <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
+                <div className=" w-full md:w-[250px] 2xl:w-[300px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
                   <div className=" flex flex-col justify-start items-start space-y-3">
                     <input
                       type="number"
                       value={profile.return}
-                      className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
+                      className="text-[#031635] w-full sm:w-[200px] font-semibold text-[22px] bg-transparent border-2 p-4 rounded-xl border-purple-900"
                       onChange={(e) =>
                         setprofile({ ...profile, return: e.target.value })
                       }
@@ -453,9 +475,9 @@ export const Users = () => {
                     <BsCashCoin />
                   </div>
                 </div>
-                <div className=" w-[350px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
+                <div className="w-full md:w-[250px] 2xl:w-[300px] px-4 pb-2 pt-8 shadow-md rounded-xl flex flex-col justify-between items-start bg-gradient-to-r from-blue-200 to-blue-500">
                   <div className=" flex flex-col justify-center items-center space-y-3">
-                    <h1 className="text-[#031635] w-[200px] font-semibold text-[22px] bg-transparent p-4">
+                    <h1 className="text-[#031635] w-full sm:w-[200px] font-semibold text-[22px] bg-transparent p-4">
                       {profile.amount
                         ? parseInt(profile.amount) +
                           (profile.return ? parseInt(profile.return) : 0)
@@ -475,13 +497,13 @@ export const Users = () => {
             <div className="text-neutral-400 text-base font-semibold tracking-wide pt-10">
               Profile Details :-
             </div>
-            <div className=" grid grid-cols-3 gap-5">
+            <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-2">
               <div>
                 <div className="text-zinc-600 mt-5">User Id</div>
                 <input
                   type="text"
                   value={profile.userId}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-gray-200 focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-gray-200 focus:outline-none focus:ring focus:border-blue-300"
                   readOnly
                 />
               </div>
@@ -497,7 +519,7 @@ export const Users = () => {
                 <input
                   type="text"
                   value={profile.name}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) =>
                     setprofile({ ...profile, name: e.target.value })
                   }
@@ -515,7 +537,7 @@ export const Users = () => {
                 <input
                   type="email"
                   value={profile.email}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) =>
                     setprofile({ ...profile, email: e.target.value })
                   }
@@ -533,7 +555,7 @@ export const Users = () => {
                 <input
                   type="number"
                   value={profile.aadhar}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) => {
                     // Remove any non-numeric characters from the input value
                     const newValue = e.target.value.replace(/[^0-9]/g, "");
@@ -558,7 +580,7 @@ export const Users = () => {
                 <input
                   type="text"
                   value={profile.pan}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md uppercase border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md uppercase border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) => {
                     // Remove any characters that are not alphanumeric
                     const newValue = e.target.value.replace(
@@ -586,7 +608,7 @@ export const Users = () => {
                 <input
                   type="number"
                   value={profile.mobile}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) => {
                     // Remove non-numeric characters from the input value
                     const newValue = e.target.value.replace(/[^0-9]/g, "");
@@ -608,7 +630,7 @@ export const Users = () => {
                 <input
                   type="number"
                   value={profile.secondary_mobile}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) => {
                     // Remove non-numeric characters from the input value
                     const newValue = e.target.value.replace(/[^0-9]/g, "");
@@ -634,7 +656,7 @@ export const Users = () => {
                   <input
                     type="date"
                     value={profile.DOB}
-                    className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                    className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                     onChange={(e) =>
                       setprofile({ ...profile, DOB: e.target.value })
                     }
@@ -652,7 +674,7 @@ export const Users = () => {
                 </div>
                 <textarea
                   value={profile.address}
-                  className="w-[300px] h-[100px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] h-[100px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) =>
                     setprofile({ ...profile, address: e.target.value })
                   }
@@ -662,7 +684,7 @@ export const Users = () => {
             <div className="text-neutral-400 text-base font-semibold tracking-wide mt-8">
               Account Details :-
             </div>
-            <div className=" grid grid-cols-3">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
               <div>
                 <div className=" flex space-x-2 mt-5">
                   <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
@@ -675,7 +697,7 @@ export const Users = () => {
                 <input
                   type="text"
                   value={profile.account_holder}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) =>
                     setprofile({ ...profile, account_holder: e.target.value })
                   }
@@ -693,7 +715,7 @@ export const Users = () => {
                 <input
                   type="number"
                   value={profile.account_no}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) =>
                     setprofile({ ...profile, account_no: e.target.value })
                   }
@@ -711,7 +733,7 @@ export const Users = () => {
                 <input
                   type="text"
                   value={profile.IFSC}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md uppercase border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md uppercase border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) => {
                     // Remove any characters that are not alphanumeric
                     const newValue = e.target.value.replace(
@@ -739,7 +761,7 @@ export const Users = () => {
                 <input
                   type="text"
                   value={profile.upi_id}
-                  className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) =>
                     setprofile({ ...profile, upi_id: e.target.value })
                   }
@@ -751,7 +773,7 @@ export const Users = () => {
                 <div className="text-neutral-400 text-base font-semibold tracking-wide mt-16">
                   Nominee Details :-
                 </div>
-                <div className=" grid grid-cols-3">
+                <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-2">
                   <div>
                     <div className=" flex space-x-2 mt-5">
                       <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
@@ -764,7 +786,7 @@ export const Users = () => {
                     <input
                       type="text"
                       value={nominee ? nominee.name : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                       onChange={(e) =>
                         setnominee({ ...nominee, name: e.target.value })
                       }
@@ -782,7 +804,7 @@ export const Users = () => {
                     <input
                       type="text"
                       value={nominee ? nominee.email : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                       onChange={(e) =>
                         setnominee({ ...nominee, email: e.target.value })
                       }
@@ -800,7 +822,7 @@ export const Users = () => {
                     <input
                       type="number"
                       value={nominee ? nominee.mobile : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                       onChange={(e) => {
                         // Remove non-numeric characters from the input value
                         const newValue = e.target.value.replace(/[^0-9]/g, "");
@@ -825,7 +847,7 @@ export const Users = () => {
                     <input
                       type="text"
                       value={nominee ? nominee.pan : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border uppercase border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border uppercase border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                       onChange={(e) => {
                         // Remove any characters that are not alphanumeric
                         const newValue = e.target.value.replace(
@@ -853,7 +875,7 @@ export const Users = () => {
                     <input
                       type="number"
                       value={nominee ? nominee.aadhar : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                       onChange={(e) => {
                         // Remove non-numeric characters from the input value
                         const newValue = e.target.value.replace(/[^0-9]/g, "");
@@ -878,7 +900,7 @@ export const Users = () => {
                     <input
                       type="text"
                       value={nominee ? nominee.account_holder : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                       onChange={(e) =>
                         setnominee({
                           ...nominee,
@@ -899,7 +921,7 @@ export const Users = () => {
                     <input
                       type="number"
                       value={nominee ? nominee.account_no : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                       onChange={(e) =>
                         setnominee({ ...nominee, account_no: e.target.value })
                       }
@@ -917,7 +939,7 @@ export const Users = () => {
                     <input
                       type="text"
                       value={nominee ? nominee.IFSC : ""}
-                      className="w-[300px] px-3 py-2 mt-3 uppercase rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      className="w-full lg:w-[250px] px-3 py-2 mt-3 uppercase rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                       onChange={(e) => {
                         // Remove any characters that are not alphanumeric
                         const newValue = e.target.value.replace(
@@ -945,7 +967,7 @@ export const Users = () => {
                     <input
                       type="text"
                       value={nominee ? nominee.upi_id : ""}
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                       onChange={(e) =>
                         setnominee({ ...nominee, upi_id: e.target.value })
                       }

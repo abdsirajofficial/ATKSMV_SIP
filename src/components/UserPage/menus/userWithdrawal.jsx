@@ -15,7 +15,7 @@ export const UserWithdrawal = () => {
   }, [Acitve]);
 
   return (
-    <div className=" px-8 py-5 w-full h-full flex flex-col">
+    <div className=" sm:px-8 py-5 w-full h-full flex flex-col">
       <div className="w-full h-auto shadow-sm grid grid-cols-5 grid-rows-1 text-center rounded py-3 text-[14px] bg-white mb-5">
         {/* <p className=" flex justify-center items-center">SI No</p> */}
         <p className=" flex justify-center items-center">User ID</p>

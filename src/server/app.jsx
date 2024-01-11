@@ -45,11 +45,11 @@ export const getUserApi = async (path, setTotal, setuserData, settotalUsers) => 
     // toast.error(err.response.data.error.message, {duration: 1500}) 
   }
 }
-export const getUserInActiveApi = async (path, setInActiveTotal, setuserInActiveData) => {
+export const getUserInActiveApi = async (path,setInActivetotalUsers, setInActiveTotal, setuserInActiveData) => {
   try{
     const res = await axios.get(api_url+path)
     setuserInActiveData(res.data.users)
-    // setInActivetotalUsers(res.data.totalUsers)
+    setInActivetotalUsers(res.data.totalUsers)
     setInActiveTotal(res.data.totalPages)
     return res
   } catch (err) {
@@ -201,9 +201,20 @@ export const getnomineeApi = async (path, data, setnominee) => {
 //get Withdrawal
 export const gettransactionApi = async (path, setTotal, settransaction) => {
   try{
-    const res = await axios.put(api_url+path)
-    settransaction(res.data.transactions)
+    const res = await axios.get(api_url+path)
+    settransaction(res.data.successTransaction)
     setTotal(res.data.totalPages)
+  return res
+  } catch(err) {
+    // toast.error(err.response.data.error.message, {duration: 1500})
+  }
+}
+//get Withdrawal
+export const getPentransactionApi = async (path,  setPendingTotal, setpenTransaction) => {
+  try{
+    const res = await axios.get(api_url+path)
+    setpenTransaction(res.data.pendingTransaction)
+    setPendingTotal(res.data.totalPages)
   return res
   } catch(err) {
     // toast.error(err.response.data.error.message, {duration: 1500})

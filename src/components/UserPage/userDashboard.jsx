@@ -139,6 +139,7 @@ export const UserDashboard = () => {
             {isMenuOpen && (
               <div className="md:hidden block  absolute z-10 top-0 right-0 text-end w-[300px] bg-blue-600">
                 {/* Close Button */}
+
                 <button
                   className="text-[26px] py-4 pr-5"
                   onClick={() => setIsMenuOpen(false)}
@@ -152,10 +153,19 @@ export const UserDashboard = () => {
                     <div className=" w-full text-white flex justify-center items-center ">
                       <img src={logo} alt="" className="w-36" />
                     </div>
-                    <div className=" w-full">
+
+                    <div className=" w-full py-2 mt-5 text-white">
+                      <div className=" flex justify-start items-start">
+                        <h1 className=" px-[18px]  text-[18px] rounded-full">
+                        User Id : {UserId}
+                        </h1>
+                        {/* <h1 className="px-[18px]  py-2 text-[18px] rounded-full my-2">
+                          {name}
+                        </h1> */}
+                      </div>
                       <NavLink
                         to={"/user/dashboard"}
-                        className=" acitive w-full mt-10 flex px-5 justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+                        className=" acitive w-full flex px-5 justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
                         // onClick={() => setShowImage(false)}
                       >
                         <h1 className=" flex justify-start items-start gap-2 ">

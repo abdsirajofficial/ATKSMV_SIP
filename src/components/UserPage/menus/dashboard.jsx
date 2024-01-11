@@ -24,7 +24,7 @@ export const Dashboard = () => {
   const [withdrawalReq, setwithrawalReq] = useState(false);
   const [PackageInvestment, setPackageInvestment] = useState(false);
   const [yearInvestment, setyearInvestment] = useState(false);
-  const [IsChecked, setIsChecked] = useState();
+  const [IsChecked, setIsChecked] = useState(false);
   const [profile, setprofile] = useState([]);
   const [nominee, setnominee] = useState([]);
   const userId = {
@@ -131,10 +131,6 @@ export const Dashboard = () => {
       !quantity
     ) {
       toast.error("Please fill in all required fields.");
-      setIsChecked();
-      setsenderAccName("");
-      setsenderTransId("");
-      setQuantity(1);
       return;
     }
 
@@ -184,10 +180,6 @@ export const Dashboard = () => {
           });
       }
     } else {
-      setIsChecked();
-      setsenderAccName("");
-      setsenderTransId("");
-      setQuantity(1);
       toast.error("Please check the CheckBox", { duration: 1500 });
     }
   };
@@ -478,7 +470,6 @@ export const Dashboard = () => {
                         : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
                     } rounded-t-md`}
                   >
-                    {console.log(currentMonPackId)}
                     <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
                       {data.amount} <span className=" text-[12px]"></span>
                     </h1>

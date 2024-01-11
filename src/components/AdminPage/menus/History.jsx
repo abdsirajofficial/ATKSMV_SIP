@@ -8,7 +8,7 @@ export const AdminHistory = () => {
   const [Total, setTotal] = useState()
 
   useEffect(() => {
-    gethistory(`admin/history?page=${Acitve}&maxResults=7`, setTotal, setHistory);
+    gethistory(`admin/history?page=${Acitve}&maxResults=9`, setTotal, setHistory);
   }, [Acitve]);
 
 
