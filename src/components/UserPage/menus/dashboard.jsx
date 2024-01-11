@@ -10,12 +10,15 @@ import {
   getAnnualPackageApi,
   getMonPackageApi,
   getProfileApi,
+  getTotalPackageApi,
   getadminApi,
   getnomineeApi,
   makeWithdrawApi,
   monPackApi,
 } from "../../../server/app";
 import toast from "react-hot-toast";
+import { BiRupee } from "react-icons/bi";
+import { IoCopyOutline } from "react-icons/io5";
 
 export const Dashboard = () => {
   const [withdrawalReq, setwithrawalReq] = useState(false);
@@ -39,23 +42,22 @@ export const Dashboard = () => {
   const [monPackages, setmonPackages] = useState([]);
   const [annPackages, setannPackages] = useState([]);
   const [quantity, setQuantity] = useState(1);
-  const [currentPackId, setcurrentPackId] = useState();
+  const [currentMonPackId, setcurrentMonPackId] = useState();
+
+  const [selectPack, setselectPack] = useState([]);
+  const [MonPackDetails, setMonPackDetails] = useState(false);
+  const [packAmount, setpackAmount] = useState();
 
   useEffect(() => {
     getProfileApi("user/profile", userId, setprofile);
     getnomineeApi("user/getNominee", userId, setnominee);
     getadminApi("user/admin", setadmin);
-    getMonPackageApi(
-      "user/monthPackages",
+    getTotalPackageApi(
+      "admin/totalPackages",
       { userId: userId.userId },
       setmonPackages,
-      setcurrentPackId
-    );
-    getAnnualPackageApi(
-      "user/annualPackages",
-      userId,
       setannPackages,
-      setcurrentPackId
+      setcurrentMonPackId
     );
     setInvestmentDtls({
       packId: "",
@@ -66,6 +68,17 @@ export const Dashboard = () => {
     setsenderTransId("");
     setQuantity(1);
   }, []);
+
+  const combinedPackages = [...monPackages, ...annPackages];
+
+  useEffect(() => {
+    const foundMonPackage = combinedPackages.find(
+      (packageItem) => packageItem.packId === currentMonPackId
+    );
+    if (foundMonPackage) {
+      setselectPack(foundMonPackage);
+    }
+  }, [currentMonPackId]);
 
   const makeWithraqBtn = () => {
     const data = {
@@ -214,7 +227,35 @@ export const Dashboard = () => {
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };
-  const currentDate = new Date().getDate();
+
+  const PackageMoreDtls = (amount) => {
+    setMonPackDetails(true);
+    setpackAmount(amount);
+  };
+
+  const sipCalculator = (values, year) => {
+    const p = values;
+    const t = year;
+    const r = 20;
+    const n = 12;
+    const sip =
+      p *
+      (((Math.pow(1 + r / (100 * n), n * t) - 1) / (r / (100 * n))) *
+        (1 + r / (100 * n)));
+    return Math.round(sip - p * n * t);
+  };
+
+  function copyToClipboard(inputId) {
+    const inputElement = document.getElementById(inputId); // Get the input element by its ID
+    if (inputElement) {
+      inputElement.select(); // Select the value inside the input
+      document.execCommand("copy"); // Copy the selected value to clipboard
+      // Optionally, you can provide some feedback to the user if needed
+      // alert('Copied to clipboard!');
+    } else {
+      // console.error("Input element not found!"); // Log an error if the input element is not found
+    }
+  }
 
   return (
     <div className=" px-8 py-5">
@@ -270,239 +311,285 @@ export const Dashboard = () => {
       </div>
       <h1 className=" w-full font-semibold py-5">Monthly Package</h1>
       <div className=" w-full grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {monPackages.length === 0 ? (
+        {combinedPackages.length === 0 ? (
           <div className="text-center py-4 text-gray-600">
             No packages available
           </div>
         ) : (
-          monPackages.map((data, index) => (
-            <div
-              className={`w-full shadow-md flex flex-col justify-between items-start rounded-md ${
-                currentPackId === data.packId
-                  ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
-                  : `bg-gray-50`
-              }`}
-              key={index}
-            >
-              <div
-                className={`w-full flex justify-between items-center ${
-                  currentPackId === data.packId
-                    ? " border-b-2 border-gray-500 "
-                    : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
-                } rounded-t-md`}
-              >
-                {console.log(currentPackId)}
-                <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-                  {data.amount} <span className=" text-[12px]">Per Month</span>
-                </h1>
-                <div>
-                  {currentPackId === data.packId && (
-                    <div className=" bg-[#ff0000] text-white py-1 px-4 rounded-md  mr-3">
-                      Active Plan{" "}
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className=" w-full flex justify-start items-center">
-                <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
-                  <div className=" flex justify-center items-center space-x-3">
-                    <h1 className=" text-green-500 ">
-                      <FaMoneyBill1Wave />
-                    </h1>
-                    <h1
-                      className={`${
-                        currentPackId === data.packId ? "" : "text-gray-800"
-                      }`}
-                    >
-                      {" "}
-                      Returns up-to {data.returns}%
-                    </h1>
-                  </div>
-                  <div className=" flex justify-center items-center space-x-3">
-                    <h1 className=" text-gray-00 ">
-                      <IoMdLock />
-                    </h1>
-                    <h1
-                      className={`${
-                        currentPackId === data.packId ? "" : "text-gray-800"
-                      }`}
-                    >
-                      {" "}
-                      Tenure: {data.years} years
-                    </h1>
-                  </div>
-                  <div className=" flex justify-center items-center space-x-3">
-                    <h1 className=" text-[#ffc200] ">
-                      <IoCashSharp />
-                    </h1>
-                    <h1
-                      className={`${
-                        currentPackId === data.packId ? "" : "text-gray-800"
-                      }`}
-                    >
-                      {" "}
-                      Total Amount :{" "}
-                      <span className=" font-semibold">
-                        {sipPackageCalc(data.amount, data.years, data.returns)}
-                      </span>
-                    </h1>
-                  </div>
-                </div>
-                <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
-                  <img src={img10} alt="" className=" w-32" />
-                </div>
-              </div>
-              <div className=" w-full flex justify-between items-center p-3">
-                <p
-                  className={`${
-                    currentPackId === data.packId
-                      ? " text-white cursor-pointer hover:font-semibold"
-                      : "text-light-blue-800 cursor-pointer hover:font-semibold"
-                  } `}
-                  // onClick={() => setMonPackDetails(true)}
+          combinedPackages.map(
+            (data, index) =>
+              data.packId.slice(0, 3) === "MON" && (
+                <div
+                  className={`w-full shadow-md flex flex-col justify-between items-start rounded-md
+                  ${selectPack.sno >= data.sno ? "cursor-not-allowed" : ""}
+                  ${
+                    currentMonPackId === data.packId
+                      ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
+                      : `bg-gray-50`
+                  }`}
+                  key={index}
                 >
-                  More details
-                </p>
-                {currentPackId === data.packId ? (
-                  <button
-                    className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
-                    onClick={() =>
-                      handleInvestbtn(data.packId, data.amount, "monthly")
-                    }
+                  <div
+                    className={`w-full flex justify-between items-center ${
+                      currentMonPackId === data.packId
+                        ? " border-b-2 border-gray-500 "
+                        : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
+                    } rounded-t-md`}
                   >
-                    <h1>Current Plan</h1>
-                  </button>
-                ) : (
-                  <button
-                    className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
-                    onClick={() =>
-                      handleInvestbtn(data.packId, data.amount, "monthly")
-                    }
-                  >
-                    <h1>Upgrade Now</h1>
-                  </button>
-                )}
-              </div>
-            </div>
-          ))
+                    {console.log(currentMonPackId)}
+                    <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
+                      {data.amount}{" "}
+                      <span className=" text-[12px]">Per Month</span>
+                    </h1>
+                    <div>
+                      {currentMonPackId === data.packId && (
+                        <div className=" bg-[#ff0000] text-white py-1 px-4 rounded-md  mr-3">
+                          Active Plan{" "}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className=" w-full flex justify-start items-center">
+                    <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
+                      <div className=" flex justify-center items-center space-x-3">
+                        <h1 className=" text-green-500 ">
+                          <FaMoneyBill1Wave />
+                        </h1>
+                        <h1
+                          className={`${
+                            currentMonPackId === data.packId
+                              ? ""
+                              : "text-gray-800"
+                          }`}
+                        >
+                          {" "}
+                          Returns up-to {data.returns}%
+                        </h1>
+                      </div>
+                      <div className=" flex justify-center items-center space-x-3">
+                        <h1 className=" text-gray-00 ">
+                          <IoMdLock />
+                        </h1>
+                        <h1
+                          className={`${
+                            currentMonPackId === data.packId
+                              ? ""
+                              : "text-gray-800"
+                          }`}
+                        >
+                          {" "}
+                          Tenure: {data.years} years
+                        </h1>
+                      </div>
+                      <div className=" flex justify-center items-center space-x-3">
+                        <h1 className=" text-[#ffc200] ">
+                          <IoCashSharp />
+                        </h1>
+                        <h1
+                          className={`${
+                            currentMonPackId === data.packId
+                              ? ""
+                              : "text-gray-800"
+                          }`}
+                        >
+                          {" "}
+                          Total Amount :{" "}
+                          <span className=" font-semibold">
+                            {sipPackageCalc(
+                              data.amount,
+                              data.years,
+                              data.returns
+                            )}
+                          </span>
+                        </h1>
+                      </div>
+                    </div>
+                    <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
+                      <img src={img10} alt="" className=" w-32" />
+                    </div>
+                  </div>
+                  <div className=" w-full flex justify-between items-center p-3">
+                    <p
+                      className={`${
+                        currentMonPackId === data.packId
+                          ? " text-white cursor-pointer hover:font-semibold"
+                          : "text-light-blue-800 cursor-pointer hover:font-semibold"
+                      } `}
+                      onClick={() => PackageMoreDtls(data.amount)}
+                    >
+                      More details
+                    </p>
+                    {currentMonPackId === data.packId ? (
+                      <button
+                        className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
+                        onClick={() =>
+                          handleInvestbtn(data.packId, data.amount, "monthly")
+                        }
+                      >
+                        <h1>Current Plan</h1>
+                      </button>
+                    ) : (
+                      <button
+                        className={`bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse ${
+                          selectPack.sno >= data.sno
+                            ? "cursor-not-allowed opacity-50"
+                            : ""
+                        }`}
+                        onClick={
+                          () =>
+                            selectPack.sno < data.sno &&
+                            handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
+                        }
+                        disabled={selectPack.sno >= data.sno} // Add disabled attribute conditionally
+                      >
+                        <h1>Upgrade Now</h1>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )
+          )
         )}
       </div>
       <h1 className=" font-semibold py-5">Annual Package</h1>
       <div className=" w-full grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {annPackages.length === 0 ? (
+        {combinedPackages.length === 0 ? (
           <div className="text-center py-4 text-gray-600">
             No packages available
           </div>
         ) : (
-          annPackages.map((data, index) => (
-            <div
-              className={`w-full shadow-md flex flex-col justify-between items-start rounded-md ${
-                currentPackId === data.packId
-                  ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
-                  : "bg-gray-50"
-              }`}
-              key={index}
-            >
-              <div
-                className={`w-full flex justify-between items-center ${
-                  currentPackId === data.packId
-                    ? " border-b-2 border-gray-500 "
-                    : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
-                } rounded-t-md`}
-              >
-                <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-                  {data.amount} <span className=" text-[12px]">Per Month</span>
-                </h1>
-                <div>
-                  {currentPackId === data.packId && (
-                    <div className=" bg-[#ff0000] text-white py-1 px-4 rounded-md  mr-3">
-                      Active Plan{" "}
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className=" w-full flex justify-start items-center">
-                <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
-                  <div className=" flex justify-center items-center space-x-3">
-                    <h1 className=" text-green-500 ">
-                      <FaMoneyBill1Wave />
-                    </h1>
-                    <h1
-                      className={`${
-                        currentPackId === data.packId ? "" : "text-gray-800"
-                      }`}
-                    >
-                      {" "}
-                      Returns up-to {data.returns}%
-                    </h1>
-                  </div>
-                  <div className=" flex justify-center items-center space-x-3">
-                    <h1 className=" text-gray-00 ">
-                      <IoMdLock />
-                    </h1>
-                    <h1
-                      className={`${
-                        currentPackId === data.packId ? "" : "text-gray-800"
-                      }`}
-                    >
-                      {" "}
-                      Tenure: {data.years} years
-                    </h1>
-                  </div>
-                  <div className=" flex justify-center items-center space-x-3">
-                    <h1 className=" text-[#ffc200] ">
-                      <IoCashSharp />
-                    </h1>
-                    <h1
-                      className={`${
-                        currentPackId === data.packId ? "" : "text-gray-800"
-                      }`}
-                    >
-                      {" "}
-                      Total Amount :{" "}
-                      <span className=" font-semibold">
-                        {sipPackageCalc(data.amount, data.years, data.returns)}
-                      </span>
-                    </h1>
-                  </div>
-                </div>
-                <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
-                  <img src={img10} alt="" className=" w-32" />
-                </div>
-              </div>
-              <div className=" w-full flex justify-between items-center p-3">
-                <p
-                  className={`${
-                    currentPackId === data.packId
-                      ? " text-white cursor-pointer hover:font-semibold"
-                      : "text-light-blue-800 cursor-pointer hover:font-semibold"
-                  } `}
-                  // onClick={() => setMonPackDetails(true)}
+          combinedPackages.map(
+            (data, index) =>
+              data.packId.slice(0, 3) === "ANL" && (
+                <div
+                  className={`w-full shadow-md flex flex-col justify-between items-start rounded-md 
+                  ${selectPack.sno >= data.sno ? "cursor-not-allowed" : ""}
+                  ${
+                    currentMonPackId === data.packId
+                      ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
+                      : `bg-gray-50`
+                  }`}
+                  key={index}
                 >
-                  More details
-                </p>
-                {currentPackId === data.packId ? (
-                  <button
-                    className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
-                    onClick={() =>
-                      handleInvestbtn(data.packId, data.amount, "monthly")
-                    }
+                  <div
+                    className={`w-full flex justify-between items-center ${
+                      currentMonPackId === data.packId
+                        ? " border-b-2 border-gray-500 "
+                        : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
+                    } rounded-t-md`}
                   >
-                    <h1>Current Plan</h1>
-                  </button>
-                ) : (
-                  <button
-                    className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
-                    onClick={() =>
-                      handleInvestbtn(data.packId, data.amount, "monthly")
-                    }
-                  >
-                    <h1>Upgrade Now</h1>
-                  </button>
-                )}
-              </div>
-            </div>
-          ))
+                    {console.log(currentMonPackId)}
+                    <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
+                      {data.amount} <span className=" text-[12px]"></span>
+                    </h1>
+                    <div>
+                      {currentMonPackId === data.packId && (
+                        <div className=" bg-[#ff0000] text-white py-1 px-4 rounded-md  mr-3">
+                          Active Plan{" "}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className=" w-full flex justify-start items-center">
+                    <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
+                      <div className=" flex justify-center items-center space-x-3">
+                        <h1 className=" text-green-500 ">
+                          <FaMoneyBill1Wave />
+                        </h1>
+                        <h1
+                          className={`${
+                            currentMonPackId === data.packId
+                              ? ""
+                              : "text-gray-800"
+                          }`}
+                        >
+                          {" "}
+                          Returns up-to {data.returns}%
+                        </h1>
+                      </div>
+                      <div className=" flex justify-center items-center space-x-3">
+                        <h1 className=" text-gray-00 ">
+                          <IoMdLock />
+                        </h1>
+                        <h1
+                          className={`${
+                            currentMonPackId === data.packId
+                              ? ""
+                              : "text-gray-800"
+                          }`}
+                        >
+                          {" "}
+                          Tenure: {data.years} years
+                        </h1>
+                      </div>
+                      <div className=" flex justify-center items-center space-x-3">
+                        <h1 className=" text-[#ffc200] ">
+                          <IoCashSharp />
+                        </h1>
+                        <h1
+                          className={`${
+                            currentMonPackId === data.packId
+                              ? ""
+                              : "text-gray-800"
+                          }`}
+                        >
+                          {" "}
+                          Total Amount :{" "}
+                          <span className=" font-semibold">
+                            {sipPackageCalc(
+                              data.amount,
+                              data.years,
+                              data.returns
+                            )}
+                          </span>
+                        </h1>
+                      </div>
+                    </div>
+                    <div className=" w-1/2 flex flex-col justify-center items-center pl-3 py-3 space-y-2">
+                      <img src={img10} alt="" className=" w-32" />
+                    </div>
+                  </div>
+                  <div className=" w-full flex justify-between items-center p-3">
+                    <p
+                      className={`${
+                        currentMonPackId === data.packId
+                          ? " text-white cursor-pointer hover:font-semibold"
+                          : "text-light-blue-800 cursor-pointer hover:font-semibold"
+                      } `}
+                      onClick={() => PackageMoreDtls(data.amount)}
+                    >
+                      More details
+                    </p>
+                    {currentMonPackId === data.packId ? (
+                      <button
+                        className="bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse"
+                        onClick={() =>
+                          handleInvestbtn(data.packId, data.amount, "monthly")
+                        }
+                      >
+                        <h1>Current Plan</h1>
+                      </button>
+                    ) : (
+                      <button
+                        className={`bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse ${
+                          selectPack.sno >= data.sno
+                            ? "cursor-not-allowed opacity-50"
+                            : ""
+                        }`}
+                        onClick={
+                          () =>
+                            selectPack.sno < data.sno &&
+                            handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
+                        }
+                        disabled={selectPack.sno >= data.sno} // Add disabled attribute conditionally
+                      >
+                        <h1>Upgrade Now</h1>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )
+          )
         )}
       </div>
       <div className=" mt-5 rounded-xl border-2 p-4 bg-[#f8f2f2]">
@@ -775,7 +862,7 @@ export const Dashboard = () => {
             <div className="">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
                 <div>
-                  <div className=" flex space-x-2 mt-5">
+                  <div className="flex space-x-2 mt-5">
                     <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
                       Account Holder Name
                     </div>
@@ -783,15 +870,23 @@ export const Dashboard = () => {
                       *
                     </div>
                   </div>
-                  <input
-                    type="text"
-                    value={admin.account_holder}
-                    className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    readOnly
-                  />
+                  <div className="relative w-full lg:w-[250px] mt-3">
+                    <input
+                      type="text"
+                      value={admin.account_holder}
+                      id="accountHolderInput" // Added id for easy selection
+                      className="w-full px-3 py-2 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      readOnly
+                    />
+                    <IoCopyOutline
+                      onClick={() => copyToClipboard("accountHolderInput")}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    />
+                  </div>
                 </div>
+
                 <div>
-                  <div className=" flex space-x-2 mt-5">
+                  <div className="flex space-x-2 mt-5">
                     <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
                       Account Number
                     </div>
@@ -799,14 +894,23 @@ export const Dashboard = () => {
                       *
                     </div>
                   </div>
-                  <input
-                    type="number"
-                    value={admin.account_no}
-                    className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  />
+                  <div className="relative w-full lg:w-[250px] mt-3">
+                    <input
+                      type="number"
+                      value={admin.account_no}
+                      id="accountNumberInput" // Added id for easy selection
+                      className="w-full px-3 py-2 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      readOnly
+                    />
+                    <IoCopyOutline
+                      onClick={() => copyToClipboard("accountNumberInput")}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    />
+                  </div>
                 </div>
+
                 <div>
-                  <div className=" flex space-x-2 mt-5">
+                  <div className="flex space-x-2 mt-5">
                     <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
                       IFSC Code
                     </div>
@@ -814,14 +918,23 @@ export const Dashboard = () => {
                       *
                     </div>
                   </div>
-                  <input
-                    type="text"
-                    value={admin.IFSC}
-                    className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  />
+                  <div className="relative w-full lg:w-[250px] mt-3">
+                    <input
+                      type="text"
+                      value={admin.IFSC}
+                      id="ifscCodeInput" // Added id for easy selection
+                      className="w-full px-3 py-2 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      readOnly
+                    />
+                    <IoCopyOutline
+                      onClick={() => copyToClipboard("ifscCodeInput")}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    />
+                  </div>
                 </div>
+
                 <div>
-                  <div className=" flex space-x-2 mt-5">
+                  <div className="flex space-x-2 mt-5">
                     <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
                       UPI id
                     </div>
@@ -829,11 +942,19 @@ export const Dashboard = () => {
                       *
                     </div>
                   </div>
-                  <input
-                    type="text"
-                    value={admin.upi_id}
-                    className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  />
+                  <div className="relative w-full lg:w-[250px] mt-3">
+                    <input
+                      type="text"
+                      value={admin.upi_id}
+                      id="upiIdInput" // Added id for easy selection
+                      className="w-full px-3 py-2 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      readOnly
+                    />
+                    <IoCopyOutline
+                      onClick={() => copyToClipboard("upiIdInput")}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="text-neutral-400 text-base font-semibold tracking-wide text-gray-700 pt-10 pb-3">
@@ -1012,223 +1133,77 @@ export const Dashboard = () => {
           </div>
         </div>
       )}
-      {/* {yearInvestment && (
-          <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10 overflow-x-auto">
-            <div className=" w-full bg-white rounded-lg p-10">
-              <h1 className=" font-semibold pb-5">
-                Check Your Account Destails :-
-              </h1>
-              <div className="">
-                <div className="text-neutral-400 text-base font-semibold tracking-wide text-gray-700">
-                  Make Payment From This Account
-                </div>
-                <div className=" grid grid-cols-3">
-                  <div>
-                    <div className=" flex space-x-2 mt-5">
-                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                        Account Holder Name
-                      </div>
-                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                        *
-                      </div>
-                    </div>
-                    <input
-                      type="text"
-                      value="siraj"
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                  </div>
-                  <div>
-                    <div className=" flex space-x-2 mt-5">
-                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                        Account Number
-                      </div>
-                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                        *
-                      </div>
-                    </div>
-                    <input
-                      type="number"
-                      value="7848751156"
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                  </div>
-                  <div>
-                    <div className=" flex space-x-2 mt-5">
-                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                        IFSC Code
-                      </div>
-                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                        *
-                      </div>
-                    </div>
-                    <input
-                      type="text"
-                      value="7848751156"
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                  </div>
-                  <div>
-                    <div className=" flex space-x-2 mt-5">
-                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                        UPI id
-                      </div>
-                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                        *
-                      </div>
-                    </div>
-                    <input
-                      type="text"
-                      value="8144228909@apl"
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                  </div>
-                </div>
-                <div className="text-neutral-400 text-base font-semibold tracking-wide text-gray-700 pt-10 pb-3">
-                  Fill The Transaction Details
-                </div>
-                <p className=" text-gray-700">
-                  Please fill the payment sender account details after submit the
-                  details. we will process the your payment within 24 hours
-                </p>
-                <div className=" grid grid-cols-3 pt-5">
-                  <div>
-                    <div className=" flex space-x-2 mt-5">
-                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                        Account Holder Name
-                      </div>
-                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                        *
-                      </div>
-                    </div>
-                    <input
-                      type="text"
-                      value="siraj"
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                  </div>
-                  <div>
-                    <div className=" flex space-x-2 mt-5">
-                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                        Account Number
-                      </div>
-                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                        *
-                      </div>
-                    </div>
-                    <input
-                      type="number"
-                      value="7848751156"
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                  </div>
-                  <div>
-                    <div className=" flex space-x-2 mt-5">
-                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                        Transaction id
-                      </div>
-                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                        *
-                      </div>
-                    </div>
-                    <input
-                      type="text"
-                      value="7848751156"
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                  </div>
 
-                  <div>
-                    <h1 className=" pt-5">(or)</h1>
-                    <div className=" flex space-x-2 mt-5">
-                      <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                        UPI id
-                      </div>
-                      <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
-                        *
-                      </div>
-                    </div>
-                    <input
-                      type="text"
-                      value="8144228909@apl"
-                      className="w-[300px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                    />
+      {MonPackDetails && (
+        <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10 overflow-y-auto">
+          <div className=" w-full bg-white rounded-lg p-10">
+            <div className=" flex justify-between items-center">
+              <h1 className=" font-medium text-[22px]">
+                Start your SIP Monthly {packAmount}
+              </h1>
+              <button
+                className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                onClick={() => {
+                  setMonPackDetails(false), setpackAmount();
+                }}
+              >
+                <h1>Cancel</h1>
+              </button>
+            </div>
+            <div className="container mx-auto mt-5 p-4 bg-gray-100 rounded-lg shadow-lg overflow-y-auto">
+              <div className="flex flex-wrap justify-between bg-blue-500 text-white p-2 rounded-t-lg">
+                <div className="w-full sm:w-1/5">Year</div>
+                <div className="w-full sm:w-1/5">Yearly Invested Amount</div>
+                <div className="w-full sm:w-1/5">Total Invested</div>
+                <div className="w-full sm:w-1/5">Wealth Gained</div>
+                <div className="w-full sm:w-1/5">Expected Amount</div>
+              </div>
+
+              {[...Array(5)].map((_, index) => (
+                <div
+                  key={index}
+                  className="flex flex-wrap justify-between items-center p-2 border-b"
+                >
+                  <div className="w-full sm:w-1/5">{2024 + index}</div>
+                  <div className="w-full sm:w-1/5">{packAmount * 12}</div>
+                  <div className="w-full sm:w-1/5">
+                    {packAmount * 12 * (index + 1)}
+                  </div>
+                  <div className="w-full sm:w-1/5">
+                    {sipCalculator(packAmount, index + 1)}
+                  </div>
+                  <div className="w-full sm:w-1/5 flex items-center">
+                    <span className="mr-1">
+                      <BiRupee />
+                    </span>
+                    {packAmount * 12 * (index + 1) +
+                      sipCalculator(packAmount, index + 1)}
                   </div>
                 </div>
-                <div className=" pt-10 pb-5 space-x-2 ">
-                  <input
-                    type="checkbox"
-                    id="checkBoxForm"
-                    name="checkBoxForm"
-                    value="checkBoxForm"
-                  />
-                  <label for="checkBoxForm">
-                    Make sure above the details are correct
-                  </label>
-                </div>
-                <div className=" flex justify-start items-center space-x-5">
-                  <button
-                    className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                    onClick={() => setyearInvestment(false)}
-                  >
-                    <h1>Cancel</h1>
-                  </button>
-                  <button className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105">
-                    <h1>Save</h1>
-                  </button>
-                </div>
-                <div className=" mt-5 rounded-xl border-2 p-4 bg-[#f8f2f2]">
-                  <h1 className=" font-bold text-gray-600 uppercase text-[15px]">
-                    Disclaimer :-
-                  </h1>
-                  <h1 className=" flex text-gray-600 mt-3 text-[14px] gap-2">
-                    <h1 className=" text-[18px]">
-                      <RiArrowRightDoubleLine />
-                    </h1>
-                    Investments in securities market are subject to markecct risk,
-                    read all the documents care fully before investing. we collect
-                    retain and use your control information for logitimate.
-                    Business purpos only to contact you and to provide you
-                    information & latest our products & services.
-                  </h1>
-                  <h1 className=" flex text-gray-600 mt-3 text-[14px] gap-2">
-                    <h1 className=" text-[18px]">
-                      <RiArrowRightDoubleLine />
-                    </h1>
-                    ARQ is not an exchange approved product and any dispute
-                    related to this will not be dealt on the exchange platform.
-                  </h1>
-                  <h1 className=" flex text-gray-600 mt-3 text-[14px] gap-2">
-                    <h1 className=" text-[18px]">
-                      <RiArrowRightDoubleLine />
-                    </h1>
-                    We do not sell or rent your contact information to third
-                    parties.
-                  </h1>
-                  <h1 className=" flex text-gray-600 mt-3 text-[14px] gap-2">
-                    <h1 className=" text-[18px]">
-                      <RiArrowRightDoubleLine />
-                    </h1>
-                    Please note that by submitting the above. Mentioned details,
-                    you are authoringing us to call ISMS you even though you may
-                    be registered under DND. we shall call ISMS for a period of to
-                    months
-                  </h1>
-                  <h1 className=" flex text-gray-600 mt-3 text-[14px] gap-2">
-                    <h1 className=" text-[18px]">
-                      <RiArrowRightDoubleLine />
-                    </h1>
-                    For issues related to cyber attacks. Call us at{" "}
-                    <span className=" font-semibold">+91 8144228909</span> or
-                    Email us at{" "}
-                    <span className=" font-semibold">sirajcsc2000@gmail.com</span>
-                  </h1>
-                  <h1 className=" mt-5 font-medium text-[14px] text-red-400">For issues related to cyber attacks. Call us at <b> +91 8148867881</b> or Email us at <b>atksmvtraders@gmail.com</b></h1>
+              ))}
+
+              <div className="flex flex-wrap justify-between bg-blue-500 text-white p-2 rounded-b-lg">
+                <div className="w-full sm:w-1/5">Footer 1</div>
+                <div className="w-full sm:w-1/5">Footer 2</div>
+                <div className="w-full sm:w-1/5">Footer 3</div>
+                <div className="w-full sm:w-1/5">Footer 4</div>
+                <div className="w-full sm:w-1/5 flex items-center">
+                  <span className="mr-1">
+                    <BiRupee />
+                  </span>
+                  {[...Array(5)]
+                    .map(
+                      (_, index) =>
+                        packAmount * 12 * (index + 1) +
+                        sipCalculator(packAmount, index + 1)
+                    )
+                    .reduce((a, b) => a + b, 0)}
                 </div>
               </div>
             </div>
           </div>
-        )} */}
+        </div>
+      )}
     </div>
   );
 };

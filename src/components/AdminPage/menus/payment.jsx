@@ -87,7 +87,7 @@ export const Payment = () => {
                 {data.status === "Pending" && (
                   <p className=" flex justify-center items-center md:space-x-5 space-x-1">
                     <button
-                      className=" flex  justify-center items-center space-x-2 md:bg-red-600 md:px-2 py-1.5 rounded-lg md:text-white hover:scale-110 hover:text-red-600"
+                      className=" flex  justify-center items-center space-x-2 md:bg-red-600 md:px-2 py-1.5 rounded-lg md:text-white hover:scale-110 hover:text-red-600 md:hover:text-white"
                         // onClick={() => deleteUser(user.userId)}
                         onClick={() => deleteUserConfirm(data.userId, data.id, data.name, data.amount)}
                     >
@@ -97,7 +97,7 @@ export const Payment = () => {
                       <p className="hidden md:block">Delete</p>
                     </button>
                     <button
-                      className=" flex  justify-center items-center space-x-2 md:bg-green-600 md:px-3 py-1.5 rounded-lg md:text-white hover:scale-110 hover:text-green-600"
+                      className=" flex  justify-center items-center space-x-2 md:bg-green-600 md:px-3 py-1.5 rounded-lg md:text-white hover:scale-110 hover:text-green-600 md:hover:text-white"
                       onClick={() => accepReq(data.id)}
                     >
                       <p className=" text-[20px]">

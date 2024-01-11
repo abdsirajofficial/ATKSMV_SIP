@@ -7,6 +7,7 @@ import img6 from "../assets/img6.png";
 import img8 from "../assets/img8.svg";
 import img9 from "../assets/img9.svg";
 import logo from "../assets/logo1.svg";
+import logo1 from "../assets/logoColor.svg";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { PieChart } from "react-minimal-pie-chart";
 import { IoIosMail, IoLogoWhatsapp, IoMdLock } from "react-icons/io";
@@ -68,7 +69,7 @@ export const HomePage = () => {
       <div className=" px-5 md:px-20 bg-gradient-to-b from-blue-500 to-[#3777FA] text-white ">
         <div className=" flex justify-between items-center pt-8">
           <div className="text-2xl font-medium">
-            <img src={logo} alt="" className=" w-26 md:w-56" />
+            <img src={logo1} alt="" className=" w-26 md:w-56" />
           </div>
           <div className=" flex justify-center items-center space-x-5">
             <button
@@ -86,17 +87,17 @@ export const HomePage = () => {
         <div className=" w-full h-full md:flex justify-center items-start md:items-center md:px-8 py-10  space-x-10">
           <div className=" md:w-1/2">
             <h1 className=" text-[22px] md:text-[52px] font-bold mb-4">
-              TMV TRADERS - Your Trading Partner
+              ATKSMV TRADERS - Your Trading Partner
             </h1>
             <p className=" md:text-[18px] font-light">
-              Welcome to TMV Traders, your trusted partner in the world of
+              Welcome to ATKSMV Traders, your trusted partner in the world of
               trading. We provide top-notch services and support to help you
               succeed in your trading journey.
             </p>
             <button
               className=" flex justify-center tems-center ml-6 gap-3 my-[20px] mt-6 select-none rounded-lg bg-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/rigester")}
             >
               <p>Register Now</p>
               <h1>
@@ -114,7 +115,7 @@ export const HomePage = () => {
       <div className="p-10 md:px-28 md:py-16 flex flex-col justify-start items-start space-y-5">
         <h1 className="text-[22px] md:text-[36px]  font-semibold mb-4 ">
           Benefits of investing in gold with
-          <span className=" text-[#3777FA]"> TKMV traders </span>
+          <span className=" text-[#3777FA]"> ATKSMV traders </span>
         </h1>
         <ul className="text-[15px] space-y-5">
           <li>
@@ -132,7 +133,7 @@ export const HomePage = () => {
           </li>
         </ul>
 
-        <div className=" md:flex md:space-x-10 pt-5">
+        <div className=" md:flex md:space-x-10 pt-5 font-semibold">
           <div className=" border-2 shadow-sm rounded-lg mt-[15px] px-4 md:p-3 md:px-4">
             <img src={img4} alt="" className=" w-16 h-16" />
             <h1 className=" py-3 text-[20px] font-semibold ">0% commission</h1>
@@ -159,7 +160,7 @@ export const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className=" px-5 md:px-28 py-16">
+      <div className=" px-5 md:px-28 py-16 font-semibold">
         <h1 className="text-[36px]  font-semibold mb-4 ">SIP Calculator</h1>
         <p className=" font-light tracking-wide">
           A Systematic Investment Plan (SIP) calculator is a tool that helps
@@ -181,7 +182,7 @@ export const HomePage = () => {
             }`}
             onClick={() => setshowBorder(true)}
           >
-            Investment Amount
+           SIP
           </h1>
           <h1
             className={`font-medium p-2 ${
@@ -191,7 +192,7 @@ export const HomePage = () => {
             }`}
             onClick={() => setshowBorder(false)}
           >
-            Target Amount
+            Lumpsum
           </h1>
         </div>
         {showBorder && (
@@ -321,12 +322,12 @@ export const HomePage = () => {
                       {
                         title: "Investment Amount",
                         value: InvestmentAmt,
-                        color: "#21b7a8",
+                        color: "#3777FA ",
                       },
                       {
                         title: "Return Amount",
                         value: ReturnAmt,
-                        color: "#3777FA",
+                        color: "#21b7a8",
                       },
                     ]}
                   />
@@ -378,7 +379,7 @@ export const HomePage = () => {
                     <input
                       type="range"
                       min="500"
-                      max="25000"
+                      max="500000"
                       step="100"
                       className="w-full "
                       value={LumInvestAmt}
@@ -472,19 +473,19 @@ export const HomePage = () => {
                       {
                         title: "Investment Amount",
                         value: parseInt(LumInvestAmt),
-                        color: "#5367ff",
+                        color: "#eef0ff",
                       },
                       {
                         title: "Return Amount",
                         value: LumReturnAmt,
-                        color: "#eef0ff",
+                        color: "#5367ff",
                       },
                     ]}
                   />
                 </div>
                 <div>
                   <div className="flex items-center">
-                    <div className="w-3 h-12 bg-[#5367ff] mr-2"></div>
+                    <div className="w-3 h-12 bg-[#eef0ff] mr-2"></div>
                     <div className=" space-y-2">
                       <h1>Invested Amount</h1>
                       <p className=" flex font-bold text-[18px]">
@@ -494,7 +495,7 @@ export const HomePage = () => {
                     </div>
                   </div>
                   <div className="flex items-center pt-4">
-                    <div className="w-3 h-12 bg-[#eef0ff] mr-2"></div>
+                    <div className="w-3 h-12 bg-[#5367ff] mr-2"></div>
                     <div className=" space-y-2">
                       <h1>Est. Returns</h1>
                       <p className=" flex font-bold text-[18px]">
@@ -509,7 +510,7 @@ export const HomePage = () => {
           </div>
         )}
       </div>
-      <div className=" p-5 md:px-28 py-16 flex flex-col justify-start items-start space-y-5">
+      <div className=" p-5 md:px-28 py-16 flex flex-col justify-start items-start space-y-5 font-semibold">
         <h1 className=" text-[24px] md:text-[36px]  font-semibold mb-4 ">What is SIP?</h1>
         <p className=" font-light tracking-wide">
           An SIP, or Systematic Investment Plan, is a method of investing money
@@ -594,7 +595,7 @@ export const HomePage = () => {
           </ol>
         </p>
       </div>
-      <div className="  bg-[#3f5bd9] md:flex justify-between items-center px-5 md:px-20 py-20 shadow-lg ">
+      <div className="  bg-[#3f5bd9] md:flex justify-between items-center px-5 md:px-20 py-20 shadow-lg font-semibold">
         <div className=" flex flex-col justify-start items-start md:w-1/2 space-y-3">
           <h1 className=" text-white font-semibold md:text-[48px]">
             We Are Here To Help You!
@@ -610,13 +611,13 @@ export const HomePage = () => {
           <img src={img8} alt="" className=" " />
         </div>
       </div>
-      <div className=" w-full px-5 md:px-28 pt-20 flex flex-col justify-center items-center space-y-5 mt-8">
+      <div className=" w-full px-5 md:px-28 pt-20 flex flex-col justify-center items-center space-y-5 mt-8 font-semibold">
         <h1 className=" font-medium text-[26px] md:text-[48px]">Want to connect with us?</h1>
         <h1 className=" text-gray-500 md:text-[18px]">
           Our support team will be happy to assist you
         </h1>
       </div>
-      <div className=" w-full md:px-28 md:flex justify-between items-center ">
+      <div className=" w-full md:px-28 md:flex justify-between items-center font-semibold">
         <div className=" md:w-1/2">
           <img src={img9} alt="" className=" w-full md:w-fit" />
         </div>
@@ -643,14 +644,14 @@ export const HomePage = () => {
       </div>
       <div className=" w-full bg-[#1b3a7f] pl-5 md:pl-28 pr-3 pt-8 pb-4 mt-10  md:mt-0">
         <h1 className="text-2xl font-medium text-white">
-          <img src={logo} alt="" className=" w-52" />
+          <img src={logo1} alt="" className=" w-52" />
         </h1>
         <div className=" md:flex justify-between items-center">
           <h1 className="text-white text-[14px] mt-3">
-            &copy;2024 TKMV TRADERS. All rights reserved{" "}
+            &copy;2024 ATKSMV TRADERS. All rights reserved{" "}
           </h1>
           <h1 className=" text-center md:text-end text-[13px] text-gray-400 mt-5 md:mt-0">
-            Developed by by Salman,Siraj,Basith
+            Developed by Siraj, Salman, Basith
           </h1>
         </div>
       </div>

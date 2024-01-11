@@ -45,6 +45,17 @@ export const getUserApi = async (path, setTotal, setuserData, settotalUsers) => 
     // toast.error(err.response.data.error.message, {duration: 1500}) 
   }
 }
+export const getUserInActiveApi = async (path, setInActiveTotal, setuserInActiveData) => {
+  try{
+    const res = await axios.get(api_url+path)
+    setuserInActiveData(res.data.users)
+    // setInActivetotalUsers(res.data.totalUsers)
+    setInActiveTotal(res.data.totalPages)
+    return res
+  } catch (err) {
+    // toast.error(err.response.data.error.message, {duration: 1500}) 
+  }
+}
 //gethistory api
 export const gethistory = async (path, setTotal, setHistory) => {
   try{
@@ -105,22 +116,34 @@ export const editApi = async (path,data) => {
   }
 }
 //get Package
-export const getMonPackageApi = async (path, userId, setmonPackages, setcurrentPackId) => {
+export const getMonPackageApi = async (path, userId, setmonPackages, setcurrentMonPackId) => {
   try{
     const res = await axios.put(api_url+ path, userId)
     setmonPackages(res.data.packages)
-    setcurrentPackId(res?.data?.lastPack?.packId || null)
+    setcurrentMonPackId(res?.data?.lastPack?.packId || 0)
+    return res
+  } catch(err){
+    // toast.error()
+  }
+}
+//total Package
+export const getTotalPackageApi = async (path, userId, setmonPackages,setannPackages, setcurrentMonPackId) => {
+  try{
+    const res = await axios.put(api_url+ path, userId)
+    setmonPackages(res.data.totalPackages[0])
+    setannPackages(res.data.totalPackages[1])
+    setcurrentMonPackId(res?.data?.lastPack?.packId || 0)
     return res
   } catch(err){
     // toast.error()
   }
 }
 //get Package
-export const getAnnualPackageApi = async (path, userId, setmonPackages, setcurrentPackId) => {
+export const getAnnualPackageApi = async (path, userId, setmonPackages, setcurrentAnnPackId) => {
   try{
     const res = await axios.put(api_url+ path, userId)
     setmonPackages(res.data.packages)
-    setcurrentPackId(res.data.lastPack.packId)
+    setcurrentAnnPackId(res.data.lastPack.packId)
     return res
   } catch(err){
     // toast.error()

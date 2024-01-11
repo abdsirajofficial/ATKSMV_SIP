@@ -42,7 +42,7 @@ export const Package = () => {
   const [monPackages, setmonPackages] = useState([]);
   const [annPackages, setannPackages] = useState([]);
   const [eidtPackages, seteidtPackages] = useState(false);
-  const [EditPackData, setEditPackData] = useState([]);
+  const [EditPackData, setEditPackData] = useState([])
 
   const sipCalculator = (values, year) => {
     const p = values;
@@ -76,7 +76,7 @@ export const Package = () => {
       setcurrentPackId
     );
     getAnnualPackageApi(
-      "user/annualPackages",
+      "admin/annualPackages",
       userId,
       setannPackages,
       setcurrentPackId
@@ -87,6 +87,8 @@ export const Package = () => {
       returns: "",
     });
   }, []);
+
+
 
   const addmonPackage = (type) => {
     const data = {
@@ -203,6 +205,7 @@ export const Package = () => {
   };
 
   const updatePackages = (type) => {
+    
     const PackaType = type.slice(0, 3);
 
     const data = {
@@ -279,14 +282,14 @@ export const Package = () => {
                 <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
                   {data.amount} <span className=" text-[12px]">Per Month</span>
                 </h1>
-                <h1
+                {/* <h1
                   className="p-3 rounded-fullfont-semibold text-[28px] text-white hover:text-red-500 cursor-pointer transform transition duration-300 hover:scale-125"
                   onClick={() =>
                     delConfirmMsg(data.packId, data.amount, "monthly")
                   }
                 >
                   <MdDelete />
-                </h1>
+                </h1> */}
               </div>
               <div className=" w-full flex justify-start items-center">
                 <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
@@ -332,15 +335,15 @@ export const Package = () => {
                 >
                   More details
                 </p>
-                <button
-                  className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                  onClick={() => handleEditPackage(data.packId, "monthly")}
-                >
-                  <h1>
-                    <MdModeEditOutline />
-                  </h1>
-                  <h1>Edit Now</h1>
-                </button>
+                  <button
+                    className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
+                    onClick={() => handleEditPackage(data.packId, "monthly")}
+                  >
+                    <h1>
+                      <MdModeEditOutline />
+                    </h1>
+                    <h1>Edit Now</h1>
+                  </button>
               </div>
             </div>
           ))

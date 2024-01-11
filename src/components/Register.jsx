@@ -26,7 +26,6 @@ const Rigester = () => {
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   //signUp api call
   const onSubmit = () => {
     setLoading(true);
@@ -53,27 +52,23 @@ const Rigester = () => {
       Password === "" ||
       DOB === "" ||
       Aadhar === "" ||
-      Pan === "" ||
       PrimaryNUmber === "" ||
-      secondaryNumber === "" ||
-      Address === "" ||
       Account === "" ||
-      UPI_id === "" ||
       AccHOlderName === "" ||
       IFSC_code === "" ||
       ConfirmPassword === ""
     ) {
-      toast.error("Please fill all required fields", {duration: 1500})
+      toast.error("Please fill all required fields", { duration: 1500 });
       setLoading(false);
     } else {
       rigesterApi("user/signUp", data, setLoading).then((res) => {
-        if(res.status === 200) {
-          toast.success(res.data.message, {duration: 1500})
+        if (res.status === 200) {
+          toast.success(res.data.message, { duration: 1500 });
           setLoading(false);
-          navigate("/login")
-        }else{
+          navigate("/login");
+        } else {
           setLoading(false);
-          toast.error("Try agian later", {duration: 1500})
+          toast.error("Try agian later", { duration: 1500 });
         }
       });
     }
@@ -81,7 +76,7 @@ const Rigester = () => {
 
   return (
     <div className="w-full h-full md:flex justify-center items-center bg-[#3777FA]">
-      <div className=" w-full md:w-1/2 h-full bg-gradient-to-b from-blue-500 to-[#3777FA] ">
+      <div className=" w-full md:w-1/2 pb-10 sm:p-0 sm:h-full bg-gradient-to-b from-blue-500 to-[#3777FA] ">
         <img className=" w-56 pb-10 pt-8 pl-5" src={logo} alt="" />
         <div className="flex flex-col space-y-10 justify-center items-center">
           <img className="" src={img3} alt="" />
@@ -156,18 +151,25 @@ const Rigester = () => {
               />
             </div>
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className="text-sm font-medium text-gray-600">
                 Pan number
               </label>
               <input
                 type="text"
                 id="pan"
                 name="Pan"
+                pattern="[A-Za-z0-9]{10}" // Regular expression for 10 alphanumeric characters
+                maxLength="10" // Limit the maximum length to 10 characters
                 className="mt-1 p-3 w-full border-2 rounded-md uppercase"
                 placeholder="Pan Number"
-                onChange={(e) => setPan(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value.toUpperCase(); // Convert input to uppercase
+                  setPan(value);
+                }}
+                title="Please enter 10 alphanumeric characters." // Display a tooltip for invalid input
               />
             </div>
+
             <div className="">
               <label className="text-sm font-medium text-gray-600">
                 Aadhar number
@@ -179,11 +181,16 @@ const Rigester = () => {
                 className="mt-1 p-3 w-full border-2 rounded-md shadow-sm"
                 placeholder="Aadhar number"
                 onChange={(e) => {
+                  // Remove all non-numeric characters
                   const newValue = e.target.value.replace(/[^0-9]/g, "");
-                  const formattedValue = newValue
-                    .slice(0, 12)
-                    .replace(/(\d{4})(\d{4})(\d{4})/, "$1 $2 $3");
+
+                  // Get the first 12 digits and set them as the formatted value
+                  const formattedValue = newValue.slice(0, 12);
+
+                  // Update the state with the formatted value
                   setAadhar(formattedValue);
+
+                  // Update the input's value to display the formatted value
                   e.target.value = formattedValue;
                 }}
               />
@@ -247,18 +254,25 @@ const Rigester = () => {
               />
             </div>
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className="text-sm font-medium text-gray-600">
                 IFSC code
               </label>
               <input
                 type="text"
                 id="ifsc"
                 name="ifsc"
+                pattern="[A-Za-z0-9]{11}" // Regular expression for 11 alphanumeric characters
+                maxLength="11" // Limit the maximum length to 11 characters
                 className="mt-1 p-3 w-full border-2 rounded-md uppercase"
                 placeholder="IFSC CODE"
-                onChange={(e) => setIFSC_code(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value.toUpperCase(); // Convert input to uppercase
+                  setIFSC_code(value);
+                }}
+                title="Please enter 11 alphanumeric characters." // Tooltip for invalid input
               />
             </div>
+
             <div className="">
               <label className=" text-sm font-medium text-gray-600">
                 UPI ID
@@ -307,7 +321,7 @@ const Rigester = () => {
           <button
             type="submit"
             className="bg-[#3777FA] text-white p-3 rounded-md flex justify-center space-x-3 items-center hover:bg-[#334e8e] w-full shadow-md mt-10"
-            onClick={()=>onSubmit()}
+            onClick={() => onSubmit()}
           >
             <p>Sign up</p>
             {loading && <img src={loadingIcon} alt="no img" className=" w-5" />}
@@ -322,7 +336,6 @@ const Rigester = () => {
               Login
             </span>
           </h1>
-          
         </div>
       </div>
     </div>

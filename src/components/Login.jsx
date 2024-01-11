@@ -72,7 +72,7 @@ const Login = () => {
           </h1>
         </div>
       </div>
-      <div className="  w-full bg-[aliceblue] md:w-1/2 h-full md:bg-white flex flex-col justify-center items-center space-y-8">
+      <div className=" p-10 md:p-0 md:h-full bg-[aliceblue] md:w-1/2 rounded-lg md:rounded-none md:bg-white flex flex-col justify-center items-center space-y-8">
         <img className=" w-52 " src={logo} alt="" />
         <h1 className=" md:text-[20px] font-semibold ">
           {" "}

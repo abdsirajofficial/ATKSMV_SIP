@@ -13,6 +13,7 @@ export const UserDashboard = () => {
 
   const token = localStorage.getItem("loginToken");
   const name = localStorage.getItem("name");
+  const UserId = localStorage.getItem("userid");
   const location = useLocation();
   useEffect(() => {
     setIsMenuOpen(false);
@@ -28,9 +29,9 @@ export const UserDashboard = () => {
     navigate("/login");
   };
 
-  useEffect(()=>{
-    setIsMenuOpen(false)
-  },[])
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, []);
 
   useEffect(() => {
     if (!token) {
@@ -53,7 +54,6 @@ export const UserDashboard = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-
   return (
     <div className=" flex w-full h-screen">
       {/* Sidebar */}
@@ -65,7 +65,7 @@ export const UserDashboard = () => {
               <img src={logo} alt="" className="w-36" />
             </div>
             <NavLink
-              to={"/user/dashboard"} 
+              to={"/user/dashboard"}
               className=" acitive w-full mt-10 flex justify-start  items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
             >
               <h1 className=" flex items-center gap-2 ">
@@ -216,9 +216,14 @@ export const UserDashboard = () => {
             )}
           </div>
           <div className=" hidden md:block">
-            <h1 className=" bg-yellow-300 px-[18px] py-2 text-[18px] rounded-full my-2">
-              {name[0]}
-            </h1>
+            <div className=" flex justify-end items-center">
+              <h1 className=" px-[18px]  py-2 text-[18px] rounded-full my-2">
+                {UserId}
+              </h1>
+              <h1 className=" bg-yellow-300 px-[18px]  py-2 text-[18px] rounded-full my-2">
+                {name[0]}
+              </h1>
+            </div>
           </div>
         </div>
 
