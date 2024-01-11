@@ -171,13 +171,13 @@ export const Users = () => {
           {showUsers ? (
             <div className=" space-x-4">
               <button
-                className=" p-2 text-[17px] bg-blue-600 rounded-md shadow-md px-3 mt-2 "
+                className={`p-2 text-[17px] bg-gradient-to-r from-blue-400 to-blue-700 rounded-md shadow-md px-3 mt-2 ${ !showUsers ? "":" text-white"}`}
                 onClick={() => setshowUsers(true)}
               >
                 Active
               </button>
               <button
-                className=" p-2 text-[17px] rounded-md shadow-md px-3 mt-2"
+                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-white  ${ showUsers ? " ":" text-"}`}
                 onClick={() => setshowUsers(false)}
               >
                 InActive
@@ -186,13 +186,13 @@ export const Users = () => {
           ) : (
             <div className=" space-x-4">
               <button
-                className=" p-2 text-[17px] bg-white rounded-md shadow-md px-3 mt-2"
+                className={`p-2 text-[17px] bg-white rounded-md  shadow-md px-3 mt-2 ${ !showUsers ? "":" text-white"}`}
                 onClick={() => setshowUsers(true)}
               >
                 Active
               </button>
               <button
-                className=" p-2 text-[17px] rounded-md shadow-md px-3 mt-2  bg-blue-600"
+                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-gradient-to-r from-blue-400 to-blue-700  ${ showUsers ? " ":" text-"}`}
                 onClick={() => setshowUsers(false)}
               >
                 InActive

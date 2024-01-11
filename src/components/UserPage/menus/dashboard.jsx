@@ -437,10 +437,10 @@ export const Dashboard = () => {
                         }`}
                         onClick={
                           () =>
-                            selectPack.sno < data.sno &&
-                            handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
+                          handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
+                          // selectPack.sno < data.sno &&
                         }
-                        disabled={selectPack.sno >= data.sno} // Add disabled attribute conditionally
+                        // disabled={selectPack.sno >= data.sno} // Add disabled attribute conditionally
                       >
                         <h1>Upgrade Now</h1>
                       </button>
@@ -578,9 +578,9 @@ export const Dashboard = () => {
                         }`}
                         onClick={
                           () =>
-                            selectPack.sno < data.sno &&
-                            handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
+                          handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
                         }
+                        // selectPack.sno < data.sno &&
                         disabled={selectPack.sno >= data.sno} // Add disabled attribute conditionally
                       >
                         <h1>Upgrade Now</h1>
@@ -1183,11 +1183,11 @@ export const Dashboard = () => {
               ))}
 
               <div className="flex flex-wrap justify-between bg-blue-500 text-white p-2 rounded-b-lg">
-                <div className="w-full sm:w-1/5">Footer 1</div>
-                <div className="w-full sm:w-1/5">Footer 2</div>
-                <div className="w-full sm:w-1/5">Footer 3</div>
-                <div className="w-full sm:w-1/5">Footer 4</div>
-                <div className="w-full sm:w-1/5 flex items-center">
+                <div className="w-full sm:w-1/5"></div>
+                <div className="w-full sm:w-1/5"></div>
+                <div className="w-full sm:w-1/5"></div>
+                <div className="w-full sm:w-1/5"></div>
+                <div className="w-full sm:w-1/5 flex items-center font-bold">
                   <span className="mr-1">
                     <BiRupee />
                   </span>

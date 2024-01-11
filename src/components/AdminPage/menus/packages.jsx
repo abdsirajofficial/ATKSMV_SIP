@@ -335,7 +335,7 @@ export const Package = () => {
                 >
                   More details
                 </p>
-                  <button
+                  {/* <button
                     className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
                     onClick={() => handleEditPackage(data.packId, "monthly")}
                   >
@@ -343,7 +343,7 @@ export const Package = () => {
                       <MdModeEditOutline />
                     </h1>
                     <h1>Edit Now</h1>
-                  </button>
+                  </button> */}
               </div>
             </div>
           ))
@@ -376,14 +376,14 @@ export const Package = () => {
                 <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
                   {data.amount} <span className=" text-[12px]"></span>
                 </h1>
-                <h1
+                {/* <h1
                   className="p-3 rounded-fullfont-semibold text-[28px] text-white hover:text-red-500 cursor-pointer transform transition duration-300 hover:scale-125"
                   onClick={() =>
                     delConfirmMsg(data.packId, data.amount, "annual")
                   }
                 >
                   <MdDelete />
-                </h1>
+                </h1> */}
               </div>
               <div className=" w-full flex justify-start items-center">
                 <div className=" w-1/2 flex flex-col justify-start items-start pl-3 py-3 space-y-2">
@@ -429,7 +429,7 @@ export const Package = () => {
                 >
                   More details
                 </p>
-                <button
+                {/* <button
                   className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
                   onClick={() => handleEditPackage(data.packId, "annual")}
                 >
@@ -437,7 +437,7 @@ export const Package = () => {
                     <MdModeEditOutline />
                   </h1>
                   <h1>Edit Now</h1>
-                </button>
+                </button> */}
               </div>
             </div>
           ))
@@ -739,47 +739,57 @@ export const Package = () => {
                 <h1>Cancel</h1>
               </button>
             </div>
-            <table className=" w-full text-center mt-5 ">
-              {/* <thead className=" bg-[#1871cd] text-white"> */}
-              <tr className=" bg-[#1871cd] text-white py-4">
-                <th>Year</th>
-                <th>Yearly Invested Amount</th>
-                <th>Total Invested</th>
-                <th>Wealth Gained</th>
-                <th>Expected Amount</th>
-              </tr>
-              {/* </thead> */}
-              {/* <tbody className=""> */}
+            <div className="container mx-auto mt-5 p-4 bg-gray-100 rounded-lg shadow-lg overflow-y-auto">
+              <div className="flex flex-wrap justify-between bg-blue-500 text-white p-2 rounded-t-lg">
+                <div className="w-full sm:w-1/5">Year</div>
+                <div className="w-full sm:w-1/5">Yearly Invested Amount</div>
+                <div className="w-full sm:w-1/5">Total Invested</div>
+                <div className="w-full sm:w-1/5">Wealth Gained</div>
+                <div className="w-full sm:w-1/5">Expected Amount</div>
+              </div>
+
               {[...Array(5)].map((_, index) => (
-                <tr key={index}>
-                  <td>{2024 + index}</td>
-                  <td>{packAmount * 12}</td>
-                  <td>{packAmount * 12 * (index + 1)}</td>
-                  <td>{sipCalculator(packAmount, index + 1)}</td>
-                  <td className=" flex justify-center items-center">
-                    <BiRupee />
-                    {packAmount * 12 * (index + 1) + sipCalculator(packAmount, index + 1)}
-                  </td>
-                </tr>
+                <div
+                  key={index}
+                  className="flex flex-wrap justify-between items-center p-2 border-b"
+                >
+                  <div className="w-full sm:w-1/5">{2024 + index}</div>
+                  <div className="w-full sm:w-1/5">{packAmount * 12}</div>
+                  <div className="w-full sm:w-1/5">
+                    {packAmount * 12 * (index + 1)}
+                  </div>
+                  <div className="w-full sm:w-1/5">
+                    {sipCalculator(packAmount, index + 1)}
+                  </div>
+                  <div className="w-full sm:w-1/5 flex items-center">
+                    <span className="mr-1">
+                      <BiRupee />
+                    </span>
+                    {packAmount * 12 * (index + 1) +
+                      sipCalculator(packAmount, index + 1)}
+                  </div>
+                </div>
               ))}
-              {/* </tbody> */}
-              {/* <tfoot> */}
-              <tr>
-                <th>Footer 1</th>
-                <th>Footer 2</th>
-                <th>Footer 3</th>
-                <th>Footer 4</th>
-                <th>
+
+              <div className="flex flex-wrap justify-between bg-blue-500 text-white p-2 rounded-b-lg">
+                <div className="w-full sm:w-1/5"></div>
+                <div className="w-full sm:w-1/5"></div>
+                <div className="w-full sm:w-1/5"></div>
+                <div className="w-full sm:w-1/5"></div>
+                <div className="w-full sm:w-1/5 flex items-center font-bold">
+                  <span className="mr-1">
+                    <BiRupee />
+                  </span>
                   {[...Array(5)]
                     .map(
                       (_, index) =>
-                      packAmount * 12 * (index + 1) + sipCalculator(packAmount, index + 1)
+                        packAmount * 12 * (index + 1) +
+                        sipCalculator(packAmount, index + 1)
                     )
                     .reduce((a, b) => a + b, 0)}
-                </th>
-              </tr>
-              {/* </tfoot> */}
-            </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
