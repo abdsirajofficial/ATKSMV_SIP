@@ -20,7 +20,7 @@ export const rigesterApi = async (path, data, setLoading) => {
     const res = await axios.post(api_url + path,data)
     return res
   } catch (err){
-    toast.error(err.response.data.error.message, {duration: 1500})
+    toast.error(err.response.data.error, {duration: 1500})
     setLoading(false)
   }
 }
@@ -89,9 +89,9 @@ export const acceptWithrawalReqApi = async (path, data) => {
   }
 }
 //delete withdrawal request
-export const delWithrawalReq = async (path, data) => {
+export const  delWithrawalReq = async (path, data) => {
   try{
-    const res = await axios.put(api_url+path, data)   
+    const res = await axios.delete(api_url+path, data)   
     return res
   } catch(err) {
     toast.error("Try again later", {duration: 1500})
@@ -199,6 +199,16 @@ export const getnomineeApi = async (path, data, setnominee) => {
   }
 }
 //get Withdrawal
+export const gettransaction = async (path, setTotal, settransaction) => {
+  try{
+    const res = await axios.put(api_url+path)
+    settransaction(res.data.transactions)
+    setTotal(res.data.totalPages)
+  return res
+  } catch(err) {
+    // toast.error(err.response.data.error.message, {duration: 1500})
+  }
+}
 export const gettransactionApi = async (path, setTotal, settransaction) => {
   try{
     const res = await axios.get(api_url+path)

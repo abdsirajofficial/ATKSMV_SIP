@@ -429,10 +429,10 @@ export const Dashboard = () => {
                         }`}
                         onClick={
                           () =>
-                          handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
+                            handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
                           // selectPack.sno < data.sno &&
                         }
-                        // disabled={selectPack.sno >= data.sno} // Add disabled attribute conditionally
+                        disabled={selectPack.sno >= data.sno} // Add disabled attribute conditionally
                       >
                         <h1>Upgrade Now</h1>
                       </button>
@@ -569,9 +569,8 @@ export const Dashboard = () => {
                         }`}
                         onClick={
                           () =>
-                          handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
+                            handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
                         }
-                        // selectPack.sno < data.sno &&
                         disabled={selectPack.sno >= data.sno} // Add disabled attribute conditionally
                       >
                         <h1>Upgrade Now</h1>

@@ -45,6 +45,11 @@ export const Payment = () => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
         setdelConfirnMsg(false);
+        gettransactionApi(
+          `admin/successTransaction?page=${Acitve}&maxResults=7`,
+          setTotal,
+          settransaction
+        );
         getPentransactionApi(
           `admin/pendingTransaction?page=${InAcitve}&maxResults=7`,
           setPendingTotal,
@@ -63,6 +68,11 @@ export const Payment = () => {
     delWithrawalReq("admin/editTransaction", { id: id }).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
+        gettransactionApi(
+          `admin/successTransaction?page=${Acitve}&maxResults=7`,
+          setTotal,
+          settransaction
+        );
         getPentransactionApi(
           `admin/pendingTransaction?page=${InAcitve}&maxResults=7`,
           setPendingTotal,

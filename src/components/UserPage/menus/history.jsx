@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getWithdrawal, gettransactionApi } from "../../../server/app";
+import { gettransaction } from "../../../server/app";
 import { Pagination } from "../../pagination";
 
 export const History = () => {
@@ -8,7 +8,7 @@ export const History = () => {
   const [Total, setTotal] = useState()
 
   useEffect(() => {
-    gettransactionApi(
+    gettransaction(
       `user/transaction?userId=${localStorage.getItem("userid")}&page=${Acitve}&maxResults=8`, setTotal,
       settransaction
     );

@@ -46,7 +46,7 @@ export const Users = () => {
       settotalUsers
     );
     getUserInActiveApi(
-      `admin/users?page=${InActive}&maxResults=7&status=InActive`,
+      `admin/users?page=${InActive}&maxResults=7&status=Inactive`,
       setInActivetotalUsers,
       setInActiveTotal,
       setuserInActiveData
@@ -64,10 +64,16 @@ export const Users = () => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
         getUserApi(
-          `admin/users?page=${Active}&maxResults=7`,
+          `admin/users?page=${Active}&maxResults=7&status=Active`,
           setTotal,
           setuserData,
           settotalUsers
+        );
+        getUserInActiveApi(
+          `admin/users?page=${InActive}&maxResults=7&status=Inactive`,
+          setInActivetotalUsers,
+          setInActiveTotal,
+          setuserInActiveData
         );
       }
     });
@@ -122,10 +128,16 @@ export const Users = () => {
         if (res.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getUserApi(
-            `admin/users?page=${Acitve}&maxResults=7`,
+            `admin/users?page=${Active}&maxResults=7&status=Active`,
             setTotal,
             setuserData,
             settotalUsers
+          );
+          getUserInActiveApi(
+            `admin/users?page=${InActive}&maxResults=7&status=Inactive`,
+            setInActivetotalUsers,
+            setInActiveTotal,
+            setuserInActiveData
           );
         } else {
           toast.error(res.data.error, { duration: 1500 });
@@ -142,7 +154,18 @@ export const Users = () => {
       editApi("admin/editUser", profileData).then((res) => {
         if (res.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
-          getUserApi("admin/users", setuserData, settotalUsers);
+          getUserApi(
+            `admin/users?page=${Active}&maxResults=7&status=Active`,
+            setTotal,
+            setuserData,
+            settotalUsers
+          );
+          getUserInActiveApi(
+            `admin/users?page=${InActive}&maxResults=7&status=Inactive`,
+            setInActivetotalUsers,
+            setInActiveTotal,
+            setuserInActiveData
+          );
         } else {
           toast.error(res.data.error, { duration: 1500 });
         }
@@ -153,7 +176,7 @@ export const Users = () => {
 
   const searchApi = () => {
     getUserApi(
-      `admin/users?name=${search}&page=${Active}&maxResults=6`,
+      `admin/users?name=${search}&page=${Active}&maxResults=7`,
       setTotal,
       setuserData,
       settotalUsers
@@ -475,8 +498,8 @@ export const Users = () => {
                     <BsCashCoin />
                   </div>
                 </div>
-                <div className="w-full md:w-[250px] 2xl:w-[300px] px-4 pb-2 pt-8 shadow-md rounded-xl flex flex-col justify-between items-start bg-gradient-to-r from-blue-200 to-blue-500">
-                  <div className=" flex flex-col justify-center items-center space-y-3">
+                <div className="w-full md:w-[25 0px] 2xl:w-[300px] px-4 pb-2 pt-8 shadow-md rounded-xl flex  justify-between items-start bg-gradient-to-r from-blue-200 to-blue-500">
+                  <div className=" flex flex-col justify-center items-start space-y-3">
                     <h1 className="text-[#031635] w-full sm:w-[200px] font-semibold text-[22px] bg-transparent p-4">
                       {profile.amount
                         ? parseInt(profile.amount) +
