@@ -200,7 +200,7 @@ export const Withdrawal = () => {
                       )
                     }
                   >
-                    <h1>Save</h1>
+                    <h1>Confirm</h1>
                   </button>
                 </div>
               </div>
