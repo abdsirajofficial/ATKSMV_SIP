@@ -108,6 +108,7 @@ export const Users = () => {
       account_no: profile.account_no,
       address: profile.address,
       amount: profile.amount ? parseInt(profile.amount) : 0,
+      password:profile.password2
     };
 
     const nomineeData = {
@@ -700,6 +701,21 @@ export const Users = () => {
                   className="w-full lg:w-[250px] h-[100px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                   onChange={(e) =>
                     setprofile({ ...profile, address: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <div className=" flex space-x-2 mt-5">
+                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    Password
+                  </div>
+                </div>
+                <input
+                  type="text"
+                  value={profile.password2}
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setprofile({ ...profile, password2: e.target.value })
                   }
                 />
               </div>

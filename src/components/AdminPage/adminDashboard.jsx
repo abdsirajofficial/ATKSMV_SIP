@@ -247,10 +247,10 @@ export const AdminDashboard = () => {
           </div>
           <div className=" hidden md:block">
             <div className=" flex justify-end items-center">
-            <h1 className=" px-[18px]  py-2 text-[18px] rounded-full my-2">
+            <h1 className=" px-[18px]  py-2 text-[18px] rounded-full my-2 font-semibold text-base">
                 {UserId}
               </h1>
-              <h1 className=" bg-yellow-300 px-[18px]  py-2 text-[18px] rounded-full my-2">
+              <h1 className=" bg-yellow-300 px-[12px] font-bold  py-2 text-[18px] rounded-full my-2">
                 {name[0]}
               </h1>
               

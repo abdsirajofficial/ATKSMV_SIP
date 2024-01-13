@@ -17,12 +17,12 @@ import Register from "./components/Register";
 
 function App() {
   return (
-    <div className="w-full h-screen bg-[#f9fbfe] font-['sara']">
+    <div className="w-full h-screen bg-[#f9fbfe] font-mono ">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/rigester" element={<Register/>} />
+          <Route path="/register" element={<Register/>} />
           <Route path="/user" element={<UserDashboard/>} >
             <Route path="/user/dashboard" element={<Dashboard/>} />
             <Route path="/user/profile" element={<Profile/>} />

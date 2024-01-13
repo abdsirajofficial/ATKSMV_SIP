@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { loginApi } from "../server/app";
 import toast from "react-hot-toast";
 import loadingIcon from "../assets/loading.svg";
+import { IoIosArrowBack } from "react-icons/io";
 
 const override = {
   display: "block",
@@ -73,6 +74,11 @@ const Login = () => {
         </div>
       </div>
       <div className=" p-10 md:p-0 md:h-full bg-[aliceblue] md:w-1/2 rounded-lg md:rounded-none md:bg-white flex flex-col justify-center items-center space-y-8">
+
+        <div>
+          
+        </div>
+
         <img className=" w-52 " src={logo} alt="" />
         <h1 className=" md:text-[20px] font-semibold ">
           {" "}
@@ -122,7 +128,7 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="bg-[#3777FA] flex justify-center items-center  space-x-3 text-white p-3 rounded-md hover:bg-[#334e8e] w-full sm:w-[290px]  shadow-md mt-5"
+            className="bg-[#3777FA] flex justify-center items-center transition-colors duration-500  space-x-3 text-white p-3 rounded-md hover:bg-[#334e8e] w-full sm:w-[290px]  shadow-md mt-5"
             onClick={() => onSubmit()}
           >
             <p>Login</p>
@@ -132,11 +138,14 @@ const Login = () => {
             Don't have an account?{" "}
             <span
               className=" text-[#3777fa] cursor-pointer"
-              onClick={() => navigate("/rigester")}
+              onClick={() => navigate("/register")}
             >
               Register
             </span>
           </h1>
+          <div className=" mt-10 w-full">
+              <button onClick={()=>navigate('../')} className=" flex space-x-2 justify-center items-center underline  transition-colors duration-700 hover:text-[#3777FA]"><IoIosArrowBack/>Back to Home</button>
+          </div>
         </div>
       </div>
     </div>

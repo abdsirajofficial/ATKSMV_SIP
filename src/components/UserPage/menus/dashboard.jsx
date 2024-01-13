@@ -154,6 +154,9 @@ export const Dashboard = () => {
               setsenderTransId("");
               setQuantity(1);
               setPackageInvestment(false);
+              setTimeout(() => {
+                window.open("https://wa.me/8148867881", "_blank");
+              }, 2000);
             }
           })
           .catch((error) => {
@@ -164,11 +167,13 @@ export const Dashboard = () => {
           .then((res) => {
             if (res.status === 200) {
               toast.success(res.data.msg);
+              
               setIsChecked();
               setsenderAccName("");
               setsenderTransId("");
               setQuantity(1);
               setPackageInvestment(false);
+              window.open("https://wa.me/8148867881", "_blank");
             }
           })
           .catch((error) => {
@@ -270,7 +275,7 @@ export const Dashboard = () => {
             </h1>
             <h1 className=" text-[#031635] font-semibold">Total returns</h1>
           </div>
-          <div className=" shadow-lg  rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
+          <div className=" shadow-lg rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
             <BsCashCoin />
           </div>
         </div>

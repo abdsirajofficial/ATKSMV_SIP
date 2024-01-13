@@ -227,10 +227,10 @@ export const UserDashboard = () => {
           </div>
           <div className=" hidden md:block">
             <div className=" flex justify-end items-center">
-              <h1 className=" px-[18px]  py-2 text-[18px] rounded-full my-2">
+              <h1 className=" px-[18px] font-semibold text-base  py-2 text-[18px] rounded-full my-2">
                 {UserId}
               </h1>
-              <h1 className=" bg-yellow-300 px-[18px]  py-2 text-[18px] rounded-full my-2">
+              <h1 className=" bg-yellow-300 px-[14px]  py-2 text-[18px] rounded-full my-2 font-bold">
                 {name[0]}
               </h1>
             </div>

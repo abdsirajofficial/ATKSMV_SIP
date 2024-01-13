@@ -91,10 +91,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Name
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -107,10 +107,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Email id
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -123,10 +123,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Aadhar Number
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -139,10 +139,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Pan Number
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -155,10 +155,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Primary Number
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -171,10 +171,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Secondary Number
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -187,10 +187,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Date of Birth
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -205,10 +205,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Address
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -225,10 +225,10 @@ export const Profile = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Account Holder Name
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -241,10 +241,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               Account Number
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -257,10 +257,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               IFSC Code
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -273,10 +273,10 @@ export const Profile = () => {
         </div>
         <div>
           <div className=" flex space-x-2 mt-5">
-            <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-zinc-600 text-base font-medium  leading-tight">
               UPI ID
             </div>
-            <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+            <div className="text-red-500 text-base font-medium  leading-tight">
               *
             </div>
           </div>
@@ -295,10 +295,10 @@ export const Profile = () => {
         <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-2">
           <div>
             <div className=" flex space-x-2 mt-5">
-              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-zinc-600 text-base font-medium  leading-tight">
                 Name
               </div>
-              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-red-500 text-base font-medium  leading-tight">
                 *
               </div>
             </div>
@@ -311,10 +311,10 @@ export const Profile = () => {
           </div>
           <div>
             <div className=" flex space-x-2 mt-5">
-              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-zinc-600 text-base font-medium  leading-tight">
                 Email Id
               </div>
-              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-red-500 text-base font-medium  leading-tight">
                 *
               </div>
             </div>
@@ -329,10 +329,10 @@ export const Profile = () => {
           </div>
           <div>
             <div className=" flex space-x-2 mt-5">
-              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-zinc-600 text-base font-medium  leading-tight">
                 Primary Number
               </div>
-              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-red-500 text-base font-medium  leading-tight">
                 *
               </div>
             </div>
@@ -354,10 +354,10 @@ export const Profile = () => {
           </div>
           <div>
             <div className=" flex space-x-2 mt-5">
-              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-zinc-600 text-base font-medium  leading-tight">
                 Pan Number
               </div>
-              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-red-500 text-base font-medium  leading-tight">
                 *
               </div>
             </div>
@@ -379,10 +379,10 @@ export const Profile = () => {
           </div>
           <div>
             <div className=" flex space-x-2 mt-5">
-              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-zinc-600 text-base font-medium  leading-tight">
                 Aadhar Number
               </div>
-              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-red-500 text-base font-medium  leading-tight">
                 *
               </div>
             </div>
@@ -404,10 +404,10 @@ export const Profile = () => {
           </div>
           <div>
             <div className=" flex space-x-2 mt-5">
-              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-zinc-600 text-base font-medium  leading-tight">
                 Account Holder Name
               </div>
-              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-red-500 text-base font-medium  leading-tight">
                 *
               </div>
             </div>
@@ -425,10 +425,10 @@ export const Profile = () => {
           </div>
           <div>
             <div className=" flex space-x-2 mt-5">
-              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-zinc-600 text-base font-medium  leading-tight">
                 Account Number
               </div>
-              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-red-500 text-base font-medium  leading-tight">
                 *
               </div>
             </div>
@@ -443,10 +443,10 @@ export const Profile = () => {
           </div>
           <div>
             <div className=" flex space-x-2 mt-5">
-              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-zinc-600 text-base font-medium  leading-tight">
                 IFSC Code
               </div>
-              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-red-500 text-base font-medium  leading-tight">
                 *
               </div>
             </div>
@@ -468,10 +468,10 @@ export const Profile = () => {
           </div>
           <div>
             <div className=" flex space-x-2 mt-5">
-              <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-zinc-600 text-base font-medium  leading-tight">
                 UPI ID
               </div>
-              <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+              <div className="text-red-500 text-base font-medium  leading-tight">
                 *
               </div>
             </div>

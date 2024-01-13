@@ -3,3 +3,14 @@
     color: white;
     width: 100%;
   }
+
+  .popup-enter {
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  }
+  
+  .popup-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+  }

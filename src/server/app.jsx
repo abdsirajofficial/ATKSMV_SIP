@@ -14,8 +14,8 @@ export const loginApi = async (path, data, setLoading) => {
     setLoading(false)
   }
 }
-//rigester api
-export const rigesterApi = async (path, data, setLoading) => {
+//register api
+export const registerApi = async (path, data, setLoading) => {
   try{
     const res = await axios.post(api_url + path,data)
     return res

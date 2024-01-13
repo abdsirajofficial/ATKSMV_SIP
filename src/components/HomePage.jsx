@@ -104,7 +104,7 @@ export const HomePage = () => {
             <button
               className=" flex justify-center tems-center ml-6 gap-3 my-[20px] mt-6 select-none rounded-lg bg-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
-              onClick={() => navigate("/rigester")}
+              onClick={() => navigate("/register")}
             >
               <p>Register Now</p>
               <h1>
@@ -205,19 +205,7 @@ export const HomePage = () => {
         {showBorder && (
           <div className=" w-full md:flex  border-2 rounded-lg shadow-sm  ">
             <div className=" w-full md:w-1/2 p-6  border-r-2">
-              <div className=" flex justify-start items-center space-x-5">
-                <div className=" flex flex-col justify-center items-center ">
-                  <img src={img2} alt="no img" />
-                </div>
-                <div>
-                  <h1 className=" md:text-[18px] font-semibold">
-                    Returns Estimator
-                  </h1>
-                  <p className=" text-[12px] md:text-[16px] text-gray-500">
-                    Estimation is based on the past performance
-                  </p>
-                </div>
-              </div>
+              
               <div className=" pt-6">
                 {/* <div className=" w-full h-full flex flex-col justify-center items-center p-6 border-2 border-blue-800 rounded-md space-y-3">
                   <h1 className=" text-[14px]">ENTER AMOUNT</h1>
