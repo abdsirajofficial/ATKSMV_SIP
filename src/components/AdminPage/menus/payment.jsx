@@ -61,6 +61,7 @@ export const Payment = () => {
 
   const deleteUserConfirm = (userId, id, name, amount) => {
     setdelUser({ userId: userId, id: id, userName: name, amount: amount });
+    // console.log(delUser)
     setdelConfirnMsg(true);
   };
 
@@ -375,7 +376,7 @@ export const Payment = () => {
               </button>
               <button
                 className=" px-5 py-2 rounded-md text-white bg-red-700 hover:shadow-lg hover:shadow-red-200 transition-all duration-700"
-                onClick={() => deleteUser(delUser.userId)}
+                onClick={() => deleteUser(delUser.id)}
               >
                 YES, DELETE USER
               </button>

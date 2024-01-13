@@ -75,7 +75,7 @@ const Rigester = () => {
   };
 
   return (
-    <div className="w-full h-full md:flex justify-center items-center bg-[#3777FA]">
+    <div className="w-full h-full md:flex justify-center items-center bg-gradient-to-b from-blue-500 to-[#3777FA]">
       <div className=" w-full md:w-1/2 pb-10 sm:p-0 sm:h-full bg-gradient-to-b from-blue-500 to-[#3777FA] ">
         <img className=" w-56 pb-10 pt-8 pl-5" src={logo} alt="" />
         <div className="flex flex-col space-y-10 justify-center items-center">
@@ -97,7 +97,12 @@ const Rigester = () => {
           <h1 className=" mb-4">Personal details</h1>
           <div className=" w-full h-full grid grid-cols-1 sm:grid-cols-2  gap-5">
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">Name</label>
+            <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
+               Name
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
+              </label>
               <input
                 type="text"
                 id="name"
@@ -108,8 +113,11 @@ const Rigester = () => {
               />
             </div>
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
-                Email id
+              <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
+                Email id 
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
               </label>
               <input
                 type="email"
@@ -121,8 +129,11 @@ const Rigester = () => {
               />
             </div>
             <div className="">
-              <label className="text-sm font-medium text-gray-600">
+              <label className="text-sm font-medium text-gray-600 flex gap-1 items-center">
                 Primary number
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
               </label>
               <input
                 type="number"
@@ -138,8 +149,11 @@ const Rigester = () => {
               />
             </div>
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                 Date of birth
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
               </label>
               <input
                 type="date"
@@ -171,8 +185,11 @@ const Rigester = () => {
             </div>
 
             <div className="">
-              <label className="text-sm font-medium text-gray-600">
+              <label className="text-sm font-medium text-gray-600 flex gap-1 items-center">
                 Aadhar number
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
               </label>
               <input
                 type="text" // Change type to text
@@ -228,8 +245,11 @@ const Rigester = () => {
           <h1 className=" my-4">Account details</h1>
           <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                 Account holder name
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
               </label>
               <input
                 type="text"
@@ -241,8 +261,11 @@ const Rigester = () => {
               />
             </div>
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                 Account Number
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
               </label>
               <input
                 type="number"
@@ -254,8 +277,11 @@ const Rigester = () => {
               />
             </div>
             <div className="">
-              <label className="text-sm font-medium text-gray-600">
+              <label className="text-sm font-medium text-gray-600 flex gap-1 items-center">
                 IFSC code
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
               </label>
               <input
                 type="text"
@@ -291,8 +317,11 @@ const Rigester = () => {
           <h1 className=" my-4">Set Password</h1>
           <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                 Password
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
               </label>
               <input
                 type="password"
@@ -304,8 +333,11 @@ const Rigester = () => {
               />
             </div>
             <div className="">
-              <label className=" text-sm font-medium text-gray-600">
+              <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                 Confirm Password
+                <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                      *
+                </div>
               </label>
               <input
                 type="password"

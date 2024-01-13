@@ -17,7 +17,7 @@ import Register from "./components/Register";
 
 function App() {
   return (
-    <div className="w-full h-screen bg-[#f9fbfe] font-['Scada'] ">
+    <div className="w-full h-screen bg-[#f9fbfe] font-['sara']">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />

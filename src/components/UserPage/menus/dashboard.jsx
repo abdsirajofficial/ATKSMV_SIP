@@ -681,7 +681,7 @@ export const Dashboard = () => {
                 <div>
                   <div className=" flex space-x-2 mt-5">
                     <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                      Account Holder Name
+                      UPI ID
                     </div>
                     <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
                       *
@@ -994,9 +994,9 @@ export const Dashboard = () => {
                     <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
                       Transaction id
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    {/* <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
                       *
-                    </div>
+                    </div> */}
                   </div>
                   <input
                     type="text"
@@ -1010,7 +1010,7 @@ export const Dashboard = () => {
                     <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
                       Add Your Quantity
                     </div>
-                    <div className="text-red-500 text-lg font-medium">*</div>
+                    {/* <div className="text-red-500 text-lg font-medium">*</div> */}
                   </div>
                   <div className=" flex space-x-2">
                     {/* Minus Button */}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import {
   acceptWithrawalReqApi,
-  delWithrawalReq,
+  deleteApi,
   getProfileApi,
   getWithdrawal,
 } from "../../../server/app";
@@ -54,7 +54,7 @@ export const Withdrawal = () => {
   };
 
   const delWithrawReq = (id) => {
-    delWithrawalReq(`admin/deleteRequest?userId=${id}`).then((res) => {
+    deleteApi(`admin/deleteRequest?userId=${id}`).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
         getWithdrawal(

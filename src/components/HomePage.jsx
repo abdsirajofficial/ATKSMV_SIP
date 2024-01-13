@@ -13,6 +13,7 @@ import { PieChart } from "react-minimal-pie-chart";
 import { IoIosMail, IoLogoWhatsapp, IoMdLock } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { BiRupee } from "react-icons/bi";
+import { Link } from 'react-router-dom';
 
 import { useNavigate } from "react-router-dom";
 
@@ -64,12 +65,18 @@ export const HomePage = () => {
     setLumReturnAmt(Math.round(futureValue) - p); // Calculate returns by subtracting principal from future value
   }, [LumInvestAmt, LumyrSliderValue, LumreturnVlaue]);
 
+  // const ChatLink = ({ phoneNumber }) => {
+    const handleChatClick = () => {
+      window.location.href = "https://wa.me/8148867881";
+    };
+  
+
   return (
     <div className=" w-full h-full">
       <div className=" px-5 md:px-20 bg-gradient-to-b from-blue-500 to-[#3777FA] text-white ">
         <div className=" flex justify-between items-center pt-8">
           <div className="text-2xl font-medium">
-            <img src={logo1} alt="" className=" w-26 md:w-56" />
+            <img src={logo} alt="" className=" w-26 md:w-56" />
           </div>
           <div className=" flex justify-center items-center space-x-5">
             <button
@@ -87,12 +94,12 @@ export const HomePage = () => {
         <div className=" w-full h-full md:flex justify-center items-start md:items-center md:px-8 py-10  space-x-10">
           <div className=" md:w-1/2">
             <h1 className=" text-[22px] md:text-[52px] font-bold mb-4">
-              ATKSMV TRADERS - Your Trading Partner
+              ATKSMV TRADERS - Your Investing Partner
             </h1>
             <p className=" md:text-[18px] font-light">
               Welcome to ATKSMV Traders, your trusted partner in the world of
               trading. We provide top-notch services and support to help you
-              succeed in your trading journey.
+              succeed in your investing journey.
             </p>
             <button
               className=" flex justify-center tems-center ml-6 gap-3 my-[20px] mt-6 select-none rounded-lg bg-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -119,12 +126,12 @@ export const HomePage = () => {
         </h1>
         <ul className="text-[15px] space-y-5">
           <li>
-            1.TMV traders offers 1000 plus online gold investment scheme that
+            1.ATKSMV traders offers 1000 plus online gold investment scheme that
             belongs from different houses,
           </li>
-          <li>2.Find the gold investment to invest in TMV traders</li>
+          <li>2.Find the gold investment to invest in ATKSMV traders</li>
           <li>
-            3.TMV traders gold investment (GI) is looked with features that
+            3.ATKSMV traders gold investment (GI) is looked with features that
             simplify the investment journey and help take the best decision
           </li>
           <li>
@@ -212,7 +219,7 @@ export const HomePage = () => {
                 </div>
               </div>
               <div className=" pt-6">
-                <div className=" w-full h-full flex flex-col justify-center items-center p-6 border-2 border-blue-800 rounded-md space-y-3">
+                {/* <div className=" w-full h-full flex flex-col justify-center items-center p-6 border-2 border-blue-800 rounded-md space-y-3">
                   <h1 className=" text-[14px]">ENTER AMOUNT</h1>
                   <div className=" flex">
                     <h1>
@@ -227,6 +234,33 @@ export const HomePage = () => {
                       }
                     />
                   </div>
+                </div> */}
+                <div className="  pt-4">
+                  <div className=" w-full flex justify-between items-center">
+                    <h1>Total investment</h1>
+                    <div className=" flex justify-center items-center space-x-3 bg-[#c1d5fd] text-[#3777fa]  px-1">
+                      <p className="text-[20px]"><BiRupee /></p>
+                      <input
+                        type="number"
+                        className=" w-[80px] text-[18px] font-bold bg-[#c1d5fd] p-1"
+                        value={LumInvestAmt}
+                        onChange={(e) =>
+                          setstartValue(e.target.value ? e.target.value : "0")
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className=" pt-4">
+                    <input
+                      type="range"
+                      min="500"
+                      max="500000"
+                      step="100"
+                      className="w-full "
+                      value={LumInvestAmt}
+                      onChange={(e) => setLumInvestAmt(e.target.value)}
+                    />
+                  </div>
                 </div>
                 <div className="  pt-4">
                   <div className=" flex justify-between items-center">
@@ -234,11 +268,11 @@ export const HomePage = () => {
                     <div className=" flex ">
                       <input
                         type="number"
-                        className=" w-[38px] text-[18px] font-bold"
+                        className=" w-[55px] text-[18px] font-bold bg-[#c1d5fd] text-blue-600 p-1"  
                         value={yrSliderValue}
                         onChange={(e) => setyrsSliderValue(e.target.value)}
                       />
-                      <p className=" text-gray-400">Yrs</p>
+                      <p className=" bg-[#c1d5fd] text-blue-600 pt-1 pr-1">Yrs</p>
                     </div>
                   </div>
                   <div className=" pt-4">
@@ -262,18 +296,18 @@ export const HomePage = () => {
                     <div className=" flex ">
                       <input
                         type="number"
-                        className=" w-[50px] text-[18px] font-bold"
+                        className=" w-[80px] text-[18px] font-bold bg-[#c1d5fd] p-1 text-blue-600"
                         value={returnVlaue}
                         onChange={(e) => setreturnVlaue(e.target.value)}
                       />
-                      <p className=" text-gray-400">%</p>
+                      <p className=" bg-[#c1d5fd] text-blue-600 pt-1 pr-1">%</p>
                     </div>
                   </div>
                   <div className=" pt-4">
                     <input
                       type="range"
                       min="8.0"
-                      max="30.0"
+                      max="50.0"
                       step="0.1"
                       className="w-full "
                       value={returnVlaue}
@@ -281,7 +315,7 @@ export const HomePage = () => {
                     />
                     <div className=" flex justify-between items-center text-gray-400 text-[14px]">
                       <h1>8%</h1>
-                      <h1>30%</h1>
+                      <h1>50%</h1>
                     </div>
                   </div>
                 </div>
@@ -322,19 +356,19 @@ export const HomePage = () => {
                       {
                         title: "Investment Amount",
                         value: InvestmentAmt,
-                        color: "#3777FA ",
+                        color: "#eef0ff ",
                       },
                       {
                         title: "Return Amount",
                         value: ReturnAmt,
-                        color: "#21b7a8",
+                        color: "#5367ff",
                       },
                     ]}
                   />
                 </div>
                 <div>
                   <div className="flex items-center">
-                    <div className="w-3 h-12 bg-[#21b7a8] mr-2"></div>
+                    <div className="w-3 h-12 bg-[#eef0ff] mr-2"></div>
                     <div className=" space-y-2">
                       <h1>Invested Amount</h1>
                       <p className=" flex font-bold text-[18px]">
@@ -344,7 +378,7 @@ export const HomePage = () => {
                     </div>
                   </div>
                   <div className="flex items-center pt-4">
-                    <div className="w-3 h-12 bg-[#3777FA] mr-2"></div>
+                    <div className="w-3 h-12 bg-[#5367ff] mr-2"></div>
                     <div className=" space-y-2">
                       <h1>Est. Returns</h1>
                       <p className=" flex font-bold text-[18px]">
@@ -369,7 +403,7 @@ export const HomePage = () => {
                       <p className="text-[20px]"><BiRupee /></p>
                       <input
                         type="number"
-                        className=" w-[75px] text-[18px] font-bold bg-[#c1d5fd] p-1"
+                        className=" w-[80px] text-[18px] font-bold bg-[#c1d5fd] p-1"
                         value={LumInvestAmt}
                         onChange={(e) => setLumInvestAmt(e.target.value)}
                       />
@@ -404,7 +438,7 @@ export const HomePage = () => {
                     <input
                       type="range"
                       min="1"
-                      max="30.0"
+                      max="50.0"
                       step="0.1"
                       className="w-full "
                       value={LumreturnVlaue}
@@ -627,12 +661,16 @@ export const HomePage = () => {
             Contact with our support team to get your queries resolved.
           </h1>
           <div className=" md:flex md:space-x-5 space-y-5">
-            <a
-              href="tel:+918148867881"
+            <Link
+              to="#"
               className=" flex justify-center items-center gap-3 bg-[#3f5bd9] p-4 rounded-lg text-white"
+              onClick={handleChatClick}
             >
               <IoLogoWhatsapp className=" text-[24px]" /> +91 8148867881
-            </a>
+            </Link>
+            {/* <Link to="#" onClick={handleChatClick}>
+      Open WhatsApp Chat
+    </Link> */}
             <a
               href="mailto:atksmvtraders@gmail.com"
               className="flex justify-center items-center gap-3 border-2 p-4 rounded-lg text-black"
@@ -644,7 +682,7 @@ export const HomePage = () => {
       </div>
       <div className=" w-full bg-[#1b3a7f] pl-5 md:pl-28 pr-3 pt-8 pb-4 mt-10  md:mt-0">
         <h1 className="text-2xl font-medium text-white">
-          <img src={logo1} alt="" className=" w-52" />
+          <img src={logo} alt="" className=" w-52" />
         </h1>
         <div className=" md:flex justify-between items-center">
           <h1 className="text-white text-[14px] mt-3">
