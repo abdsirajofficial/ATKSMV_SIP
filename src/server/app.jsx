@@ -30,7 +30,7 @@ export const addNomineeApi = async (path, data) => {
     const res = await axios.post(api_url + path,data)
     return res
   } catch (err){
-    toast.error(err.response.data.error, {duration: 1500})
+    toast.error(err.response.data.error.message, {duration: 1500})
   }
 }
 //getUser api

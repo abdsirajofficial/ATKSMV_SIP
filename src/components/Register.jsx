@@ -31,6 +31,13 @@ const Register = () => {
   const onSubmit = () => {
     setLoading(true);
 
+    if(ConfirmPassword !== Password){
+      setLoading(false);
+      toast.error('Both password not same')
+      return
+     
+    }
+
     const data = {
       name: Name,
       email: Email,
@@ -63,7 +70,7 @@ const Register = () => {
       setLoading(false);
     } else {
       registerApi("user/signUp", data, setLoading).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success(res.data.message, { duration: 1500 });
           setLoading(false);
           setOpenPopup(true)

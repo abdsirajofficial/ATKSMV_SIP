@@ -27,7 +27,7 @@ const Login = () => {
     const data = { email: username, password: password };
 
     loginApi("user/login", data, setLoading).then((res) => {
-      if (res.status === 200) {
+      if (res?.status === 200) {
         const token = res.data.token;
         const UserName = res.data.profile.name;
         const UserId = res.data.profile.userId;

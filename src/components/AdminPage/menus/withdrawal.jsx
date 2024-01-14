@@ -40,7 +40,7 @@ export const Withdrawal = () => {
       amount: amount,
     };
     acceptWithrawalReqApi("admin/requestChange", data).then((res) => {
-      if(res.status === 200){
+      if(res?.status === 200){
         getWithdrawal(
           `admin/withdrawRequest?page=${Acitve}&maxResults=7`,
           setTotal,
@@ -55,7 +55,7 @@ export const Withdrawal = () => {
 
   const delWithrawReq = (id) => {
     deleteApi(`admin/deleteRequest?userId=${id}`).then((res) => {
-      if (res.status === 200) {
+      if (res?.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
         getWithdrawal(
           `admin/withdrawRequest?page=${Acitve}&maxResults=7`,

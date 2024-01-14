@@ -89,7 +89,7 @@ export const Dashboard = () => {
 
     if (IsChecked === true) {
       makeWithdrawApi("user/withdrawal", data).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           if (res.data.msg === "WithDrawal request already Exist") {
             toast.success(res.data.msg, { duration: 1500 });
             setIsChecked();
@@ -147,7 +147,7 @@ export const Dashboard = () => {
       if (InvestmentDtls.type === "monthly") {
         monPackApi("user/transaction", data)
           .then((res) => {
-            if (res.status === 200) {
+            if (res?.status === 200) {
               toast.success(res.data.msg);
               setIsChecked();
               setsenderAccName("");
@@ -165,7 +165,7 @@ export const Dashboard = () => {
       } else {
         monPackApi("user/transaction", data)
           .then((res) => {
-            if (res.status === 200) {
+            if (res?.status === 200) {
               toast.success(res.data.msg);
               
               setIsChecked();
@@ -694,7 +694,7 @@ export const Dashboard = () => {
                   </div>
                   <input
                     type="text"
-                    value={profile.upi_id}
+                    value={profile['IFSC']}
                     className=" w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                     readOnly
                   />

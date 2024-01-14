@@ -42,7 +42,7 @@ export const Profile = () => {
       !nominee?.email ||
       !nominee?.aadhar ||
       !nominee?.pan ||
-      !nominee?.mobile ||
+      nominee?.mobile.length <10 ||
       !nominee?.account_no ||
       !nominee?.upi_id ||
       !nominee?.account_holder ||
@@ -68,7 +68,7 @@ export const Profile = () => {
     };
 
     addNomineeApi("user/nominee", nomineeData).then((res) => {
-      if (res.status === 201) {
+      if (res?.status === 201) {
         toast.success(res.data.message, { duration: 1500 });
       }
     });

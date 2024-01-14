@@ -98,7 +98,7 @@ export const Package = () => {
     };
     if (type === "monthly") {
       addPackageApi("admin/monthPackage", data).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getMonPackageApi(
             "admin/monthPackages",
@@ -116,7 +116,7 @@ export const Package = () => {
       });
     } else {
       addPackageApi("admin/annualPackages", data).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getAnnualPackageApi(
             "admin/annualPackages",
@@ -138,7 +138,7 @@ export const Package = () => {
   const deletePackage = (id, type) => {
     if (type === "monthly") {
       delPackageApi(`admin/monthPackages?packId=${id}`).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getMonPackageApi(
             "user/monthPackages",
@@ -151,7 +151,7 @@ export const Package = () => {
       setdelConfirnMsg(false);
     } else {
       delPackageApi(`admin/annualPackages?packId=${id}`).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getAnnualPackageApi(
             "user/annualPackages",
@@ -217,7 +217,7 @@ export const Package = () => {
 
     if (PackaType === "MON") {
       eidtPackageApi("admin/editMonthPackages", data).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getMonPackageApi(
             "admin/monthPackages",
@@ -232,7 +232,7 @@ export const Package = () => {
       });
     } else {
       eidtPackageApi("admin/editAnnualPackages", data).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getAnnualPackageApi(
             "admin/annualPackages",

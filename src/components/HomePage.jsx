@@ -108,9 +108,9 @@ export const HomePage = () => {
               onClick={() => navigate("/register")}
             >
               <p>Register Now</p>
-              <h1>
+              <div>
                 <FaArrowRightLong />
-              </h1>
+              </div>
             </button>
           </div>
 

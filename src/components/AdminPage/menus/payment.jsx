@@ -42,7 +42,7 @@ export const Payment = () => {
 
   const deleteUser = (id) => {
     delUserApi(`admin/deleteTransaction?id=${parseInt(id)}`).then((res) => {
-      if (res.status === 200) {
+      if (res?.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
         setdelConfirnMsg(false);
         gettransactionApi(
@@ -67,7 +67,7 @@ export const Payment = () => {
 
   const accepReq = (id) => {
     delWithrawalReq("admin/editTransaction", { id: id }).then((res) => {
-      if (res.status === 200) {
+      if (res?.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
         gettransactionApi(
           `admin/successTransaction?page=${Acitve}&maxResults=7`,

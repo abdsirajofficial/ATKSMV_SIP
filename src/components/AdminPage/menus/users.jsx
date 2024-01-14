@@ -62,7 +62,7 @@ export const Users = () => {
 
   const deleteUser = (id) => {
     delUserApi(`admin/deleteUser?userId=${id}`).then((res) => {
-      if (res.status === 200) {
+      if (res?.status === 200) {
         toast.success(res.data.msg, { duration: 1500 });
         getUserApi(
           `admin/users?page=${Active}&maxResults=7&status=Active`,
@@ -135,7 +135,7 @@ export const Users = () => {
 
     if (nomineeData.name === "") {
       editApi("admin/editUser", profileData).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getUserApi(
             `admin/users?page=${Active}&maxResults=7&status=Active`,
@@ -156,13 +156,13 @@ export const Users = () => {
       seteditUser(false);
     } else {
       editApi("admin/editNominee", nomineeData).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
         } else {
           toast.error(res.data.error, { duration: 1500 });
         }
       });
       editApi("admin/editUser", profileData).then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success(res.data.msg, { duration: 1500 });
           getUserApi(
             `admin/users?page=${Active}&maxResults=7&status=Active`,
