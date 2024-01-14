@@ -1,6 +1,6 @@
 .active {
     background-color: #00132e;
-    color: white;
+    color: white !important;
     width: 100%;
   }
 

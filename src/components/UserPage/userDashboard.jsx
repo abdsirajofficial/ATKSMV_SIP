@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo1.svg";
+import logo from "../../assets/logo2.svg";
 import { MdDashboard, MdManageHistory, MdOutlineLogout } from "react-icons/md";
 import { RiAccountBoxFill } from "react-icons/ri";
 import jwtDecode from "jwt-decode";
@@ -9,9 +9,9 @@ import { IoMenu } from "react-icons/io5";
 import { ImCancelCircle } from "react-icons/im";
 import loadingIcon from "../../assets/loading.svg";
 
-export const UserDashboard = ({isLoading}) => {
+export const UserDashboard = ({ isLoading }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
 
   const token = localStorage.getItem("loginToken");
   const name = localStorage.getItem("name");
@@ -130,24 +130,20 @@ export const UserDashboard = ({isLoading}) => {
             {/* Menu Button */}
             <div className="sm:hidden block">
               <button
-                className="text-[26px] py-4"
-                onClick={() => setIsMenuOpen(true)}
+                className="text-[26px] py-4 transition-transform duration-700 ease-in-out"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <IoMenu />
+                {
+                  isMenuOpen ? <ImCancelCircle /> : <IoMenu />
+                }
               </button>
             </div>
 
             {/* Menu Content */}
             {isMenuOpen && (
-              <div className="md:hidden block  absolute z-10 top-0 right-0 text-end w-[300px] bg-blue-600">
+              <div className="md:hidden block  absolute z-10 top-10 right-3 text-end w-[65%] rounded-md bg-white border-2 shadow-md">
                 {/* Close Button */}
 
-                <button
-                  className="text-[26px] py-4 pr-5"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <ImCancelCircle />
-                </button>
 
                 {/* Menu Items */}
                 <div className="py-5">
@@ -159,7 +155,7 @@ export const UserDashboard = ({isLoading}) => {
                     <div className=" w-full py-2 mt-5 text-white">
                       <div className=" flex justify-start items-start">
                         <h1 className=" px-[18px]  text-[18px] rounded-full">
-                        User Id : {UserId}
+                          User Id : {UserId}
                         </h1>
                         {/* <h1 className="px-[18px]  py-2 text-[18px] rounded-full my-2">
                           {name}
@@ -167,8 +163,8 @@ export const UserDashboard = ({isLoading}) => {
                       </div>
                       <NavLink
                         to={"/user/dashboard"}
-                        className=" acitive w-full flex px-5 justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-                        // onClick={() => setShowImage(false)}
+                        className=" acitive w-full flex px-5 justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#00132e] font-medium"
+                      // onClick={() => setShowImage(false)}
                       >
                         <h1 className=" flex justify-start items-start gap-2 ">
                           <h1 className=" text-[24px] ">
@@ -179,7 +175,7 @@ export const UserDashboard = ({isLoading}) => {
                       </NavLink>
                       <NavLink
                         to={"/user/profile"}
-                        className=" acitive w-full mt- flex px-5 justify-start items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+                        className=" acitive w-full mt- flex px-5 justify-start items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
                         <h1 className=" flex justify-start items-start gap-2">
                           <h1 className=" text-[24px]">
@@ -190,7 +186,7 @@ export const UserDashboard = ({isLoading}) => {
                       </NavLink>
                       <NavLink
                         to={"/user/withdrawal"}
-                        className=" acitive w-full mt- flex px-5 justify-start items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+                        className=" acitive w-full mt- flex px-5 justify-start items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
                         <h1 className="flex justify-start items-start gap-2">
                           <h1 className=" text-[24px]">
@@ -201,7 +197,7 @@ export const UserDashboard = ({isLoading}) => {
                       </NavLink>
                       <NavLink
                         to={"/user/history"}
-                        className=" acitive w-full mt- flex px-5 justify-start items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+                        className=" acitive w-full mt- flex px-5 justify-start items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
                         <h1 className="flex gap-3 text-center">
                           <h1 className=" text-[24px]">
@@ -211,9 +207,9 @@ export const UserDashboard = ({isLoading}) => {
                         </h1>
                       </NavLink>
                     </div>
-                    <div className=" flex justify-start items-start pr-40 pt-5">
+                    <div className=" flex justify-start items-start w-full px-5 pt-5">
                       <button
-                        className="flex justify-center items-center gap-x-2 bg-[aliceblue] hover:bg-red-400 hover:text-white px-3 py-2 rounded-md shadow-lg transform hover:scale-105 transition duration-300"
+                        className="flex justify-center items-center gap-x-2 bg-[aliceblue] hover:bg-red-400 hover:text-white px-3 py-2 rounded-md shadow-lg transform hover:scale-105 transition duration-300 border-2 border-[#00132e]"
                         onClick={() => handleLogout()}
                       >
                         <h1 className="text-[20px]">
@@ -247,7 +243,7 @@ export const UserDashboard = ({isLoading}) => {
 
       {
         isLoading && <div className=" absolute left-[50%] top-5">
-          <img src={loadingIcon} alt=""  className=" h-10 w-10 bg-white shadow-md rounded-full"/>
+          <img src={loadingIcon} alt="" className=" h-10 w-10 bg-white shadow-md rounded-full" />
         </div>
       }
     </div>

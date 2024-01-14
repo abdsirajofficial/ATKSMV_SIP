@@ -35,6 +35,7 @@ export const Users = () => {
   const [InActiveTotal, setInActiveTotal] = useState();
   const [search, setsearch] = useState();
   const [showUsers, setshowUsers] = useState(true);
+  const [newPassword, setNewPassword] = useState('');
 
   useEffect(() => {
     setprofile([]);
@@ -108,8 +109,12 @@ export const Users = () => {
       account_no: profile.account_no,
       address: profile.address,
       amount: profile.amount ? parseInt(profile.amount) : 0,
-      password:profile.password2
+      password: newPassword.length > 0 ? newPassword : ''
     };
+
+    if (newPassword.length > 0 && newPassword.length < 8) {
+      toast.error('Password length should be minimum 8')
+    }
 
     const nomineeData = {
       name: nominee?.name || "",
@@ -123,6 +128,10 @@ export const Users = () => {
       IFSC: nominee?.IFSC || "",
       userId: profile.userId,
     };
+
+    if (newPassword.length > 0 && newPassword.length < 8) {
+      toast.error('Password length should be minimum 8')
+    }
 
     if (nomineeData.name === "") {
       editApi("admin/editUser", profileData).then((res) => {
@@ -196,17 +205,15 @@ export const Users = () => {
           {showUsers ? (
             <div className=" space-x-4">
               <button
-                className={`p-2 text-[17px] bg-gradient-to-r from-blue-400 to-blue-700 rounded-md shadow-md px-3 mt-2 ${
-                  !showUsers ? "" : " text-white"
-                }`}
+                className={`p-2 text-[17px] bg-gradient-to-r from-blue-400 to-blue-700 rounded-md shadow-md px-3 mt-2 ${!showUsers ? "" : " text-white"
+                  }`}
                 onClick={() => setshowUsers(true)}
               >
                 Active
               </button>
               <button
-                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-white  ${
-                  showUsers ? " " : " text-"
-                }`}
+                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-white  ${showUsers ? " " : " text-"
+                  }`}
                 onClick={() => setshowUsers(false)}
               >
                 InActive
@@ -215,17 +222,15 @@ export const Users = () => {
           ) : (
             <div className=" space-x-4">
               <button
-                className={`p-2 text-[17px] bg-white rounded-md  shadow-md px-3 mt-2 ${
-                  !showUsers ? "" : " text-white"
-                }`}
+                className={`p-2 text-[17px] bg-white rounded-md  shadow-md px-3 mt-2 ${!showUsers ? "" : " text-white"
+                  }`}
                 onClick={() => setshowUsers(true)}
               >
                 Active
               </button>
               <button
-                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-gradient-to-r from-blue-400 to-blue-700  ${
-                  showUsers ? " " : " text-white"
-                }`}
+                className={`p-2 text-[17px] rounded-md shadow-md px-3 mt-2 bg-gradient-to-r from-blue-400 to-blue-700  ${showUsers ? " " : " text-white"
+                  }`}
                 onClick={() => setshowUsers(false)}
               >
                 InActive
@@ -272,9 +277,8 @@ export const Users = () => {
               userData.map((user, index) => (
                 <div
                   key={index}
-                  className={`w-full h-auto grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white shadow border-b border-neutral-400 ${
-                    index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
-                  }`}
+                  className={`w-full h-auto grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white shadow border-b border-neutral-400 ${index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
+                    }`}
                 >
                   <p className=" flex justify-center items-center">
                     {user.userId}
@@ -291,11 +295,10 @@ export const Users = () => {
                   </p>
                   <p className=" flex justify-center items-center">
                     <p
-                      className={`sm:px-3.5 px-1 rounded-full border-2 py-0.5 ${
-                        user.status === "Active"
+                      className={`sm:px-3.5 px-1 rounded-full border-2 py-0.5 ${user.status === "Active"
                           ? "bg-green-50 border-green-200"
                           : "bg-red-50 border-red-200"
-                      }`}
+                        }`}
                     >
                       {user.status}
                     </p>
@@ -359,9 +362,8 @@ export const Users = () => {
               userInActiveData.map((user, index) => (
                 <div
                   key={index}
-                  className={`w-full h-auto grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white shadow border-b border-neutral-400 ${
-                    index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
-                  }`}
+                  className={`w-full h-auto grid grid-cols-6 grid-rows-1 text-center rounded py-3 text-[12px]  sm:text-[14px] bg-white shadow border-b border-neutral-400 ${index % 2 === 0 ? " bg-gray-100" : " bg-[#dbedfe]"
+                    }`}
                 >
                   <p className=" flex justify-center items-center">
                     {user.userId}
@@ -378,11 +380,10 @@ export const Users = () => {
                   </p>
                   <p className=" flex justify-center items-center">
                     <p
-                      className={`sm:px-3.5 px-1 rounded-full border-2 py-0.5 ${
-                        user.status === "Active"
+                      className={`sm:px-3.5 px-1 rounded-full border-2 py-0.5 ${user.status === "Active"
                           ? "bg-green-50 border-green-200"
                           : "bg-red-50 border-red-200"
-                      }`}
+                        }`}
                     >
                       {user.status}
                     </p>
@@ -401,7 +402,7 @@ export const Users = () => {
                 </div>
               ))
             )}
-             {Total > 1 && (
+            {Total > 1 && (
               <div className=" w-full mt-5 justify-end items-end">
                 <Pagination
                   active={InActive}
@@ -504,7 +505,7 @@ export const Users = () => {
                     <h1 className="text-[#031635] w-full sm:w-[200px] font-semibold text-[22px] bg-transparent p-4">
                       {profile.amount
                         ? parseInt(profile.amount) +
-                          (profile.return ? parseInt(profile.return) : 0)
+                        (profile.return ? parseInt(profile.return) : 0)
                         : 0}
                     </h1>
                     <h1 className=" text-[#031635] font-semibold">
@@ -687,6 +688,23 @@ export const Users = () => {
                   />
                 </div>
               </div>
+              
+              <div>
+                <div className=" flex space-x-2 mt-5">
+                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    Password
+                  </div>
+                </div>
+                <input
+                  type="text"
+                  value={newPassword}
+                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={(e) =>
+                    setNewPassword(e.target.value)
+                  }
+                />
+              </div>
+
               <div>
                 <div className=" flex space-x-2 mt-5">
                   <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
@@ -704,21 +722,9 @@ export const Users = () => {
                   }
                 />
               </div>
-              <div>
-                <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
-                    Password
-                  </div>
-                </div>
-                <input
-                  type="text"
-                  value={profile.password2}
-                  className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
-                  onChange={(e) =>
-                    setprofile({ ...profile, password2: e.target.value })
-                  }
-                />
-              </div>
+
+              
+
             </div>
             <div className="text-neutral-400 text-base font-semibold tracking-wide mt-8">
               Account Details :-

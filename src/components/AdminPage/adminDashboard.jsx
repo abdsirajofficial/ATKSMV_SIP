@@ -12,6 +12,7 @@ import { LuPackageCheck } from "react-icons/lu";
 import jwtDecode from "jwt-decode";
 import { IoMenu } from "react-icons/io5";
 import { ImCancelCircle } from "react-icons/im";
+import loadingIcon from "../../assets/loading.svg";
 
 export const AdminDashboard = ({isLoading}) => {
   const token = localStorage.getItem("loginToken");
