@@ -13,7 +13,7 @@ import jwtDecode from "jwt-decode";
 import { IoMenu } from "react-icons/io5";
 import { ImCancelCircle } from "react-icons/im";
 
-export const AdminDashboard = () => {
+export const AdminDashboard = ({isLoading}) => {
   const token = localStorage.getItem("loginToken");
   const name = localStorage.getItem("name");
   const UserId = localStorage.getItem("userid");
@@ -263,6 +263,11 @@ export const AdminDashboard = () => {
           <Outlet />
         </div>
       </div>
+      {
+        isLoading && <div className=" absolute left-[50%] top-5">
+          <img src={loadingIcon} alt=""  className=" h-10 w-10 bg-white shadow-md rounded-full"/>
+        </div>
+      }
 
     </div>
   );

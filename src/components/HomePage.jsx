@@ -21,7 +21,7 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   const [showBorder, setshowBorder] = useState(true);
-  const [startValue, setstartValue] = useState("500");
+  const [startValue, setstartValue] = useState(500);
   const [yrSliderValue, setyrsSliderValue] = useState(10);
   const [returnVlaue, setreturnVlaue] = useState(12);
   const [InvestmentAmt, setInvestmentAmt] = useState(0);
@@ -35,6 +35,7 @@ export const HomePage = () => {
   // const [LumInvestmentAmt, setLumInvestmentAmt] = useState(0);
   const [LumValue, setLumSipValue] = useState(0);
   const [LumReturnAmt, setLumReturnAmt] = useState(0);
+
 
   useEffect(() => {
     const p = parseFloat(startValue);
@@ -66,10 +67,10 @@ export const HomePage = () => {
   }, [LumInvestAmt, LumyrSliderValue, LumreturnVlaue]);
 
   // const ChatLink = ({ phoneNumber }) => {
-    const handleChatClick = () => {
-      window.location.href = "https://wa.me/8148867881";
-    };
-  
+  const handleChatClick = () => {
+    window.location.href = "https://wa.me/8148867881";
+  };
+
 
   return (
     <div className=" w-full h-full">
@@ -182,21 +183,19 @@ export const HomePage = () => {
 
         <div className=" flex space-x-5 py-5 cursor-pointer text-[18px]">
           <h1
-            className={`font-medium p-2 ${
-              showBorder === true
+            className={`font-medium p-2 ${showBorder === true
                 ? " text-[14px] md:text-[18px] text-[#3777FA] border-b-4 border-[#3777FA]"
                 : "text-[14px] md:text-[18px] text-gray-400"
-            }`}
+              }`}
             onClick={() => setshowBorder(true)}
           >
-           SIP
+            SIP
           </h1>
           <h1
-            className={`font-medium p-2 ${
-              showBorder === false
+            className={`font-medium p-2 ${showBorder === false
                 ? " text-[14px] md:text-[18px] text-[#3777FA] border-b-4 border-[#3777FA]"
                 : "text-[14px] md:text-[18px] text-gray-400"
-            }`}
+              }`}
             onClick={() => setshowBorder(false)}
           >
             Lumpsum
@@ -205,8 +204,8 @@ export const HomePage = () => {
         {showBorder && (
           <div className=" w-full md:flex  border-2 rounded-lg shadow-sm  ">
             <div className=" w-full md:w-1/2 p-6  border-r-2">
-              
-              <div className=" pt-6">
+
+              <div className=" w-full h-full flex flex-col justify-between py-6">
                 {/* <div className=" w-full h-full flex flex-col justify-center items-center p-6 border-2 border-blue-800 rounded-md space-y-3">
                   <h1 className=" text-[14px]">ENTER AMOUNT</h1>
                   <div className=" flex">
@@ -231,7 +230,7 @@ export const HomePage = () => {
                       <input
                         type="number"
                         className=" w-[80px] text-[18px] font-bold bg-[#c1d5fd] p-1"
-                        value={LumInvestAmt}
+                        value={startValue}
                         onChange={(e) =>
                           setstartValue(e.target.value ? e.target.value : "0")
                         }
@@ -245,39 +244,12 @@ export const HomePage = () => {
                       max="500000"
                       step="100"
                       className="w-full "
-                      value={LumInvestAmt}
-                      onChange={(e) => setLumInvestAmt(e.target.value)}
+                      value={startValue}
+                      onChange={(e) => setstartValue(e.target.value)}
                     />
                   </div>
                 </div>
-                <div className="  pt-4">
-                  <div className=" flex justify-between items-center">
-                    <h1>Select Duration</h1>
-                    <div className=" flex ">
-                      <input
-                        type="number"
-                        className=" w-[55px] text-[18px] font-bold bg-[#c1d5fd] text-blue-600 p-1"  
-                        value={yrSliderValue}
-                        onChange={(e) => setyrsSliderValue(e.target.value)}
-                      />
-                      <p className=" bg-[#c1d5fd] text-blue-600 pt-1 pr-1">Yrs</p>
-                    </div>
-                  </div>
-                  <div className=" pt-4">
-                    <input
-                      type="range"
-                      min="0"
-                      max="30"
-                      className="w-full "
-                      value={yrSliderValue}
-                      onChange={(e) => setyrsSliderValue(e.target.value)}
-                    />
-                    <div className=" flex justify-between items-center text-gray-400 text-[14px]">
-                      <h1>1Yrs</h1>
-                      <h1>30Yrs</h1>
-                    </div>
-                  </div>
-                </div>
+
                 <div className="  pt-4">
                   <div className=" flex justify-between items-center">
                     <h1>Expected Rate of Return</h1>
@@ -307,6 +279,36 @@ export const HomePage = () => {
                     </div>
                   </div>
                 </div>
+
+                <div className="  pt-4">
+                  <div className=" flex justify-between items-center">
+                    <h1>Time Period</h1>
+                    <div className=" flex ">
+                      <input
+                        type="number"
+                        className=" w-[55px] text-[18px] font-bold bg-[#c1d5fd] text-blue-600 p-1"
+                        value={yrSliderValue}
+                        onChange={(e) => setyrsSliderValue(e.target.value)}
+                      />
+                      <p className=" bg-[#c1d5fd] text-blue-600 pt-1 pr-1">Yrs</p>
+                    </div>
+                  </div>
+                  <div className=" pt-4">
+                    <input
+                      type="range"
+                      min="0"
+                      max="30"
+                      className="w-full "
+                      value={yrSliderValue}
+                      onChange={(e) => setyrsSliderValue(e.target.value)}
+                    />
+                    <div className=" flex justify-between items-center text-gray-400 text-[14px]">
+                      <h1>1Yrs</h1>
+                      <h1>30Yrs</h1>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
             <div className=" w-full flex flex-col justify-center items-center p-6 mt-6 ">
@@ -331,14 +333,14 @@ export const HomePage = () => {
                         window.innerWidth <= 768
                           ? "200px" // Mobile devices
                           : window.innerWidth <= 1024
-                          ? "250px" // Tablets
-                          : "300px", // Laptops and desktops
+                            ? "250px" // Tablets
+                            : "300px", // Laptops and desktops
                       width:
                         window.innerWidth <= 768
                           ? "200px" // Mobile devices
                           : window.innerWidth <= 1024
-                          ? "250px" // Tablets
-                          : "300px", // Laptops and desktops
+                            ? "250px" // Tablets
+                            : "300px", // Laptops and desktops
                     }}
                     data={[
                       {
@@ -384,6 +386,7 @@ export const HomePage = () => {
           <div className="w-full md:flex  border-2 rounded-lg shadow-sm  ">
             <div className=" w-full md:w-1/2 p-6  border-r-2">
               <div className=" w-full h-full flex flex-col justify-between py-6">
+
                 <div className="  pt-4">
                   <div className=" w-full flex justify-between items-center">
                     <h1>Total investment</h1>
@@ -407,8 +410,10 @@ export const HomePage = () => {
                       value={LumInvestAmt}
                       onChange={(e) => setLumInvestAmt(e.target.value)}
                     />
+
                   </div>
                 </div>
+
                 <div className="  pt-4">
                   <div className=" flex justify-between items-center">
                     <h1>Expected return rate (p.a)</h1>
@@ -432,8 +437,13 @@ export const HomePage = () => {
                       value={LumreturnVlaue}
                       onChange={(e) => setLumreturnVlaue(e.target.value)}
                     />
+                    <div className=" flex justify-between items-center text-gray-400 text-[14px]">
+                      <h1>1</h1>
+                      <h1>50</h1>
+                    </div>
                   </div>
                 </div>
+
                 <div className="  pt-4">
                   <div className=" flex justify-between items-center">
                     <h1>Time period</h1>
@@ -456,8 +466,13 @@ export const HomePage = () => {
                       value={LumyrSliderValue}
                       onChange={(e) => setLumyrsSliderValue(e.target.value)}
                     />
+                    <div className=" flex justify-between items-center text-gray-400 text-[14px]">
+                      <h1>0Yrs</h1>
+                      <h1>30Yrs</h1>
+                    </div>
                   </div>
                 </div>
+
               </div>
             </div>
             <div className="  w-full flex flex-col justify-center items-center p-6 mt-6 ">
@@ -477,19 +492,19 @@ export const HomePage = () => {
               <div className="  md:flex justify-start md:justify-center items-start md:items-center md:space-x-16 space-y-10 pt-6">
                 <div>
                   <PieChart
-                     style={{
+                    style={{
                       height:
                         window.innerWidth <= 768
                           ? "200px" // Mobile devices
                           : window.innerWidth <= 1024
-                          ? "250px" // Tablets
-                          : "300px", // Laptops and desktops
+                            ? "250px" // Tablets
+                            : "300px", // Laptops and desktops
                       width:
                         window.innerWidth <= 768
                           ? "200px" // Mobile devices
                           : window.innerWidth <= 1024
-                          ? "250px" // Tablets
-                          : "300px", // Laptops and desktops
+                            ? "250px" // Tablets
+                            : "300px", // Laptops and desktops
                     }}
                     data={[
                       {

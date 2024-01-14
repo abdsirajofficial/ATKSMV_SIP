@@ -7,9 +7,11 @@ import jwtDecode from "jwt-decode";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { IoMenu } from "react-icons/io5";
 import { ImCancelCircle } from "react-icons/im";
+import loadingIcon from "../../assets/loading.svg";
 
-export const UserDashboard = () => {
+export const UserDashboard = ({isLoading}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
 
   const token = localStorage.getItem("loginToken");
   const name = localStorage.getItem("name");
@@ -242,6 +244,12 @@ export const UserDashboard = () => {
           <Outlet />
         </div>
       </div>
+
+      {
+        isLoading && <div className=" absolute left-[50%] top-5">
+          <img src={loadingIcon} alt=""  className=" h-10 w-10 bg-white shadow-md rounded-full"/>
+        </div>
+      }
     </div>
   );
 };
