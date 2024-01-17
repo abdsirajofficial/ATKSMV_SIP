@@ -64,6 +64,20 @@ export const AdminDashboard = ({isLoading}) => {
             <div className=" flex justify-center items-center text-white">
               <img src={logo} alt="" className="w-36" />
             </div>
+
+            <NavLink
+              to={"/admin/dashboard"}
+              className=" acitive w-full mt-10 flex justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+              // onClick={() => setShowImage(false)}
+            >
+              <h1 className=" flex items-start gap-2 ">
+                <h1 className=" text-[24px] ">
+                  <MdDashboard />
+                </h1>
+                Dashboard
+              </h1>
+            </NavLink>
+
             <NavLink
               to={"/admin/users"}
               className=" acitive w-full mt-10 flex justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
@@ -76,6 +90,7 @@ export const AdminDashboard = ({isLoading}) => {
                 Users
               </h1>
             </NavLink>
+
             <NavLink
               to={"/admin/packages"}
               className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
@@ -87,6 +102,7 @@ export const AdminDashboard = ({isLoading}) => {
                 Packages
               </h1>
             </NavLink>
+
             <NavLink
               to={"/admin/payment"}
               className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
@@ -98,6 +114,7 @@ export const AdminDashboard = ({isLoading}) => {
                 Payment
               </h1>
             </NavLink>
+            
             <NavLink
               to={"/admin/withdrawal"}
               className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"

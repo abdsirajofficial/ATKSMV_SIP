@@ -15,6 +15,7 @@ import { UserWithdrawal } from "./components/UserPage/menus/userWithdrawal";
 import { Payment } from "./components/AdminPage/menus/payment";
 import Register from "./components/Register";
 import { useGlobalLoading } from "./components/useGlobalLoading ";
+import DashBoards from "./components/AdminPage/menus/dashBoards";
 
 function App() {
   const [isLoading, setIsLoading] = useGlobalLoading();
@@ -25,19 +26,20 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register/>} />
-          <Route path="/user" element={<UserDashboard isLoading={isLoading}/>} >
-            <Route path="/user/dashboard" element={<Dashboard/>} />
-            <Route path="/user/profile" element={<Profile/>} />
-            <Route path="/user/history" element={<History/>} />
-            <Route path="/user/withdrawal" element={<UserWithdrawal/>} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/user" element={<UserDashboard isLoading={isLoading} />} >
+            <Route path="/user/dashboard" element={<Dashboard />} />
+            <Route path="/user/profile" element={<Profile />} />
+            <Route path="/user/history" element={<History />} />
+            <Route path="/user/withdrawal" element={<UserWithdrawal />} />
           </Route>
-          <Route path="/admin" element={<AdminDashboard isLoading={isLoading}/>} >
-            <Route path="/admin/users" element={<Users/>} />
-            <Route path="/admin/withdrawal" element={<Withdrawal/>} />
-            <Route path="/admin/history" element={<AdminHistory/>} />
-            <Route path="/admin/packages" element={<Package/>} />
-            <Route path="/admin/payment" element={<Payment/>} />
+          <Route path="/admin" element={<AdminDashboard isLoading={isLoading} />} >
+            <Route path="/admin/dashboard" element={<DashBoards />} />
+            <Route path="/admin/users" element={<Users />} />
+            <Route path="/admin/withdrawal" element={<Withdrawal />} />
+            <Route path="/admin/history" element={<AdminHistory />} />
+            <Route path="/admin/packages" element={<Package />} />
+            <Route path="/admin/payment" element={<Payment />} />
           </Route>
         </Routes>
       </BrowserRouter>

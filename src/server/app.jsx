@@ -267,3 +267,14 @@ export const eidtPackageApi = async (path, data) => {
     toast.error(err.response.data.err, {duration: 1500})
   }
 }
+
+
+export const getDashboard = async (setData) => {
+  try{
+    const res = await axios.get(api_url+'admin/dashboard')
+    setData(res.data.data)
+    return res
+  } catch (err) {
+    toast.error(err.response.data.error, {duration: 1500}) 
+  }
+}

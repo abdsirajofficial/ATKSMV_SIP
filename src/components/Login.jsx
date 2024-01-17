@@ -39,7 +39,7 @@ const Login = () => {
             localStorage.setItem("userid", UserId);
             localStorage.setItem("role", UserRole);
             toast.success("Login successfull!", { duration: 1500 });
-            navigate("/admin/users");
+            navigate("/admin/dashboard");
             setLoading(false);
           } else {
             localStorage.setItem("loginToken", token);
