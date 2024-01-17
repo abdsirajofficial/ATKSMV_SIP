@@ -47,6 +47,7 @@ export const Dashboard = () => {
   const [selectPack, setselectPack] = useState([]);
   const [MonPackDetails, setMonPackDetails] = useState(false);
   const [packAmount, setpackAmount] = useState();
+  const [packType, setpackType] = useState();
 
   useEffect(() => {
     getProfileApi("user/profile", userId, setprofile);
@@ -89,7 +90,7 @@ export const Dashboard = () => {
 
     if (IsChecked === true) {
       makeWithdrawApi("user/withdrawal", data).then((res) => {
-        if (res?.status === 200) {
+        if (res.status === 200) {
           if (res.data.msg === "WithDrawal request already Exist") {
             toast.success(res.data.msg, { duration: 1500 });
             setIsChecked();
@@ -147,16 +148,13 @@ export const Dashboard = () => {
       if (InvestmentDtls.type === "monthly") {
         monPackApi("user/transaction", data)
           .then((res) => {
-            if (res?.status === 200) {
+            if (res.status === 200) {
               toast.success(res.data.msg);
               setIsChecked();
               setsenderAccName("");
               setsenderTransId("");
               setQuantity(1);
               setPackageInvestment(false);
-              setTimeout(() => {
-                window.open("https://wa.me/8148867881", "_blank");
-              }, 2000);
             }
           })
           .catch((error) => {
@@ -165,15 +163,13 @@ export const Dashboard = () => {
       } else {
         monPackApi("user/transaction", data)
           .then((res) => {
-            if (res?.status === 200) {
+            if (res.status === 200) {
               toast.success(res.data.msg);
-              
               setIsChecked();
               setsenderAccName("");
               setsenderTransId("");
               setQuantity(1);
               setPackageInvestment(false);
-              window.open("https://wa.me/8148867881", "_blank");
             }
           })
           .catch((error) => {
@@ -225,8 +221,9 @@ export const Dashboard = () => {
     }
   };
 
-  const PackageMoreDtls = (amount) => {
+  const PackageMoreDtls = (amount, type) => {
     setMonPackDetails(true);
+    setpackType(type);
     setpackAmount(amount);
   };
 
@@ -240,6 +237,15 @@ export const Dashboard = () => {
       (((Math.pow(1 + r / (100 * n), n * t) - 1) / (r / (100 * n))) *
         (1 + r / (100 * n)));
     return Math.round(sip - p * n * t);
+  };
+
+  const lumCalculator = (values, year) => {
+    const p = values;
+    const t = year;
+    const r = 20;
+    const n = 12;
+    const futureValue = p * Math.pow(1 + r / 100, t);
+    return Math.round(futureValue);
   };
 
   function copyToClipboard(inputId) {
@@ -275,7 +281,7 @@ export const Dashboard = () => {
             </h1>
             <h1 className=" text-[#031635] font-semibold">Total returns</h1>
           </div>
-          <div className=" shadow-lg rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
+          <div className=" shadow-lg  rounded-full text-[20px] p-4 text-[#000000] bg-blue-500">
             <BsCashCoin />
           </div>
         </div>
@@ -322,7 +328,7 @@ export const Dashboard = () => {
                   ${
                     currentMonPackId === data.packId
                       ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
-                      : `bg-gray-50`
+                      : "bg-gray-50"
                   }`}
                   key={index}
                 >
@@ -412,7 +418,7 @@ export const Dashboard = () => {
                           ? " text-white cursor-pointer hover:font-semibold"
                           : "text-light-blue-800 cursor-pointer hover:font-semibold"
                       } `}
-                      onClick={() => PackageMoreDtls(data.amount)}
+                      onClick={() => PackageMoreDtls(data.amount, "Monthly")}
                     >
                       More details
                     </p>
@@ -464,7 +470,7 @@ export const Dashboard = () => {
                   ${
                     currentMonPackId === data.packId
                       ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
-                      : `bg-gray-50`
+                      : "bg-gray-50"
                   }`}
                   key={index}
                 >
@@ -552,7 +558,7 @@ export const Dashboard = () => {
                           ? " text-white cursor-pointer hover:font-semibold"
                           : "text-light-blue-800 cursor-pointer hover:font-semibold"
                       } `}
-                      onClick={() => PackageMoreDtls(data.amount)}
+                      onClick={() => PackageMoreDtls(data.amount, "Annual")}
                     >
                       More details
                     </p>
@@ -694,7 +700,7 @@ export const Dashboard = () => {
                   </div>
                   <input
                     type="text"
-                    value={profile['IFSC']}
+                    value={profile.upi_id}
                     className=" w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                     readOnly
                   />
@@ -1130,16 +1136,17 @@ export const Dashboard = () => {
       )}
 
       {MonPackDetails && (
-        <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10 overflow-y-auto">
+        <div className=" w-full h-full fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm px-10 pt-10">
           <div className=" w-full bg-white rounded-lg p-10">
             <div className=" flex justify-between items-center">
               <h1 className=" font-medium text-[22px]">
-                Start your SIP Monthly {packAmount}
+                Start your {packType === "Monthly" ? "SIP" : "Lumpsum"}{" "}
+                {packAmount}
               </h1>
               <button
                 className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
                 onClick={() => {
-                  setMonPackDetails(false), setpackAmount();
+                  setMonPackDetails(false), setpackAmount(), setpackType();
                 }}
               >
                 <h1>Cancel</h1>
@@ -1159,42 +1166,38 @@ export const Dashboard = () => {
                   key={index}
                   className="flex flex-wrap justify-between items-center p-2 border-b"
                 >
-                  <div className="w-full sm:w-1/5">{2024 + index}</div>
-                  <div className="w-full sm:w-1/5">{packAmount * 12}</div>
                   <div className="w-full sm:w-1/5">
-                    {packAmount * 12 * (index + 1)}
+                    {packType === "Monthly"
+                      ? new Date().getFullYear() + index
+                      : index === 0 && new Date().getFullYear()}
+                  </div>
+
+                  <div className="w-full sm:w-1/5">
+                    {packType === "Monthly"
+                      ? packAmount * 12
+                      : index === 0 && packAmount}
                   </div>
                   <div className="w-full sm:w-1/5">
-                    {sipCalculator(packAmount, index + 1)}
+                    {packType === "Monthly"
+                      ? packAmount * 12 * (index + 1)
+                      : index === 0 && packAmount}
+                  </div>
+                  <div className="w-full sm:w-1/5">
+                    {packType === "Monthly"
+                      ? sipCalculator(packAmount, index + 1)
+                      : lumCalculator(packAmount, index + 1) - packAmount}
                   </div>
                   <div className="w-full sm:w-1/5 flex items-center">
                     <span className="mr-1">
                       <BiRupee />
                     </span>
-                    {packAmount * 12 * (index + 1) +
-                      sipCalculator(packAmount, index + 1)}
+                    {packType === "Monthly"
+                      ? packAmount * 12 * (index + 1) +
+                        sipCalculator(packAmount, index + 1)
+                      : lumCalculator(packAmount, index + 1)}
                   </div>
                 </div>
               ))}
-
-              <div className="flex flex-wrap justify-between bg-blue-500 text-white p-2 rounded-b-lg">
-                <div className="w-full sm:w-1/5"></div>
-                <div className="w-full sm:w-1/5"></div>
-                <div className="w-full sm:w-1/5"></div>
-                <div className="w-full sm:w-1/5"></div>
-                <div className="w-full sm:w-1/5 flex items-center font-bold">
-                  <span className="mr-1">
-                    <BiRupee />
-                  </span>
-                  {[...Array(5)]
-                    .map(
-                      (_, index) =>
-                        packAmount * 12 * (index + 1) +
-                        sipCalculator(packAmount, index + 1)
-                    )
-                    .reduce((a, b) => a + b, 0)}
-                </div>
-              </div>
             </div>
           </div>
         </div>

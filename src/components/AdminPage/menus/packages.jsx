@@ -22,6 +22,7 @@ export const Package = () => {
   const [MonPackDetails, setMonPackDetails] = useState(false);
   const [addYearPackage, setaddYearPackage] = useState(false);
   const [packAmount, setpackAmount] = useState();
+  const [packType, setpackType] = useState();
   const userId = {
     userId: localStorage.getItem("userid"),
   };
@@ -42,7 +43,7 @@ export const Package = () => {
   const [monPackages, setmonPackages] = useState([]);
   const [annPackages, setannPackages] = useState([]);
   const [eidtPackages, seteidtPackages] = useState(false);
-  const [EditPackData, setEditPackData] = useState([])
+  const [EditPackData, setEditPackData] = useState([]);
 
   const sipCalculator = (values, year) => {
     const p = values;
@@ -68,6 +69,15 @@ export const Package = () => {
     return Math.round(sip);
   };
 
+  const lumCalculator = (values, year) => {
+    const p = values;
+    const t = year;
+    const r = 20;
+    const n = 12;
+    const futureValue = p * Math.pow(1 + r / 100, t);
+    return Math.round(futureValue);
+  };
+  
   useEffect(() => {
     getMonPackageApi(
       "admin/monthPackages",
@@ -87,8 +97,6 @@ export const Package = () => {
       returns: "",
     });
   }, []);
-
-
 
   const addmonPackage = (type) => {
     const data = {
@@ -205,7 +213,6 @@ export const Package = () => {
   };
 
   const updatePackages = (type) => {
-    
     const PackaType = type.slice(0, 3);
 
     const data = {
@@ -248,10 +255,11 @@ export const Package = () => {
     }
   };
 
-  const PackageMoreDtls = (amount) => {
-    setMonPackDetails(true)
-    setpackAmount(amount)
-  }
+  const PackageMoreDtls = (amount, type) => {
+    setMonPackDetails(true);
+    setpackType(type);
+    setpackAmount(amount);
+  };
 
   return (
     <div className=" px-8 py-5">
@@ -331,11 +339,11 @@ export const Package = () => {
               <div className=" w-full flex justify-between items-center p-3">
                 <p
                   className=" text-light-blue-800 cursor-pointer hover:font-semibold"
-                  onClick={() => PackageMoreDtls( data.amount)}
+                  onClick={() => PackageMoreDtls(data.amount, "Monthly")}
                 >
                   More details
                 </p>
-                  {/* <button
+                {/* <button
                     className=" flex justify-center items-center space-x-3  bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
                     onClick={() => handleEditPackage(data.packId, "monthly")}
                   >
@@ -425,7 +433,7 @@ export const Package = () => {
               <div className=" w-full flex justify-between items-center p-3">
                 <p
                   className=" text-light-blue-800 cursor-pointer hover:font-semibold"
-                  onClick={() => setMonPackDetails(true)}
+                  onClick={() => PackageMoreDtls(data.amount, "Annual")}
                 >
                   More details
                 </p>
@@ -730,11 +738,14 @@ export const Package = () => {
           <div className=" w-full bg-white rounded-lg p-10">
             <div className=" flex justify-between items-center">
               <h1 className=" font-medium text-[22px]">
-                Start your SIP Monthly {packAmount}
+                Start your {packType === "Monthly" ? "SIP" : "Lumpsum"}{" "}
+                {packAmount}
               </h1>
               <button
                 className=" flex justify-center items-center space-x-3  bg-gray-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105"
-                onClick={() =>{setMonPackDetails(false), setpackAmount()} }
+                onClick={() => {
+                  setMonPackDetails(false), setpackAmount(), setpackType();
+                }}
               >
                 <h1>Cancel</h1>
               </button>
@@ -753,42 +764,38 @@ export const Package = () => {
                   key={index}
                   className="flex flex-wrap justify-between items-center p-2 border-b"
                 >
-                  <div className="w-full sm:w-1/5">{2024 + index}</div>
-                  <div className="w-full sm:w-1/5">{packAmount * 12}</div>
                   <div className="w-full sm:w-1/5">
-                    {packAmount * 12 * (index + 1)}
+                    {packType === "Monthly"
+                      ? new Date().getFullYear() + index
+                      : index === 0 && new Date().getFullYear()}
+                  </div>
+
+                  <div className="w-full sm:w-1/5">
+                    {packType === "Monthly"
+                      ? packAmount * 12
+                      : index === 0 && packAmount}
                   </div>
                   <div className="w-full sm:w-1/5">
-                    {sipCalculator(packAmount, index + 1)}
+                    {packType === "Monthly"
+                      ? packAmount * 12 * (index + 1)
+                      : index === 0 && packAmount}
+                  </div>
+                  <div className="w-full sm:w-1/5">
+                    {packType === "Monthly"
+                      ? sipCalculator(packAmount, index + 1)
+                      : lumCalculator(packAmount, index + 1) - packAmount}
                   </div>
                   <div className="w-full sm:w-1/5 flex items-center">
                     <span className="mr-1">
                       <BiRupee />
                     </span>
-                    {packAmount * 12 * (index + 1) +
-                      sipCalculator(packAmount, index + 1)}
+                    {packType === "Monthly"
+                      ? packAmount * 12 * (index + 1) +
+                        sipCalculator(packAmount, index + 1)
+                      : lumCalculator(packAmount, index + 1)}
                   </div>
                 </div>
               ))}
-
-              <div className="flex flex-wrap justify-between bg-blue-500 text-white p-2 rounded-b-lg">
-                <div className="w-full sm:w-1/5"></div>
-                <div className="w-full sm:w-1/5"></div>
-                <div className="w-full sm:w-1/5"></div>
-                <div className="w-full sm:w-1/5"></div>
-                <div className="w-full sm:w-1/5 flex items-center font-bold">
-                  <span className="mr-1">
-                    <BiRupee />
-                  </span>
-                  {[...Array(5)]
-                    .map(
-                      (_, index) =>
-                        packAmount * 12 * (index + 1) +
-                        sipCalculator(packAmount, index + 1)
-                    )
-                    .reduce((a, b) => a + b, 0)}
-                </div>
-              </div>
             </div>
           </div>
         </div>
