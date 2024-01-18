@@ -108,7 +108,7 @@ const Register = () => {
               <div className="">
                 <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                   Name
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>
@@ -124,7 +124,7 @@ const Register = () => {
               <div className="">
                 <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                   Email id
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>
@@ -140,7 +140,7 @@ const Register = () => {
               <div className="">
                 <label className="text-sm font-medium text-gray-600 flex gap-1 items-center">
                   Primary number
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>
@@ -160,7 +160,7 @@ const Register = () => {
               <div className="">
                 <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                   Date of birth
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>
@@ -196,7 +196,7 @@ const Register = () => {
               <div className="">
                 <label className="text-sm font-medium text-gray-600 flex gap-1 items-center">
                   Aadhar number
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>
@@ -256,7 +256,7 @@ const Register = () => {
               <div className="">
                 <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                   Account holder name
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>
@@ -272,7 +272,7 @@ const Register = () => {
               <div className="">
                 <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                   Account Number
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>
@@ -288,7 +288,7 @@ const Register = () => {
               <div className="">
                 <label className="text-sm font-medium text-gray-600 flex gap-1 items-center">
                   IFSC code
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>
@@ -328,7 +328,7 @@ const Register = () => {
               <div className="">
                 <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                   Password
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>
@@ -344,7 +344,7 @@ const Register = () => {
               <div className="">
                 <label className=" text-sm font-medium text-gray-600 flex gap-1 items-center">
                   Confirm Password
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </label>

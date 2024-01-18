@@ -459,10 +459,10 @@ export const Package = () => {
             <div className=" flex space-x-5">
               <div>
                 <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-zinc-600 text-base font-normal  leading-tight">
                     Amount
                   </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </div>
@@ -478,10 +478,10 @@ export const Package = () => {
               </div>
               <div>
                 <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-zinc-600 text-base font-normal  leading-tight">
                     No of years
                   </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </div>
@@ -497,10 +497,10 @@ export const Package = () => {
               </div>
               <div>
                 <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-zinc-600 text-base font-normal  leading-tight">
                     Returns %
                   </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </div>
@@ -578,10 +578,10 @@ export const Package = () => {
             <div className=" flex space-x-5">
               <div>
                 <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-zinc-600 text-base font-normal  leading-tight">
                     Amount
                   </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </div>
@@ -597,10 +597,10 @@ export const Package = () => {
               </div>
               <div>
                 <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-zinc-600 text-base font-normal  leading-tight">
                     No of years
                   </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </div>
@@ -616,10 +616,10 @@ export const Package = () => {
               </div>
               <div>
                 <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-zinc-600 text-base font-normal  leading-tight">
                     Returns %
                   </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </div>
@@ -659,10 +659,10 @@ export const Package = () => {
             <div className=" flex space-x-5">
               <div>
                 <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-zinc-600 text-base font-normal  leading-tight">
                     Amount
                   </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </div>
@@ -678,10 +678,10 @@ export const Package = () => {
               </div>
               <div>
                 <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-zinc-600 text-base font-normal  leading-tight">
                     No of years
                   </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </div>
@@ -697,10 +697,10 @@ export const Package = () => {
               </div>
               <div>
                 <div className=" flex space-x-2 mt-5">
-                  <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-zinc-600 text-base font-normal  leading-tight">
                     Returns %
                   </div>
-                  <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                  <div className="text-red-500 text-base font-normal  leading-tight">
                     *
                   </div>
                 </div>

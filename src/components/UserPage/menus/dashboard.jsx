@@ -155,6 +155,7 @@ export const Dashboard = () => {
               setsenderTransId("");
               setQuantity(1);
               setPackageInvestment(false);
+              window.open("https://wa.me/8148867881", "_blank");
             }
           })
           .catch((error) => {
@@ -643,10 +644,10 @@ export const Dashboard = () => {
               <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-2">
                 <div>
                   <div className=" flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       Account Holder Name
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -659,10 +660,10 @@ export const Dashboard = () => {
                 </div>
                 <div>
                   <div className=" flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       Account Number
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -675,10 +676,10 @@ export const Dashboard = () => {
                 </div>
                 <div>
                   <div className=" flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       IFSC Code
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -691,10 +692,10 @@ export const Dashboard = () => {
                 </div>
                 <div>
                   <div className=" flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       UPI ID
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -714,10 +715,10 @@ export const Dashboard = () => {
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
                     <div>
                       <div className=" flex space-x-2 mt-5">
-                        <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        <div className="text-zinc-600 text-base font-normal  leading-tight">
                           Name
                         </div>
-                        <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        <div className="text-red-500 text-base font-normal  leading-tight">
                           *
                         </div>
                       </div>
@@ -730,10 +731,10 @@ export const Dashboard = () => {
                     </div>
                     <div>
                       <div className=" flex space-x-2 mt-5">
-                        <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        <div className="text-zinc-600 text-base font-normal  leading-tight">
                           Account Holder Name
                         </div>
-                        <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        <div className="text-red-500 text-base font-normal  leading-tight">
                           *
                         </div>
                       </div>
@@ -746,10 +747,10 @@ export const Dashboard = () => {
                     </div>
                     <div>
                       <div className=" flex space-x-2 mt-5">
-                        <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        <div className="text-zinc-600 text-base font-normal  leading-tight">
                           Account Number
                         </div>
-                        <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        <div className="text-red-500 text-base font-normal  leading-tight">
                           *
                         </div>
                       </div>
@@ -762,10 +763,10 @@ export const Dashboard = () => {
                     </div>
                     <div>
                       <div className=" flex space-x-2 mt-5">
-                        <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                        <div className="text-zinc-600 text-base font-normal  leading-tight">
                           IFSC Code
                         </div>
-                        <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                        <div className="text-red-500 text-base font-normal  leading-tight">
                           *
                         </div>
                       </div>
@@ -864,10 +865,10 @@ export const Dashboard = () => {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
                 <div>
                   <div className="flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       Account Holder Name
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -888,10 +889,10 @@ export const Dashboard = () => {
 
                 <div>
                   <div className="flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       Account Number
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -912,10 +913,10 @@ export const Dashboard = () => {
 
                 <div>
                   <div className="flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       IFSC Code
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -936,10 +937,10 @@ export const Dashboard = () => {
 
                 <div>
                   <div className="flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       UPI id
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -969,10 +970,10 @@ export const Dashboard = () => {
               <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-2">
                 <div>
                   <div className=" flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       Sender Account Name
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -985,10 +986,10 @@ export const Dashboard = () => {
                 </div>
                 <div>
                   <div className=" flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       Enter The Amount
                     </div>
-                    <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div>
                   </div>
@@ -1002,10 +1003,10 @@ export const Dashboard = () => {
                 </div>
                 <div>
                   <div className=" flex space-x-2 mt-5">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       Transaction id
                     </div>
-                    {/* <div className="text-red-500 text-base font-normal font-['Sarabun'] leading-tight">
+                    {/* <div className="text-red-500 text-base font-normal  leading-tight">
                       *
                     </div> */}
                   </div>
@@ -1018,7 +1019,7 @@ export const Dashboard = () => {
                 </div>
                 <div className="flex flex-col space-y-4 mt-5 ">
                   <div className=" flex space-x-2">
-                    <div className="text-zinc-600 text-base font-normal font-['Sarabun'] leading-tight">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
                       Add Your Quantity
                     </div>
                     {/* <div className="text-red-500 text-lg font-medium">*</div> */}

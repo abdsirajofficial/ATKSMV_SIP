@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo2.svg";  
+import logo from "../../assets/logo2.svg";
 import {
   MdDashboard,
   MdLogout,
   MdManageHistory,
-  MdOutlineLogout,
+  MdOutlineLogout, MdComputer, MdGroup
 } from "react-icons/md";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { LuPackageCheck } from "react-icons/lu";
@@ -54,6 +54,42 @@ export const AdminDashboard = ({ isLoading }) => {
     navigate("/login");
   };
 
+  const navData = [
+    {
+      name: 'Dashboard',
+      path: '/admin/dashboard',
+      icon: <MdComputer className=" text-[24px]" />,
+    },
+    {
+      name: 'Users',
+      path: '/admin/users',
+      icon: <MdGroup className=" text-[24px] " />,
+    },
+    {
+      name: 'Packages',
+      path: '/admin/packages',
+      icon: <LuPackageCheck className=" text-[24px]" />,
+    },
+    {
+      name: 'Payment',
+      path: '/admin/payment',
+      icon: <LuPackageCheck className=" text-[24px]" />,
+    },
+
+    {
+      name: 'Withdrawal',
+      path: '/admin/withdrawal',
+      icon: <BiMoneyWithdraw className=" text-[24px]" />,
+    },
+
+    {
+      name: 'History',
+      path: '/admin/history',
+      icon: <MdManageHistory className=" text-[24px]" />,
+    },
+
+  ]
+
   return (
     <div className=" flex w-full h-screen">
       {/* Sidebar */}
@@ -61,80 +97,22 @@ export const AdminDashboard = ({ isLoading }) => {
       <div className=" hidden md:block">
         <div className="  w-40 lg:w-48 h-full bg-gradient-to-b from-blue-500 to-[#3777FA] flex flex-col justify-between  items-center pt-5 space-y-2 pb-10">
           <div className=" flex flex-col justify-center items-center">
-            <div className=" flex justify-center items-center text-white">
+            <div className=" flex justify-center items-center text-white mb-10">
               <img src={logo} alt="" className="w-36" />
             </div>
 
-            <NavLink
-              to={"/admin/dashboard"}
-              className=" acitive w-full mt-10 flex justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-            // onClick={() => setShowImage(false)}
-            >
-              <MdDashboard  className=" text-[24px]"/>
-              <h1 className=" flex items-start gap-2 ">
-                Dashboard
-              </h1>
-            </NavLink>
+            {
+              navData.map((item, index) => <NavLink
+                to={item.path}
+                className=" acitive w-full flex justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+              >
+                {item.icon}
+                <h1 className=" flex items-start gap-2 ">
+                  {item.name}
+                </h1>
+              </NavLink>)
+            }
 
-            <NavLink
-              to={"/admin/users"}
-              className=" acitive w-full  flex justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-            // onClick={() => setShowImage(false)}
-            >
-              <h1 className=" flex items-start gap-2 ">
-                <h1 className=" text-[24px] ">
-                  <MdDashboard />
-                </h1>
-                Users
-              </h1>
-            </NavLink>
-
-            <NavLink
-              to={"/admin/packages"}
-              className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-            >
-              <h1 className="flex gap-3 text-center">
-                <h1 className=" text-[24px]">
-                  <LuPackageCheck />
-                </h1>
-                Packages
-              </h1>
-            </NavLink>
-
-            <NavLink
-              to={"/admin/payment"}
-              className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-            >
-              <h1 className="flex gap-3 text-center">
-                <h1 className=" text-[24px]">
-                  <LuPackageCheck />
-                </h1>
-                Payment
-              </h1>
-            </NavLink>
-
-            <NavLink
-              to={"/admin/withdrawal"}
-              className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-            >
-              <h1 className=" flex justify-center items-center gap-2">
-                <h1 className=" text-[24px]">
-                  <BiMoneyWithdraw />
-                </h1>
-                Withdrawal
-              </h1>
-            </NavLink>
-            <NavLink
-              to={"/admin/history"}
-              className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-            >
-              <h1 className="flex gap-3 text-center">
-                <h1 className=" text-[24px]">
-                  <MdManageHistory />
-                </h1>
-                History
-              </h1>
-            </NavLink>
           </div>
           <button
             className="flex justify-center items-center gap-x-2 bg-[aliceblue] hover:bg-red-400 hover:text-white px-3 py-2 rounded-md shadow-lg transform hover:scale-105 transition duration-300"
@@ -164,8 +142,8 @@ export const AdminDashboard = ({ isLoading }) => {
 
             {/* Menu Content */}
             {isMenuOpen && (
-               <div className="md:hidden block  absolute z-10 top-10 right-3 text-end w-[65%] rounded-md bg-white border-2 shadow-md">
-               {/* Close Button */}
+              <div className="md:hidden block  absolute z-10 top-10 right-3 text-end w-[65%] rounded-md bg-white border-2 shadow-md">
+                {/* Close Button */}
                 <button
                   className="text-[26px] py-4 pr-5"
                   onClick={() => setIsMenuOpen(false)}
@@ -188,6 +166,9 @@ export const AdminDashboard = ({ isLoading }) => {
                           {name}
                         </h1> */}
                       </div>
+                      {
+
+                      }
 
                       <NavLink
                         to={"/admin/dashboard"}
@@ -195,7 +176,7 @@ export const AdminDashboard = ({ isLoading }) => {
                       // onClick={() => setShowImage(false)}
                       >
                         <h1 className=" flex items-start gap-2 ">
-                            <MdDashboard className=" text-[24px] "/>
+                          <MdDashboard className=" text-[24px] " />
                           Dashboard
                         </h1>
                       </NavLink>
@@ -216,7 +197,7 @@ export const AdminDashboard = ({ isLoading }) => {
                         to={"/admin/packages"}
                         className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
-                        <h1 className="flex gap-3 text-center">
+                        <h1 className="flex items-start gap-2">
                           <h1 className=" text-[24px]">
                             <LuPackageCheck />
                           </h1>
@@ -227,10 +208,8 @@ export const AdminDashboard = ({ isLoading }) => {
                         to={"/admin/payment"}
                         className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
-                        <h1 className="flex gap-3 text-center">
-                          <h1 className=" text-[24px]">
-                            <LuPackageCheck />
-                          </h1>
+                        <LuPackageCheck />
+                        <h1 className="flex items-start gap-2">
                           Payment
                         </h1>
                       </NavLink>
@@ -238,10 +217,9 @@ export const AdminDashboard = ({ isLoading }) => {
                         to={"/admin/withdrawal"}
                         className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
-                        <h1 className=" flex justify-center items-center gap-2">
-                          <h1 className=" text-[24px]">
-                            <BiMoneyWithdraw />
-                          </h1>
+
+                        <BiMoneyWithdraw className=" text-[24px]" />
+                        <h1 className=" flex items-start gap-2">
                           Withdrawal
                         </h1>
                       </NavLink>
@@ -249,10 +227,8 @@ export const AdminDashboard = ({ isLoading }) => {
                         to={"/admin/history"}
                         className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
-                        <h1 className="flex gap-3 text-center">
-                          <h1 className=" text-[24px]">
-                            <MdManageHistory />
-                          </h1>
+                        <MdManageHistory className=" text-[24px]" />
+                        <h1 className="flex items-start gap-2">
                           History
                         </h1>
                       </NavLink>
