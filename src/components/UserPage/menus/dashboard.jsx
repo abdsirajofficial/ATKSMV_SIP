@@ -171,6 +171,7 @@ export const Dashboard = () => {
               setsenderTransId("");
               setQuantity(1);
               setPackageInvestment(false);
+              window.open("https://wa.me/8148867881", "_blank");
             }
           })
           .catch((error) => {
@@ -291,7 +292,7 @@ export const Dashboard = () => {
             <h1 className="text-[#031635] font-semibold text-[22px]">
               {profile.amount
                 ? parseInt(profile.amount) +
-                  (profile.return ? parseInt(profile.return) : 0)
+                (profile.return ? parseInt(profile.return) : 0)
                 : 0}
             </h1>
             <h1 className="text-[#031635] font-semibold">Total amount</h1>
@@ -301,16 +302,16 @@ export const Dashboard = () => {
           {(profile.amount ? parseInt(profile.amount) : 0) +
             (profile.return ? parseInt(profile.return) : 0) >
             0 && (
-            <div
-              className="w-full flex justify-end items-center space-x-2"
-              onClick={() => makewithraw()}
-            >
-              <h1 className="font-semibold text-[14px] text-[#031635] cursor-pointer">
-                Withdraw
-              </h1>
-              <FaArrowRightLong className="text-[#031635]" />
-            </div>
-          )}
+              <div
+                className="w-full flex justify-end items-center space-x-2"
+                onClick={() => makewithraw()}
+              >
+                <h1 className="font-semibold text-[14px] text-[#031635] cursor-pointer">
+                  Withdraw
+                </h1>
+                <FaArrowRightLong className="text-[#031635]" />
+              </div>
+            )}
         </div>
       </div>
       <h1 className=" w-full font-semibold py-5">Monthly Package</h1>
@@ -326,19 +327,17 @@ export const Dashboard = () => {
                 <div
                   className={`w-full shadow-md flex flex-col justify-between items-start rounded-md
                   ${selectPack.sno >= data.sno ? "cursor-not-allowed" : ""}
-                  ${
-                    currentMonPackId === data.packId
+                  ${currentMonPackId === data.packId
                       ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
                       : "bg-gray-50"
-                  }`}
+                    }`}
                   key={index}
                 >
                   <div
-                    className={`w-full flex justify-between items-center ${
-                      currentMonPackId === data.packId
+                    className={`w-full flex justify-between items-center ${currentMonPackId === data.packId
                         ? " border-b-2 border-gray-500 "
                         : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
-                    } rounded-t-md`}
+                      } rounded-t-md`}
                   >
                     {console.log(currentMonPackId)}
                     <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
@@ -360,11 +359,10 @@ export const Dashboard = () => {
                           <FaMoneyBill1Wave />
                         </h1>
                         <h1
-                          className={`${
-                            currentMonPackId === data.packId
+                          className={`${currentMonPackId === data.packId
                               ? ""
                               : "text-gray-800"
-                          }`}
+                            }`}
                         >
                           {" "}
                           Returns up-to {data.returns}%
@@ -375,11 +373,10 @@ export const Dashboard = () => {
                           <IoMdLock />
                         </h1>
                         <h1
-                          className={`${
-                            currentMonPackId === data.packId
+                          className={`${currentMonPackId === data.packId
                               ? ""
                               : "text-gray-800"
-                          }`}
+                            }`}
                         >
                           {" "}
                           Tenure: {data.years} years
@@ -390,11 +387,10 @@ export const Dashboard = () => {
                           <IoCashSharp />
                         </h1>
                         <h1
-                          className={`${
-                            currentMonPackId === data.packId
+                          className={`${currentMonPackId === data.packId
                               ? ""
                               : "text-gray-800"
-                          }`}
+                            }`}
                         >
                           {" "}
                           Total Amount :{" "}
@@ -414,11 +410,10 @@ export const Dashboard = () => {
                   </div>
                   <div className=" w-full flex justify-between items-center p-3">
                     <p
-                      className={`${
-                        currentMonPackId === data.packId
+                      className={`${currentMonPackId === data.packId
                           ? " text-white cursor-pointer hover:font-semibold"
                           : "text-light-blue-800 cursor-pointer hover:font-semibold"
-                      } `}
+                        } `}
                       onClick={() => PackageMoreDtls(data.amount, "Monthly")}
                     >
                       More details
@@ -434,11 +429,10 @@ export const Dashboard = () => {
                       </button>
                     ) : (
                       <button
-                        className={`bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse ${
-                          selectPack.sno >= data.sno
+                        className={`bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse ${selectPack.sno >= data.sno
                             ? "cursor-not-allowed opacity-50"
                             : ""
-                        }`}
+                          }`}
                         onClick={
                           () =>
                             handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
@@ -468,19 +462,17 @@ export const Dashboard = () => {
                 <div
                   className={`w-full shadow-md flex flex-col justify-between items-start rounded-md 
                   ${selectPack.sno >= data.sno ? "cursor-not-allowed" : ""}
-                  ${
-                    currentMonPackId === data.packId
+                  ${currentMonPackId === data.packId
                       ? "bg-[#002c9b] text-white border-[6px]  border-spacing-8 border-[#00ccff]"
                       : "bg-gray-50"
-                  }`}
+                    }`}
                   key={index}
                 >
                   <div
-                    className={`w-full flex justify-between items-center ${
-                      currentMonPackId === data.packId
+                    className={`w-full flex justify-between items-center ${currentMonPackId === data.packId
                         ? " border-b-2 border-gray-500 "
                         : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
-                    } rounded-t-md`}
+                      } rounded-t-md`}
                   >
                     <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
                       {data.amount} <span className=" text-[12px]"></span>
@@ -500,11 +492,10 @@ export const Dashboard = () => {
                           <FaMoneyBill1Wave />
                         </h1>
                         <h1
-                          className={`${
-                            currentMonPackId === data.packId
+                          className={`${currentMonPackId === data.packId
                               ? ""
                               : "text-gray-800"
-                          }`}
+                            }`}
                         >
                           {" "}
                           Returns up-to {data.returns}%
@@ -515,11 +506,10 @@ export const Dashboard = () => {
                           <IoMdLock />
                         </h1>
                         <h1
-                          className={`${
-                            currentMonPackId === data.packId
+                          className={`${currentMonPackId === data.packId
                               ? ""
                               : "text-gray-800"
-                          }`}
+                            }`}
                         >
                           {" "}
                           Tenure: {data.years} years
@@ -530,11 +520,10 @@ export const Dashboard = () => {
                           <IoCashSharp />
                         </h1>
                         <h1
-                          className={`${
-                            currentMonPackId === data.packId
+                          className={`${currentMonPackId === data.packId
                               ? ""
                               : "text-gray-800"
-                          }`}
+                            }`}
                         >
                           {" "}
                           Total Amount :{" "}
@@ -554,11 +543,10 @@ export const Dashboard = () => {
                   </div>
                   <div className=" w-full flex justify-between items-center p-3">
                     <p
-                      className={`${
-                        currentMonPackId === data.packId
+                      className={`${currentMonPackId === data.packId
                           ? " text-white cursor-pointer hover:font-semibold"
                           : "text-light-blue-800 cursor-pointer hover:font-semibold"
-                      } `}
+                        } `}
                       onClick={() => PackageMoreDtls(data.amount, "Annual")}
                     >
                       More details
@@ -574,11 +562,10 @@ export const Dashboard = () => {
                       </button>
                     ) : (
                       <button
-                        className={`bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse ${
-                          selectPack.sno >= data.sno
+                        className={`bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse ${selectPack.sno >= data.sno
                             ? "cursor-not-allowed opacity-50"
                             : ""
-                        }`}
+                          }`}
                         onClick={
                           () =>
                             handleInvestbtn(data.packId, data.amount, "monthly") // Check the condition before invoking the handler
@@ -1194,7 +1181,7 @@ export const Dashboard = () => {
                     </span>
                     {packType === "Monthly"
                       ? packAmount * 12 * (index + 1) +
-                        sipCalculator(packAmount, index + 1)
+                      sipCalculator(packAmount, index + 1)
                       : lumCalculator(packAmount, index + 1)}
                   </div>
                 </div>
