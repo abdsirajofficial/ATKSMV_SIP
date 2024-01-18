@@ -30,11 +30,11 @@ const DashBoards = () => {
 
 
   return (
-    <div className=" sm:px-8 py-5 w-full h-full flex flex-col">
+    <div className=" sm:px-8 md:py-5 py-10 w-full h-full flex flex-col">
 
-      <div>
+      <div className=' px-5 py-5'>
         <p className=' text-[#172b4d] font-semibold text-xl'>Over All</p>
-        <div className=' h-52 w-full flex flex-wrap gap-7'>
+        <div className=' h-fit md:h-52 w-full flex flex-wrap gap-7'>
 
           {/* <div className='h-36 w-[15rem] bg-white rounded-2xl shadow-lg border p-3 flex flex-col justify-center relative'>
             <p className=' text-[#8898aa] text-lg font-medium'>Total amount</p>
@@ -73,7 +73,7 @@ const DashBoards = () => {
         </div>
       </div>
 
-      <div>
+      <div className=' px-5 py-10'>
         <p className=' text-[#172b4d] font-semibold text-xl'>This month</p>
         <div className=' h-52 w-full flex flex-wrap gap-7'>
 

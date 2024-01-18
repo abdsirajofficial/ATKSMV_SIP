@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo1.svg";
+import logo from "../../assets/logo2.svg";  
 import {
   MdDashboard,
   MdLogout,
@@ -14,7 +14,7 @@ import { IoMenu } from "react-icons/io5";
 import { ImCancelCircle } from "react-icons/im";
 import loadingIcon from "../../assets/loading.svg";
 
-export const AdminDashboard = ({isLoading}) => {
+export const AdminDashboard = ({ isLoading }) => {
   const token = localStorage.getItem("loginToken");
   const name = localStorage.getItem("name");
   const UserId = localStorage.getItem("userid");
@@ -68,20 +68,18 @@ export const AdminDashboard = ({isLoading}) => {
             <NavLink
               to={"/admin/dashboard"}
               className=" acitive w-full mt-10 flex justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-              // onClick={() => setShowImage(false)}
+            // onClick={() => setShowImage(false)}
             >
+              <MdDashboard  className=" text-[24px]"/>
               <h1 className=" flex items-start gap-2 ">
-                <h1 className=" text-[24px] ">
-                  <MdDashboard />
-                </h1>
                 Dashboard
               </h1>
             </NavLink>
 
             <NavLink
               to={"/admin/users"}
-              className=" acitive w-full mt-10 flex justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-              // onClick={() => setShowImage(false)}
+              className=" acitive w-full  flex justify-start  items-start lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+            // onClick={() => setShowImage(false)}
             >
               <h1 className=" flex items-start gap-2 ">
                 <h1 className=" text-[24px] ">
@@ -114,7 +112,7 @@ export const AdminDashboard = ({isLoading}) => {
                 Payment
               </h1>
             </NavLink>
-            
+
             <NavLink
               to={"/admin/withdrawal"}
               className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
@@ -166,8 +164,8 @@ export const AdminDashboard = ({isLoading}) => {
 
             {/* Menu Content */}
             {isMenuOpen && (
-              <div className="md:hidden block  absolute z-10 top-0 right-0 text-end w-[300px] bg-blue-600">
-                {/* Close Button */}
+               <div className="md:hidden block  absolute z-10 top-10 right-3 text-end w-[65%] rounded-md bg-white border-2 shadow-md">
+               {/* Close Button */}
                 <button
                   className="text-[26px] py-4 pr-5"
                   onClick={() => setIsMenuOpen(false)}
@@ -182,18 +180,30 @@ export const AdminDashboard = ({isLoading}) => {
                       <img src={logo} alt="" className="w-36" />
                     </div>
                     <div className=" w-full py-2 mt-5 text-white">
-                    <div className=" flex justify-start items-start">
+                      <div className=" flex justify-start items-start">
                         <h1 className=" px-[18px]  text-[18px] rounded-full">
-                        User Id : {UserId}
+                          User Id : {UserId}
                         </h1>
                         {/* <h1 className="px-[18px]  py-2 text-[18px] rounded-full my-2">
                           {name}
                         </h1> */}
                       </div>
+
+                      <NavLink
+                        to={"/admin/dashboard"}
+                        className=" acitive w-full mt-10 flex justify-start  items-start lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
+                      // onClick={() => setShowImage(false)}
+                      >
+                        <h1 className=" flex items-start gap-2 ">
+                            <MdDashboard className=" text-[24px] "/>
+                          Dashboard
+                        </h1>
+                      </NavLink>
+
                       <NavLink
                         to={"/admin/users"}
-                        className=" acitive w-full mt-10 flex justify-start  items-start lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
-                        // onClick={() => setShowImage(false)}
+                        className=" acitive w-full flex justify-start  items-start lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
+                      // onClick={() => setShowImage(false)}
                       >
                         <h1 className=" flex items-start gap-2 ">
                           <h1 className=" text-[24px] ">
@@ -204,7 +214,7 @@ export const AdminDashboard = ({isLoading}) => {
                       </NavLink>
                       <NavLink
                         to={"/admin/packages"}
-                        className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+                        className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
                         <h1 className="flex gap-3 text-center">
                           <h1 className=" text-[24px]">
@@ -215,7 +225,7 @@ export const AdminDashboard = ({isLoading}) => {
                       </NavLink>
                       <NavLink
                         to={"/admin/payment"}
-                        className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+                        className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
                         <h1 className="flex gap-3 text-center">
                           <h1 className=" text-[24px]">
@@ -226,7 +236,7 @@ export const AdminDashboard = ({isLoading}) => {
                       </NavLink>
                       <NavLink
                         to={"/admin/withdrawal"}
-                        className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+                        className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
                         <h1 className=" flex justify-center items-center gap-2">
                           <h1 className=" text-[24px]">
@@ -237,7 +247,7 @@ export const AdminDashboard = ({isLoading}) => {
                       </NavLink>
                       <NavLink
                         to={"/admin/history"}
-                        className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#ebedf2] font-medium"
+                        className=" acitive w-full mt- flex justify-start items-center lg:space-x-5 text-center py-3 px-5 lg:px-10 cursor-pointer text-[#00132e] font-medium"
                       >
                         <h1 className="flex gap-3 text-center">
                           <h1 className=" text-[24px]">
@@ -247,9 +257,10 @@ export const AdminDashboard = ({isLoading}) => {
                         </h1>
                       </NavLink>
                     </div>
-                    <div className=" flex justify-start items-start pr-40 mt-5">
+
+                    <div className=" flex justify-start items-start w-full px-5 pt-5">
                       <button
-                        className="flex justify-center items-center gap-x-2 bg-[aliceblue] hover:bg-red-400 hover:text-white px-3 py-2 rounded-md shadow-lg transform hover:scale-105 transition duration-300"
+                        className="flex justify-center items-center gap-x-2 bg-[aliceblue] hover:bg-red-400 hover:text-white px-3 py-2 rounded-md shadow-lg transform hover:scale-105 transition duration-300 border-2 border-[#00132e]"
                         onClick={() => handleLogout()}
                       >
                         <h1 className="text-[20px]">
@@ -258,20 +269,22 @@ export const AdminDashboard = ({isLoading}) => {
                         Logout
                       </button>
                     </div>
+
                   </div>
+
                 </div>
               </div>
             )}
           </div>
           <div className=" hidden md:block">
             <div className=" flex justify-end items-center">
-            <h1 className=" px-[18px]  py-2 text-[18px] rounded-full my-2 font-semibold text-base">
+              <h1 className=" px-[18px]  py-2 text-[18px] rounded-full my-2 font-semibold text-base">
                 {UserId}
               </h1>
               <h1 className=" bg-yellow-300 px-[12px] font-bold  py-2 text-[18px] rounded-full my-2">
                 {name[0]}
               </h1>
-              
+
             </div>
           </div>
         </div>
@@ -283,7 +296,7 @@ export const AdminDashboard = ({isLoading}) => {
       </div>
       {
         isLoading && <div className=" absolute left-[50%] top-5">
-          <img src={loadingIcon} alt=""  className=" h-10 w-10 bg-white shadow-md rounded-full"/>
+          <img src={loadingIcon} alt="" className=" h-10 w-10 bg-white shadow-md rounded-full" />
         </div>
       }
 

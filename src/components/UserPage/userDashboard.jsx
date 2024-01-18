@@ -207,6 +207,7 @@ export const UserDashboard = ({ isLoading }) => {
                         </h1>
                       </NavLink>
                     </div>
+
                     <div className=" flex justify-start items-start w-full px-5 pt-5">
                       <button
                         className="flex justify-center items-center gap-x-2 bg-[aliceblue] hover:bg-red-400 hover:text-white px-3 py-2 rounded-md shadow-lg transform hover:scale-105 transition duration-300 border-2 border-[#00132e]"
@@ -218,6 +219,7 @@ export const UserDashboard = ({ isLoading }) => {
                         Logout
                       </button>
                     </div>
+                    
                   </div>
                 </div>
               </div>
