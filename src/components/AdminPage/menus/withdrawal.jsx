@@ -9,6 +9,7 @@ import {
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 import toast from "react-hot-toast";
 import { Pagination } from "../../pagination";
+import FormateCurrency from "../../formateCurrency";
 
 export const Withdrawal = () => {
   const [approved, setapproved] = useState(false);
@@ -101,7 +102,7 @@ export const Withdrawal = () => {
                   {withdraw.name}
                 </p>
                 <p className=" flex justify-center items-center">
-                  {withdraw.amount}
+                <FormateCurrency amount={withdraw.amount}/>
                 </p>
                 <p className=" flex justify-center items-center">
                   {withdraw.updatedOn.slice(0, 10)}
@@ -161,7 +162,8 @@ export const Withdrawal = () => {
                   {profile.name}
                 </p>
                 <p className=" flex justify-center items-center">
-                  {profile.amount}
+                <FormateCurrency amount=
+                      {profile.amount}/>
                 </p>
                 <p className=" flex justify-center items-center">
                   {profile.upi_id}

@@ -14,6 +14,7 @@ import {
 } from "../../../server/app";
 import toast from "react-hot-toast";
 import { Pagination } from "../../pagination";
+import FormateCurrency from "../../formateCurrency";
 
 export const Users = () => {
   const [editUser, seteditUser] = useState(false);
@@ -290,14 +291,14 @@ export const Users = () => {
                     {user.role}
                   </p>
                   <p className=" flex justify-center items-center">
-                    {(user.amount ? user.amount : 0) +
-                      (user.return ? user.return : 0)}
+                    {<FormateCurrency amount={(user.amount ? user.amount : 0) +
+                      (user.return ? user.return : 0)} />}
                   </p>
                   <p className=" flex justify-center items-center">
                     <p
                       className={`sm:px-3.5 px-1 rounded-full border-2 py-0.5 ${user.status === "Active"
-                          ? "bg-green-50 border-green-200"
-                          : "bg-red-50 border-red-200"
+                        ? "bg-green-50 border-green-200"
+                        : "bg-red-50 border-red-200"
                         }`}
                     >
                       {user.status}
@@ -375,14 +376,14 @@ export const Users = () => {
                     {user.role}
                   </p>
                   <p className=" flex justify-center items-center">
-                    {(user.amount ? user.amount : 0) +
-                      (user.return ? user.return : 0)}
+                    {<FormateCurrency amount={(user.amount ? user.amount : 0) +
+                      (user.return ? user.return : 0)} />}
                   </p>
                   <p className=" flex justify-center items-center">
                     <p
                       className={`sm:px-3.5 px-1 rounded-full border-2 py-0.5 ${user.status === "Active"
-                          ? "bg-green-50 border-green-200"
-                          : "bg-red-50 border-red-200"
+                        ? "bg-green-50 border-green-200"
+                        : "bg-red-50 border-red-200"
                         }`}
                     >
                       {user.status}
@@ -688,7 +689,7 @@ export const Users = () => {
                   />
                 </div>
               </div>
-              
+
               <div>
                 <div className=" flex space-x-2 mt-5">
                   <div className="text-zinc-600 text-base font-normal  leading-tight">
@@ -723,7 +724,7 @@ export const Users = () => {
                 />
               </div>
 
-              
+
 
             </div>
             <div className="text-neutral-400 text-base font-semibold tracking-wide mt-8">

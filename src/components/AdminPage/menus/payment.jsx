@@ -10,6 +10,7 @@ import { VscWorkspaceTrusted } from "react-icons/vsc";
 import toast from "react-hot-toast";
 import { IoWarning } from "react-icons/io5";
 import { Pagination } from "../../pagination";
+import FormateCurrency from "../../formateCurrency";
 
 export const Payment = () => {
   const [transaction, settransaction] = useState([]);
@@ -162,7 +163,8 @@ export const Payment = () => {
                     {data.name}
                   </p>
                   <p className=" flex justify-center items-center">
-                    {data.amount}
+                    <FormateCurrency amount=
+                      {data.amount}/>
                   </p>
                   <p className=" flex justify-center items-center">
                     {data.count}
@@ -208,7 +210,8 @@ export const Payment = () => {
                     {data.name}
                   </p>
                   <p className=" flex justify-center items-center">
-                    {data.amount}
+                    <FormateCurrency amount=
+                      {data.amount}/>
                   </p>
                   <p className=" flex justify-center items-center">
                     {data.count}
@@ -286,7 +289,8 @@ export const Payment = () => {
                 </p>
                 <p className=" flex justify-center items-center">{data.name}</p>
                 <p className=" flex justify-center items-center">
-                  {data.amount}
+                  <FormateCurrency amount=
+                      {data.amount}/>
                 </p>
                 <p className=" flex justify-center items-center">
                   {data.count}

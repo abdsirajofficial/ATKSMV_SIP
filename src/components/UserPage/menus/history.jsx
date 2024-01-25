@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { gettransaction } from "../../../server/app";
 import { Pagination } from "../../pagination";
+import FormateCurrency from "../../formateCurrency";
 
 export const History = () => {
   const [transaction, settransaction] = useState([]);
@@ -16,6 +17,7 @@ export const History = () => {
 
   return (
     <div className=" sm:px-8 py-5 w-full h-full flex flex-col">
+      <p className=" mb-4 font-semibold text-xl">Transection history</p>
       <div className="w-full h-auto shadow-sm grid grid-cols-6 grid-rows-1 text-center rounded py-3  text-[14px] bg-white mb-5">
         <p className=" flex justify-center items-center">User ID</p>
         <p className=" flex justify-center items-center">Name</p>
@@ -34,7 +36,7 @@ export const History = () => {
                 >
                   <p className="flex justify-center items-center">{data.userId}</p>
                   <p className="flex justify-center items-center">{data.name}</p>
-                  <p className="flex justify-center items-center">{data.amount}</p>
+                  <p className="flex justify-center items-center"> <FormateCurrency amount={data.amount}/></p>
                   <p className="flex justify-center items-center">{data.count}</p>
                   <p className="flex justify-center items-center">
                     {data.updatedOn.slice(0, 10)}

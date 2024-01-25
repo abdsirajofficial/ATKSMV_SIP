@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getDashboard } from '../../../server/app';
 import { FaWallet } from "react-icons/fa";
+import FormateCurrency from "../../formateCurrency";
 
 const DashBoards = () => {
   const [data, setData] = useState([]);
@@ -61,8 +62,7 @@ const DashBoards = () => {
             <div key={index} className='h-36 w-[15rem] bg-white rounded-2xl shadow-lg border p-3 flex flex-col justify-center relative'>
               <p className='text-[#8898aa] text-lg font-medium'>{item?.title}</p>
               <div className='flex space-x-2 text-2xl font-bold text-[#172b4d]'>
-                <p>RS</p>
-                <p>{item?.amount}</p>
+                {<FormateCurrency amount={item?.amount} />}
               </div>
               <div className={`absolute right-4 flex justify-center items-center h-12 w-12 bg-gradient-to-r shadow-md rounded-full ${fromColor[(index) % fromColor.length]} ${toColor[(index - 1) % toColor.length]}`}>
                 <FaWallet />
@@ -81,11 +81,11 @@ const DashBoards = () => {
             <div key={index} className='h-36 w-[15rem] bg-white rounded-2xl shadow-lg border p-3 flex flex-col justify-center relative'>
               <p className='text-[#8898aa] text-lg font-medium'>{item?.title}</p>
               <div className='flex space-x-2 text-2xl font-bold text-[#172b4d]'>
-                <p>{item?.title === 'No. Paid' || item?.title === 'No. Withdraw' ? '' : 'RS'}</p>
-                <p>{item?.amount}</p>
+                <p>{item?.title === 'No. Paid' || item?.title === 'No. Withdraw' ? item?.amount : <FormateCurrency amount={item?.amount} />}</p>
+
               </div>
-              <div className={`absolute right-4 h-12 w-12 flex justify-center items-center bg-gradient-to-r rounded-full shadow-md  ${fromColor[(index - 1) % fromColor.length]} ${toColor[(index - 1) % toColor.length]}`}>
-                <FaWallet  className=''/>
+              <div className={`absolute right-4 h-12 w-12 flex justify-center items-center bg-gradient-to-r  rounded-full shadow-md  ${fromColor[(index - 1) % fromColor.length] || 'from-orange-900 '  } ${toColor[(index - 1) % toColor.length]}`}>
+                <FaWallet className='' />
               </div>
             </div>
           ))}

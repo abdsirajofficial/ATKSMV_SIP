@@ -19,6 +19,7 @@ import {
 import toast from "react-hot-toast";
 import { BiRupee } from "react-icons/bi";
 import { IoCopyOutline } from "react-icons/io5";
+import FormateCurrency from "../../formateCurrency";
 
 export const Dashboard = () => {
   const [withdrawalReq, setwithrawalReq] = useState(false);
@@ -262,13 +263,15 @@ export const Dashboard = () => {
     }
   }
 
+ 
+
   return (
     <div className=" px-8 py-5">
       <div className=" grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
         <div className=" w-full md:w-[250px] 2xl:w-[300px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
           <div className=" flex flex-col justify-center items-center space-y-3">
             <h1 className=" text-[#031635] font-semibold text-[22px]">
-              {profile.amount ? profile.amount : 0}
+              {<FormateCurrency amount={profile.amount ? profile?.amount : 0} />}
             </h1>
             <h1 className=" text-[#031635] font-semibold">Total investment</h1>
           </div>
@@ -279,7 +282,7 @@ export const Dashboard = () => {
         <div className=" w-full md:w-[250px] 2xl:w-[300px] px-4 py-8 shadow-md  rounded-xl flex justify-between items-center bg-gradient-to-r from-blue-200 to-blue-500">
           <div className=" flex flex-col justify-center items-center space-y-3">
             <h1 className=" text-[#031635] font-semibold text-[22px]">
-              {profile.return ? profile.return : 0}
+              {<FormateCurrency amount={profile.return ? profile?.return : 0} />}
             </h1>
             <h1 className=" text-[#031635] font-semibold">Total returns</h1>
           </div>
@@ -290,10 +293,10 @@ export const Dashboard = () => {
         <div className="w-full md:w-[250px] 2xl:w-[300px] px-4 pb-2 pt-8 shadow-md rounded-xl flex flex-col justify-between items-start bg-gradient-to-r from-blue-200 to-blue-500">
           <div className="flex flex-col justify-center items-center space-y-3">
             <h1 className="text-[#031635] font-semibold text-[22px]">
-              {profile.amount
+              {<FormateCurrency amount={profile.amount
                 ? parseInt(profile.amount) +
                 (profile.return ? parseInt(profile.return) : 0)
-                : 0}
+                : 0} />}
             </h1>
             <h1 className="text-[#031635] font-semibold">Total amount</h1>
           </div>
@@ -335,13 +338,14 @@ export const Dashboard = () => {
                 >
                   <div
                     className={`w-full flex justify-between items-center ${currentMonPackId === data.packId
-                        ? " border-b-2 border-gray-500 "
-                        : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
+                      ? " border-b-2 border-gray-500 "
+                      : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
                       } rounded-t-md`}
                   >
                     {console.log(currentMonPackId)}
                     <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-                      {data.amount}{" "}
+                      <FormateCurrency amount=
+                        {data.amount} />{" "}
                       <span className=" text-[12px]">Per Month</span>
                     </h1>
                     <div>
@@ -360,8 +364,8 @@ export const Dashboard = () => {
                         </h1>
                         <h1
                           className={`${currentMonPackId === data.packId
-                              ? ""
-                              : "text-gray-800"
+                            ? ""
+                            : "text-gray-800"
                             }`}
                         >
                           {" "}
@@ -374,8 +378,8 @@ export const Dashboard = () => {
                         </h1>
                         <h1
                           className={`${currentMonPackId === data.packId
-                              ? ""
-                              : "text-gray-800"
+                            ? ""
+                            : "text-gray-800"
                             }`}
                         >
                           {" "}
@@ -388,18 +392,19 @@ export const Dashboard = () => {
                         </h1>
                         <h1
                           className={`${currentMonPackId === data.packId
-                              ? ""
-                              : "text-gray-800"
+                            ? ""
+                            : "text-gray-800"
                             }`}
                         >
                           {" "}
                           Total Amount :{" "}
                           <span className=" font-semibold">
-                            {sipPackageCalc(
-                              data.amount,
-                              data.years,
-                              data.returns
-                            )}
+                            <FormateCurrency amount=
+                              {sipPackageCalc(
+                                data.amount,
+                                data.years,
+                                data.returns
+                              )} />
                           </span>
                         </h1>
                       </div>
@@ -411,8 +416,8 @@ export const Dashboard = () => {
                   <div className=" w-full flex justify-between items-center p-3">
                     <p
                       className={`${currentMonPackId === data.packId
-                          ? " text-white cursor-pointer hover:font-semibold"
-                          : "text-light-blue-800 cursor-pointer hover:font-semibold"
+                        ? " text-white cursor-pointer hover:font-semibold"
+                        : "text-light-blue-800 cursor-pointer hover:font-semibold"
                         } `}
                       onClick={() => PackageMoreDtls(data.amount, "Monthly")}
                     >
@@ -430,8 +435,8 @@ export const Dashboard = () => {
                     ) : (
                       <button
                         className={`bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse ${selectPack.sno >= data.sno
-                            ? "cursor-not-allowed opacity-50"
-                            : ""
+                          ? "cursor-not-allowed opacity-50"
+                          : ""
                           }`}
                         onClick={
                           () =>
@@ -470,8 +475,8 @@ export const Dashboard = () => {
                 >
                   <div
                     className={`w-full flex justify-between items-center ${currentMonPackId === data.packId
-                        ? " border-b-2 border-gray-500 "
-                        : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
+                      ? " border-b-2 border-gray-500 "
+                      : "bg-gradient-to-l from-blue-700 via-blue-800 to-blue-900"
                       } rounded-t-md`}
                   >
                     <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
@@ -493,8 +498,8 @@ export const Dashboard = () => {
                         </h1>
                         <h1
                           className={`${currentMonPackId === data.packId
-                              ? ""
-                              : "text-gray-800"
+                            ? ""
+                            : "text-gray-800"
                             }`}
                         >
                           {" "}
@@ -507,8 +512,8 @@ export const Dashboard = () => {
                         </h1>
                         <h1
                           className={`${currentMonPackId === data.packId
-                              ? ""
-                              : "text-gray-800"
+                            ? ""
+                            : "text-gray-800"
                             }`}
                         >
                           {" "}
@@ -521,18 +526,18 @@ export const Dashboard = () => {
                         </h1>
                         <h1
                           className={`${currentMonPackId === data.packId
-                              ? ""
-                              : "text-gray-800"
+                            ? ""
+                            : "text-gray-800"
                             }`}
                         >
                           {" "}
                           Total Amount :{" "}
                           <span className=" font-semibold">
-                            {sipPackageCalc(
+                          <FormateCurrency amount={sipPackageCalc(
                               data.amount,
                               data.years,
                               data.returns
-                            )}
+                            )}/>
                           </span>
                         </h1>
                       </div>
@@ -544,8 +549,8 @@ export const Dashboard = () => {
                   <div className=" w-full flex justify-between items-center p-3">
                     <p
                       className={`${currentMonPackId === data.packId
-                          ? " text-white cursor-pointer hover:font-semibold"
-                          : "text-light-blue-800 cursor-pointer hover:font-semibold"
+                        ? " text-white cursor-pointer hover:font-semibold"
+                        : "text-light-blue-800 cursor-pointer hover:font-semibold"
                         } `}
                       onClick={() => PackageMoreDtls(data.amount, "Annual")}
                     >
@@ -563,8 +568,8 @@ export const Dashboard = () => {
                     ) : (
                       <button
                         className={`bg-gradient-to-l from-blue-700 via-blue-800 to-blue-800 text-white rounded-md py-2 px-6 shadow-md transform transition duration-300 hover:scale-105 animate-pulse ${selectPack.sno >= data.sno
-                            ? "cursor-not-allowed opacity-50"
-                            : ""
+                          ? "cursor-not-allowed opacity-50"
+                          : ""
                           }`}
                         onClick={
                           () =>
@@ -981,8 +986,8 @@ export const Dashboard = () => {
                     </div>
                   </div>
                   <input
-                    type="number"
-                    value={senderAmt * quantity}
+                    type="text"
+                    value={senderAmt * quantity || 0}
                     className="w-full lg:w-[250px] px-3 py-2 mt-3 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
                     // onChange={(e) => setsenderAmt(parseInt(e.target.value, 10))}
                     readOnly
@@ -1155,34 +1160,33 @@ export const Dashboard = () => {
                   className="flex flex-wrap justify-between items-center p-2 border-b"
                 >
                   <div className="w-full sm:w-1/5">
-                    {packType === "Monthly"
-                      ? new Date().getFullYear() + index
-                      : index === 0 && new Date().getFullYear()}
+                   
+                      {packType === "Monthly"
+                        ? new Date().getFullYear() + index
+                        : index === 0 && new Date().getFullYear()} 
                   </div>
 
                   <div className="w-full sm:w-1/5">
-                    {packType === "Monthly"
+                    <FormateCurrency amount={packType === "Monthly"
                       ? packAmount * 12
-                      : index === 0 && packAmount}
+                      : index === 0 && packAmount} />
                   </div>
                   <div className="w-full sm:w-1/5">
-                    {packType === "Monthly"
+                    <FormateCurrency amount={packType === "Monthly"
                       ? packAmount * 12 * (index + 1)
-                      : index === 0 && packAmount}
+                      : index === 0 && packAmount} />
                   </div>
                   <div className="w-full sm:w-1/5">
-                    {packType === "Monthly"
+                    <FormateCurrency amount={packType === "Monthly"
                       ? sipCalculator(packAmount, index + 1)
-                      : lumCalculator(packAmount, index + 1) - packAmount}
+                      : lumCalculator(packAmount, index + 1) - packAmount} />
                   </div>
                   <div className="w-full sm:w-1/5 flex items-center">
-                    <span className="mr-1">
-                      <BiRupee />
-                    </span>
-                    {packType === "Monthly"
-                      ? packAmount * 12 * (index + 1) +
-                      sipCalculator(packAmount, index + 1)
-                      : lumCalculator(packAmount, index + 1)}
+                    <FormateCurrency amount=
+                      {packType === "Monthly"
+                        ? packAmount * 12 * (index + 1) +
+                        sipCalculator(packAmount, index + 1)
+                        : lumCalculator(packAmount, index + 1)} />
                   </div>
                 </div>
               ))}

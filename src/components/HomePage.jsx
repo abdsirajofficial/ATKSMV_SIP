@@ -16,12 +16,13 @@ import { BiRupee } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 
 import { useNavigate } from "react-router-dom";
+import FormateCurrency from "./formateCurrency";
 
 export const HomePage = () => {
   const navigate = useNavigate();
 
   const [showBorder, setshowBorder] = useState(true);
-  const [startValue, setstartValue] = useState(500);
+  const [startValue, setstartValue] = useState("500");
   const [yrSliderValue, setyrsSliderValue] = useState(10);
   const [returnVlaue, setreturnVlaue] = useState(12);
   const [InvestmentAmt, setInvestmentAmt] = useState(0);
@@ -70,6 +71,8 @@ export const HomePage = () => {
   const handleChatClick = () => {
     window.location.href = "https://wa.me/8148867881";
   };
+
+  const formattedValue = FormateCurrency({ amount: startValue });
 
 
   return (
@@ -184,8 +187,8 @@ export const HomePage = () => {
         <div className=" flex space-x-5 py-5 cursor-pointer text-[18px]">
           <h1
             className={`font-medium p-2 ${showBorder === true
-                ? " text-[14px] md:text-[18px] text-[#3777FA] border-b-4 border-[#3777FA]"
-                : "text-[14px] md:text-[18px] text-gray-400"
+              ? " text-[14px] md:text-[18px] text-[#3777FA] border-b-4 border-[#3777FA]"
+              : "text-[14px] md:text-[18px] text-gray-400"
               }`}
             onClick={() => setshowBorder(true)}
           >
@@ -193,8 +196,8 @@ export const HomePage = () => {
           </h1>
           <h1
             className={`font-medium p-2 ${showBorder === false
-                ? " text-[14px] md:text-[18px] text-[#3777FA] border-b-4 border-[#3777FA]"
-                : "text-[14px] md:text-[18px] text-gray-400"
+              ? " text-[14px] md:text-[18px] text-[#3777FA] border-b-4 border-[#3777FA]"
+              : "text-[14px] md:text-[18px] text-gray-400"
               }`}
             onClick={() => setshowBorder(false)}
           >
@@ -229,10 +232,11 @@ export const HomePage = () => {
                       <p className="text-[20px]"><BiRupee /></p>
                       <input
                         type="number"
-                        className=" w-[80px] text-[18px] font-bold bg-[#c1d5fd] p-1"
+                        className=" max-w-[100px] min-w-[80px] text-[18px] font-bold bg-[#c1d5fd] p-1"
                         value={startValue}
+                        min="500"
                         onChange={(e) =>
-                          setstartValue(e.target.value ? e.target.value : "0")
+                          setstartValue(e.target.value ? e.target.value : "500")
                         }
                       />
                     </div>
@@ -320,10 +324,8 @@ export const HomePage = () => {
                 will be
               </h1>
               <h1 className=" flex font-bold text-[18px] md:text-[36px] pt-4">
-                <h1>
-                  <FaIndianRupeeSign />
-                </h1>
-                <h1>{sipValue} </h1>
+
+                <h1>{<FormateCurrency amount={sipValue} /> || 0} </h1>
               </h1>
               <div className="  md:flex justify-start md:justify-center items-start md:items-center md:space-x-16 space-y-10 pt-6">
                 <div>
@@ -362,8 +364,8 @@ export const HomePage = () => {
                     <div className=" space-y-2">
                       <h1>Invested Amount</h1>
                       <p className=" flex font-bold text-[18px]">
-                        <FaIndianRupeeSign />
-                        {InvestmentAmt}
+                        <FormateCurrency amount={InvestmentAmt} />
+
                       </p>
                     </div>
                   </div>
@@ -372,8 +374,8 @@ export const HomePage = () => {
                     <div className=" space-y-2">
                       <h1>Est. Returns</h1>
                       <p className=" flex font-bold text-[18px]">
-                        <FaIndianRupeeSign />
-                        {ReturnAmt}
+                        <FormateCurrency amount={ReturnAmt} />
+
                       </p>
                     </div>
                   </div>
@@ -394,7 +396,7 @@ export const HomePage = () => {
                       <p className="text-[20px]"><BiRupee /></p>
                       <input
                         type="number"
-                        className=" w-[80px] text-[18px] font-bold bg-[#c1d5fd] p-1"
+                        className=" max-w-[100px] min-w-[80px] text-[18px] font-bold bg-[#c1d5fd] p-1"
                         value={LumInvestAmt}
                         onChange={(e) => setLumInvestAmt(e.target.value)}
                       />
@@ -484,10 +486,8 @@ export const HomePage = () => {
                 will be
               </h1>
               <h1 className=" flex font-bold text-[18px] md:text-[36px] pt-4">
-                <h1>
-                  <FaIndianRupeeSign />
-                </h1>
-                <h1>{LumValue} </h1>
+
+                <h1>{<FormateCurrency amount={LumValue} /> || 0} </h1>
               </h1>
               <div className="  md:flex justify-start md:justify-center items-start md:items-center md:space-x-16 space-y-10 pt-6">
                 <div>
@@ -526,8 +526,8 @@ export const HomePage = () => {
                     <div className=" space-y-2">
                       <h1>Invested Amount</h1>
                       <p className=" flex font-bold text-[18px]">
-                        <FaIndianRupeeSign />
-                        {LumInvestAmt}
+                        <FormateCurrency amount={LumInvestAmt} />
+
                       </p>
                     </div>
                   </div>
@@ -536,8 +536,8 @@ export const HomePage = () => {
                     <div className=" space-y-2">
                       <h1>Est. Returns</h1>
                       <p className=" flex font-bold text-[18px]">
-                        <FaIndianRupeeSign />
-                        {LumReturnAmt}
+                        <FormateCurrency amount={LumReturnAmt} />
+
                       </p>
                     </div>
                   </div>

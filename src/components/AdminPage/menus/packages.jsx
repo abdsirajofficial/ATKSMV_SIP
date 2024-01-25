@@ -16,6 +16,7 @@ import {
 import toast from "react-hot-toast";
 // import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { IoWarning } from "react-icons/io5";
+import FormateCurrency from "../../formateCurrency";
 
 export const Package = () => {
   const [addMonPackage, setaddMonPackage] = useState(false);
@@ -77,7 +78,7 @@ export const Package = () => {
     const futureValue = p * Math.pow(1 + r / 100, t);
     return Math.round(futureValue);
   };
-  
+
   useEffect(() => {
     getMonPackageApi(
       "admin/monthPackages",
@@ -288,7 +289,8 @@ export const Package = () => {
             >
               <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
                 <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-                  {data.amount} <span className=" text-[12px]">Per Month</span>
+                  <FormateCurrency amount=
+                    {data.amount} /> <span className=" text-[12px]">Per Month</span>
                 </h1>
                 {/* <h1
                   className="p-3 rounded-fullfont-semibold text-[28px] text-white hover:text-red-500 cursor-pointer transform transition duration-300 hover:scale-125"
@@ -327,7 +329,7 @@ export const Package = () => {
                       {" "}
                       Total Amount :{" "}
                       <span className=" font-semibold">
-                        {sipPackageCalc(data.amount, data.years, data.returns)}
+                        {<FormateCurrency amount={sipPackageCalc(data.amount, data.years, data.returns)} />}
                       </span>
                     </h1>
                   </div>
@@ -382,7 +384,8 @@ export const Package = () => {
             >
               <div className=" w-full flex justify-between items-center bg-gradient-to-l from-blue-700 via-blue-800 to-gray-900  rounded-t-md">
                 <h1 className="p-3 rounded-fullfont-semibold text-[20px] text-white">
-                  {data.amount} <span className=" text-[12px]"></span>
+                  <FormateCurrency amount=
+                    {data.amount} /> <span className=" text-[12px]"></span>
                 </h1>
                 {/* <h1
                   className="p-3 rounded-fullfont-semibold text-[28px] text-white hover:text-red-500 cursor-pointer transform transition duration-300 hover:scale-125"
@@ -421,7 +424,8 @@ export const Package = () => {
                       {" "}
                       Total Amount :{" "}
                       <span className=" font-semibold">
-                        {sipPackageCalc(data.amount, data.years, data.returns)}
+                        <FormateCurrency amount=
+                          {lumCalculator(data.amount, data.years)} />
                       </span>
                     </h1>
                   </div>
@@ -771,28 +775,30 @@ export const Package = () => {
                   </div>
 
                   <div className="w-full sm:w-1/5">
-                    {packType === "Monthly"
-                      ? packAmount * 12
-                      : index === 0 && packAmount}
+                    {<FormateCurrency amount=
+                      {packType === "Monthly"
+                        ? packAmount * 12
+                        : index === 0 && packAmount} />}
                   </div>
                   <div className="w-full sm:w-1/5">
-                    {packType === "Monthly"
-                      ? packAmount * 12 * (index + 1)
-                      : index === 0 && packAmount}
+                    {<FormateCurrency amount=
+                      {packType === "Monthly"
+                        ? packAmount * 12 * (index + 1)
+                        : index === 0 && packAmount} />}
                   </div>
                   <div className="w-full sm:w-1/5">
-                    {packType === "Monthly"
-                      ? sipCalculator(packAmount, index + 1)
-                      : lumCalculator(packAmount, index + 1) - packAmount}
+                    {<FormateCurrency amount=
+                      {packType === "Monthly"
+                        ? sipCalculator(packAmount, index + 1)
+                        : lumCalculator(packAmount, index + 1) - packAmount} />}
                   </div>
                   <div className="w-full sm:w-1/5 flex items-center">
-                    <span className="mr-1">
-                      <BiRupee />
-                    </span>
-                    {packType === "Monthly"
-                      ? packAmount * 12 * (index + 1) +
+
+                    {<FormateCurrency amount=
+                      {packType === "Monthly"
+                        ? packAmount * 12 * (index + 1) +
                         sipCalculator(packAmount, index + 1)
-                      : lumCalculator(packAmount, index + 1)}
+                        : lumCalculator(packAmount, index + 1)} />}
                   </div>
                 </div>
               ))}

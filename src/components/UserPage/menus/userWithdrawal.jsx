@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getWithdrawal } from "../../../server/app";
 import { Pagination } from "../../pagination";
+import FormateCurrency from "../../formateCurrency";
 
 export const UserWithdrawal = () => {
   const [withdrawal, setwithdrawal] = useState([]);
@@ -38,7 +39,7 @@ export const UserWithdrawal = () => {
                   </p>
                   <p className="flex justify-center items-center">{withdraw.name}</p>
                   <p className="flex justify-center items-center">
-                    {withdraw.amount}
+                  <FormateCurrency amount={withdraw.amount}/>
                   </p>
                   <p className="flex justify-center items-center">
                     {withdraw.updatedOn.slice(0, 10)}
