@@ -950,6 +950,29 @@ export const Dashboard = () => {
                     />
                   </div>
                 </div>
+                <div>
+                  <div className="flex space-x-2 mt-5">
+                    <div className="text-zinc-600 text-base font-normal  leading-tight">
+                      Google Pay / Phone Pay / Paytm
+                    </div>
+                    <div className="text-red-500 text-base font-normal  leading-tight">
+                      *
+                    </div>
+                  </div>
+                  <div className="relative w-full lg:w-[250px] mt-3">
+                    <input
+                      type="number"
+                      value= "6374745822"
+                      id="upiNoInput"
+                      className="w-full px-3 py-2 rounded-md border border-gray-300 bg-[#F8FCFF] focus:outline-none focus:ring focus:border-blue-300"
+                      readOnly
+                    />
+                    <IoCopyOutline
+                      onClick={() => copyToClipboard("upiNoInput")}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    />
+                  </div>
+                </div>
               </div>
               <div className="text-neutral-400 text-base font-semibold tracking-wide text-gray-700 pt-10 pb-3">
                 Fill The Transaction Details
