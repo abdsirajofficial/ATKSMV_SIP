@@ -22,7 +22,7 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   const [showBorder, setshowBorder] = useState(true);
-  const [startValue, setstartValue] = useState("500");
+  const [startValue, setstartValue] = useState(500);
   const [yrSliderValue, setyrsSliderValue] = useState(10);
   const [returnVlaue, setreturnVlaue] = useState(12);
   const [InvestmentAmt, setInvestmentAmt] = useState(0);
